@@ -1,0 +1,76 @@
+<p-toast position="top-center" />
+
+<app-auth
+  headline="Mostrá tu proceso, no solo el resultado."
+  description="Una comunidad para compartir ideas de diseño, pedir feedback y aprender de otras miradas."
+  heading="Ingresá a tu cuenta"
+  subtitle="Volvé a tu feed y seguí la conversación."
+  switchText="¿Todavía no tenés cuenta?"
+  switchLinkText="Creá una"
+  switchLinkPath="/register"
+>
+  <form class="fields" [formGroup]="form">
+    <div class="field">
+      <label class="field__label">Correo electrónico</label>
+
+      <input type="email" pInputText placeholder="Correo electrónico" formControlName="email" />
+
+      @if (
+        getFormControl('email')?.invalid &&
+        (getFormControl('email')?.touched || getFormControl('email')?.dirty)
+      ) {
+        @if (getFormControl('email')?.hasError('required')) {
+          <p class="field__error">El campo es obligatorio.</p>
+        }
+
+        @if (getFormControl('email')?.hasError('email')) {
+          <p class="field__error">Ingresá un correo electrónico válido.</p>
+        }
+      }
+    </div>
+
+    <div class="field">
+      <label class="field__label">Contraseña</label>
+
+      <input type="password" pInputText placeholder="Contraseña" formControlName="password" />
+
+      @if (
+        getFormControl('password')?.invalid &&
+        (getFormControl('password')?.touched || getFormControl('password')?.dirty)
+      ) {
+        @if (getFormControl('email')?.hasError('required')) {
+          <p class="field__error">El campo es obligatorio.</p>
+        }
+      }
+    </div>
+
+    <button
+      type="button"
+      pButton
+      [disabled]="form.invalid || isLoading()"
+      class="button--block"
+      (click)="onLogin()"
+    >
+      @if (isLoading()) {
+        <div class="spinner">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M22 12C22 13.3132 21.7413 14.6136 21.2388 15.8268C20.7362 17.0401 19.9997 18.1425 19.0711 19.0711C18.1425 19.9997 17.0401 20.7362 15.8268 21.2388C14.6136 21.7413 13.3132 22 12 22"
+              stroke="white"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      } @else {
+        Iniciar sesión
+      }
+    </button>
+  </form>
+</app-auth>

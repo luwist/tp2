@@ -1,0 +1,39 @@
+<header class="header">
+  <a routerLink="/" class="logo">
+    <img src="logo.svg" alt="Logo de la red social" />
+  </a>
+
+  @if (auth.isAuthenticated()) {
+    <div class="actions">
+      <button pButton severity="secondary">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 10.625H5A.63.63 0 0 1 4.375 10 .63.63 0 0 1 5 9.375h10a.63.63 0 0 1 .625.625.63.63 0 0 1-.625.625"
+            fill="#FFFFFF"
+          />
+          <path
+            d="M10 15.625A.63.63 0 0 1 9.375 15V5A.63.63 0 0 1 10 4.375a.63.63 0 0 1 .625.625v10a.63.63 0 0 1-.625.625"
+            fill="#FFFFFF"
+          />
+        </svg>
+
+        Crear
+      </button>
+
+      <div class="avatar">
+        <img [src]="auth.user()?.avatarUrl" alt="" />
+      </div>
+    </div>
+  } @else {
+    <div class="actions">
+      <p-button label="Registrarse" severity="secondary" [outlined]="true" />
+      <p-button label="Iniciar sesión" />
+    </div>
+  }
+</header>

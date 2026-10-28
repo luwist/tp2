@@ -1,0 +1,24 @@
+<section class="posts-page">
+  <aside class="posts-page__side posts-page__side--left">
+    <!-- ProfileCard if logged in, GuestCard if not -->
+  </aside>
+
+  <div class="posts-page__feed" [attr.aria-busy]="isLoading()">
+    <div class="posts-page__header">
+      <h1 class="posts-page__title">Publicaciones</h1>
+    </div>
+    @for (post of posts(); track post._id) {
+      <app-post-card [post]="post" />
+    }
+
+    @if (isLoading()) {
+      @for (item of skeletons; track item) {
+        <app-post-card-skeleton />
+      }
+    }
+  </div>
+
+  <aside class="posts-page__side posts-page__side--right">
+    <!-- Recent posts -->
+  </aside>
+</section>

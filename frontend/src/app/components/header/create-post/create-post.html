@@ -1,0 +1,94 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [showHeader]="false"
+  [dismissableMask]="true"
+  styleClass="create-post-dialog"
+>
+  <form class="post-composer">
+    <header class="post-composer__header">
+      <div class="post-composer__author">
+        <!-- <img
+          class="post-composer__avatar"
+          [src]="auth.user()?.avatarUrl"
+          alt=""
+        />
+        <div class="post-composer__author-info">
+          <span class="post-composer__name">{{ auth.user()?.name }}</span>
+          <span class="post-composer__handle">@{{ auth.user()?.username }}</span>
+        </div> -->
+      </div>
+
+      <button type="button" class="post-composer__close" aria-label="Cerrar">
+        <i class="pi pi-times"></i>
+      </button>
+    </header>
+
+    <div class="post-composer__body">
+      <input
+        class="post-composer__title"
+        type="text"
+        formControlName="title"
+        placeholder="¿Sobre qué quieres debatir hoy?"
+        aria-label="Título de la publicación"
+      />
+
+      <textarea
+        class="post-composer__content"
+        formControlName="content"
+        placeholder="Comienza a escribir los detalles de tu consulta, idea o aporte..."
+        aria-label="Contenido de la publicación"
+      ></textarea>
+
+      <!-- @if (attachments().length) {
+        <ul class="post-composer__attachments">
+          @for (attachment of attachments(); track attachment.id) {
+            <li class="post-composer__attachment">
+              <img
+                class="post-composer__attachment-image"
+                [src]="attachment.url"
+                alt=""
+              />
+              <button
+                type="button"
+                class="post-composer__attachment-remove"
+                aria-label="Quitar imagen"
+                (click)="removeAttachment(attachment.id)"
+              >
+                <i class="pi pi-times"></i>
+              </button>
+            </li>
+          }
+        </ul>
+      } -->
+    </div>
+
+    <div class="post-composer__toolbar">
+      <button
+        type="button"
+        class="post-composer__tool post-composer__tool--filled"
+        aria-label="Agregar imagen"
+        (click)="imageInput.click()"
+      >
+        <i class="pi pi-image"></i>
+      </button>
+      <input #imageInput class="post-composer__file-input" type="file" accept="image/*" multiple />
+
+      <button type="button" class="post-composer__tool" aria-label="Agregar código">
+        <i class="pi pi-code"></i>
+      </button>
+    </div>
+
+    <footer class="post-composer__footer">
+      <button type="button" class="post-composer__button post-composer__button--ghost">
+        Cancelar
+      </button>
+      <button type="submit" class="post-composer__button post-composer__button--primary">
+        Publicar
+      </button>
+    </footer>
+  </form>
+</p-dialog>

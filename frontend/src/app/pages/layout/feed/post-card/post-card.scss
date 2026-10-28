@@ -1,0 +1,115 @@
+.post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 16px;
+  background: #FFFFFF;
+  border-radius: 24px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__author {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.25;
+  }
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+  }
+
+  &__username {
+    font-size: 14px;
+    color: #8697AC;
+  }
+
+  &__menu {
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+
+    &:hover {
+      background: var(--color-bg);
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 140%;
+  }
+
+  &__message {
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+
+  &__image {
+    width: 100%;
+    max-height: 360px;
+    background-color: #FAFAFA;
+    object-fit: cover;
+    border-radius: 1rem;
+  }
+
+  &__date {
+    font-size: 12px;
+    color: #8697AC;
+  }
+
+  &__footer {
+    display: flex;
+    padding-top: 16px;
+    border-top: 1px solid #E7ECF0;
+  }
+
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 50px;
+    font-family: "Lato", sans-serif;
+    background: none;
+    color: var(--color-text);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background: hsla(239, 100%, 50%, 0.05);
+    }
+
+    &--liked {
+      background: #fdecee;
+      color: #e11d48;
+
+      &:hover {
+        background: #fbdde1;
+      }
+    }
+  }
+}

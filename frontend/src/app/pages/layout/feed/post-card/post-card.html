@@ -1,0 +1,78 @@
+<article class="post-card">
+  <header class="post-card__header">
+    <img [src]="post().author.avatarUrl" alt="" class="post-card__avatar" />
+    <div class="post-card__author">
+      <span class="post-card__name">
+        {{ post().author.firstName }} {{ post().author.lastName }}
+      </span>
+      <span class="post-card__username">&#64;{{ post().author.username }}</span>
+    </div>
+    <button type="button" class="post-card__menu" aria-label="Más opciones">
+      <i class="pi pi-ellipsis-h"></i>
+    </button>
+  </header>
+
+  <h2 class="post-card__title">{{ post().title }}</h2>
+  <p class="post-card__message">{{ post().message }}</p>
+
+  @if (post().imageUrl) {
+    <img
+      class="post-card__image"
+      [src]="post().imageUrl"
+      [alt]="'Imagen de la publicación: ' + post().title"
+      loading="lazy"
+    />
+  }
+
+  <time class="post-card__date" [attr.datetime]="post().createdAt">
+    {{ post().createdAt | date: 'dd/MM/yyyy · hh:mm a' }}
+  </time>
+
+  <footer class="post-card__footer">
+    <button
+      type="button"
+      class="post-card__action"
+      [class.post-card__action--liked]="post().likedByMe"
+      [attr.aria-pressed]="post().likedByMe"
+      (click)="likeToggled.emit(post())"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10.517 17.341c-.284.1-.75.1-1.034 0-2.416-.825-7.816-4.266-7.816-10.1 0-2.575 2.075-4.658 4.633-4.658 1.517 0 2.858.733 3.7 1.867a4.6 4.6 0 0 1 3.7-1.867c2.558 0 4.633 2.083 4.633 4.658 0 5.834-5.4 9.275-7.816 10.1"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke="#1f2232"
+        />
+      </svg>
+      <span>{{ post().likesCount ?? 0 }}</span>
+    </button>
+
+    <button type="button" class="post-card__action">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M14.083 15.842c-.258 0-.517-.076-.742-.226l-.8-.525a.63.63 0 0 1-.258-.691c.059-.192.084-.417.084-.667v-3.392c0-1.358-.85-2.208-2.209-2.208H4.5q-.148.002-.284.017a.67.67 0 0 1-.474-.167.6.6 0 0 1-.2-.458V5.216c0-2.45 1.716-4.166 4.166-4.166h7.083c2.45 0 4.167 1.716 4.167 4.166v4.25c0 1.209-.408 2.275-1.158 3.009-.6.608-1.434 1-2.384 1.117v.924c0 .5-.274.95-.708 1.184a1.5 1.5 0 0 1-.625.142m-.5-1.567.542.308c.05-.025.05-.067.05-.075V13a.63.63 0 0 1 .625-.625c.875 0 1.616-.275 2.125-.792.525-.517.791-1.25.791-2.125v-4.25c0-1.775-1.141-2.917-2.916-2.917H7.716C5.942 2.291 4.8 3.433 4.8 5.208v1.667h5.366c2.034 0 3.459 1.425 3.459 3.458v3.392a6 6 0 0 1-.042.55"
+          fill="#1f2232"
+        />
+        <path
+          d="M5.058 18.958c-.183 0-.375-.041-.55-.133a1.19 1.19 0 0 1-.633-1.058v-.634c-.733-.116-1.384-.425-1.867-.908-.633-.633-.966-1.5-.966-2.5v-3.392c0-1.883 1.233-3.266 3.066-3.441.134-.009.259-.017.392-.017h5.658c2.034 0 3.459 1.425 3.459 3.458v3.392c0 .367-.042.708-.134 1.017-.375 1.5-1.65 2.441-3.325 2.441H8.083L5.725 18.75c-.2.142-.433.208-.667.208M4.5 8.125q-.148.002-.284.017c-1.2.108-1.924.933-1.924 2.191v3.392c0 .667.208 1.225.6 1.617.383.383.941.591 1.608.591a.63.63 0 0 1 .625.625v1.092l2.417-1.608a.64.64 0 0 1 .35-.109h2.266c1.1 0 1.875-.55 2.117-1.516a2.6 2.6 0 0 0 .091-.692v-3.392c0-1.358-.85-2.208-2.208-2.208z"
+          fill="#1f2232"
+        />
+      </svg>
+
+      <span>{{ post().commentsCount ?? 0 }}</span>
+    </button>
+  </footer>
+</article>

@@ -1,0 +1,31 @@
+.post-card-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 16px;
+  background: #FFFFFF;
+  border-radius: 24px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__author {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__footer {
+    display: flex;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    // border-top: 1px solid #;
+  }
+}
+
+p-skeleton {
+  background-color: #FAFAFA;
+}
