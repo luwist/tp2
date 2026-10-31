@@ -1,0 +1,27 @@
+<div class="splash" [class]="'splash--' + variant()">
+  <div class="splash__blob splash__blob--pink" aria-hidden="true"></div>
+  <div class="splash__blob splash__blob--blue" aria-hidden="true"></div>
+
+  <div class="splash__content">
+    <p class="splash__logo" aria-hidden="true">
+      @for (letter of letters; track $index) {
+        <span class="splash__letter" [style.--index]="$index">{{ letter }}</span>
+      }
+    </p>
+
+    <!-- @switch (variant()) {
+      @case ('bar') {
+        <span class="splash__bar" aria-hidden="true"></span>
+      }
+      @case ('dots') {
+        <span class="splash__dots" aria-hidden="true">
+          <span class="splash__dot"></span>
+          <span class="splash__dot"></span>
+          <span class="splash__dot"></span>
+        </span>
+      }
+    } -->
+  </div>
+
+  <p class="splash__status" role="status">Cargando dessin</p>
+</div>

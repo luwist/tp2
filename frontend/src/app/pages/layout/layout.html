@@ -1,3 +1,7 @@
 <app-header />
 
+@if (auth.isChecking()) {
+  <app-splash-screen />
+}
+
 <router-outlet />

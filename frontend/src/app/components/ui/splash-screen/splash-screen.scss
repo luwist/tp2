@@ -1,0 +1,254 @@
+$wave-stagger: 90ms;
+$wave-duration: 1.4s;
+
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: block;
+}
+
+.splash {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0f121a;
+  color: #fff;
+  font-family: var(--font-heading, 'Sora', system-ui, sans-serif);
+
+  &__blob {
+    position: absolute;
+    will-change: transform;
+
+    &--pink {
+      top: -140px;
+      left: -120px;
+      width: 340px;
+      height: 380px;
+      background: #ff0066;
+      border-radius: 60% 40% 55% 45% / 55% 45% 55% 45%;
+      animation: splash-drift-pink 9s ease-in-out infinite;
+    }
+
+    &--blue {
+      right: -160px;
+      bottom: -160px;
+      width: 520px;
+      height: 440px;
+      background: #1439d8;
+      border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+      animation: splash-drift-blue 11s ease-in-out infinite;
+    }
+  }
+
+  // position: relative keeps the content painted above the absolutely positioned blobs
+  &__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__logo {
+    display: flex;
+    margin: 0;
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  &__letter {
+    display: inline-block;
+  }
+
+  // Indeterminate progress bar (variant: bar)
+  &__bar {
+    position: relative;
+    width: 120px;
+    height: 3px;
+    overflow: hidden;
+    background: rgb(255 255 255 / 12%);
+    border-radius: 999px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 40%;
+      background: linear-gradient(90deg, #ff0066, #1439d8);
+      border-radius: inherit;
+      animation: splash-bar-slide 1.2s ease-in-out infinite;
+    }
+  }
+
+  // Pulsing dots (variant: dots)
+  &__dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.3;
+    transform: scale(0.7);
+    animation: splash-dot 1.2s ease-in-out infinite both;
+
+    &:nth-child(2) {
+      animation-delay: 150ms;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 300ms;
+    }
+  }
+
+  // Visually hidden, announced by screen readers
+  &__status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  // Variant: bar -> letters do a vertical wave
+  &--bar &__letter {
+    animation: splash-wave $wave-duration ease-in-out infinite;
+    // Must come after the shorthand, which resets the delay
+    animation-delay: calc(var(--index) * #{$wave-stagger});
+  }
+
+  // Variant: breathe -> blobs scale in and out while they drift.
+  // The individual `scale` property composes with the `transform` of the drift.
+  &--breathe &__blob--pink {
+    animation:
+      splash-drift-pink 9s ease-in-out infinite,
+      splash-blob-breathe 2.4s ease-in-out infinite;
+  }
+
+  &--breathe &__blob--blue {
+    animation:
+      splash-drift-blue 11s ease-in-out infinite,
+      splash-blob-breathe 2.4s ease-in-out 400ms infinite;
+  }
+}
+
+@keyframes splash-wave {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
+
+// The segment is 40% of the track, so 250% of its own width = one full track
+@keyframes splash-bar-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+@keyframes splash-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.7);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes splash-blob-breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.14;
+  }
+}
+
+@keyframes splash-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes splash-drift-pink {
+  0%,
+  100% {
+    border-radius: 60% 40% 55% 45% / 55% 45% 55% 45%;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    border-radius: 45% 55% 40% 60% / 60% 40% 60% 40%;
+    transform: translate(28px, 22px) rotate(8deg);
+  }
+}
+
+@keyframes splash-drift-blue {
+  0%,
+  100% {
+    border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
+    transform: translate(-32px, -24px) rotate(-6deg);
+  }
+}
+
+// Reduced motion: nothing moves, but each variant keeps a soft opacity
+// pulse so the screen still reads as "working".
+@media (prefers-reduced-motion: reduce) {
+  // .splash__blob,
+  // .splash__letter {
+  //   animation: none;
+  // }
+
+  // .splash--bar .splash__letter {
+  //   animation: none;
+  // }
+
+  // .splash__bar::after {
+  //   width: 100%;
+  //   animation: splash-pulse 1.4s ease-in-out infinite;
+  // }
+
+  // .splash__dot {
+  //   transform: none;
+  //   animation-name: splash-pulse;
+  // }
+
+  // .splash--breathe .splash__blob--pink,
+  // .splash--breathe .splash__blob--blue {
+  //   animation: none;
+  // }
+
+  // .splash--breathe .splash__logo {
+  //   animation: splash-pulse 1.8s ease-in-out infinite;
+  // }
+}

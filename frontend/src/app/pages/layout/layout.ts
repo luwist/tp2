@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from '@app/components';
+import { SplashScreen } from '@app/components/ui';
+import { AuthService } from '@app/services';
 
 @Component({
-  imports: [RouterOutlet, Header],
+  imports: [RouterOutlet, Header, SplashScreen],
   selector: 'app-layout',
   styleUrl: './layout.scss',
   templateUrl: './layout.html',
 })
-export class Layout {}
+export class Layout {
+  protected readonly auth = inject(AuthService);
+}

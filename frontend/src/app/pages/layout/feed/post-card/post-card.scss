@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 0.75rem;
   padding: 16px;
-  background: #FFFFFF;
+  background: #161820;
   border-radius: 24px;
 
   &__header {
@@ -30,12 +30,12 @@
   &__name {
     font-size: 14px;
     font-weight: 600;
-    color: #000000;
+    color: #FFFFFF;
   }
 
   &__username {
     font-size: 14px;
-    color: #8697AC;
+    color: #C9C9D6;
   }
 
   &__menu {
@@ -76,13 +76,13 @@
 
   &__date {
     font-size: 12px;
-    color: #8697AC;
+    color: #C9C9D6;
   }
 
   &__footer {
     display: flex;
     padding-top: 16px;
-    border-top: 1px solid #E7ECF0;
+    border-top: 1px solid #212530;
   }
 
   &__action {

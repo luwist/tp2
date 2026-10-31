@@ -1,0 +1,75 @@
+:host {
+  display: block;
+  width: 80px;
+  height: 80px;
+}
+
+.uploader {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px dashed #2B3041;
+
+  .uploader__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+.uploader__trigger {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  &.uploader__trigger--empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background-color: transparent;
+    border: 0;
+    font-family: inherit;
+  }
+
+  &.uploader__trigger--edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    background-color: #171A23;
+    border: 0;
+    width: 24px;
+    height: 24px;
+    box-shadow: 0 0 0 4px #161820;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #242424;
+    }
+  }
+}
+
+.uploader__preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.uploader__text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFFFFF;
+}

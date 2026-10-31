@@ -5,212 +5,163 @@
   headline="Tu próximo feedback está a un clic."
   description="Creá tu cuenta, publicá tu primer trabajo y conversá con otras personas que diseñan."
   heading="Creá tu cuenta"
-  subtitle="Es gratis y lleva un minuto. Los campos con asterisco son obligatorios."
-  switchText="¿Ya tenés cuenta?"
-  switchLinkText="Ingresá"
+  switchText="¿Ya tenes una cuenta?"
+  switchLinkText="Iniciar sesión"
   switchLinkPath="/login"
 >
-  <form class="fields" [formGroup]="form">
-    <div class="avatar-picker">
-      <div class="avatar-picker__preview">
-        @if (avatarPreviewUrl(); as previewUrl) {
-          <img
-            class="avatar-picker__image"
-            [src]="previewUrl"
-            alt="Vista previa de tu foto de perfil"
-          />
-        } @else {
-          <svg
-            class="avatar-picker__placeholder"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="9" r="3.6" />
-            <path d="M5 20c1-4 4-6 7-6s6 2 7 6" />
-          </svg>
-        }
+  <form class="form" [formGroup]="form">
+    <div class="fields">
+      <div class="field">
+        <app-avatar-uploader (fileSelected)="onfileSelected($event)" />
       </div>
 
-      <div class="avatar-picker__actions">
-        <input
-          #avatarInput
-          class="avatar-picker__input"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          tabindex="-1"
-          aria-hidden="true"
-          (change)="onAvatarSelected($event)"
-        />
-        <div class="avatar-picker__buttons">
-          <button
-            type="button"
-            pButton
-            size="small"
-            severity="secondary"
-            (click)="avatarInput.click()"
-          >
-            {{ avatarPreviewUrl() ? 'Cambiar foto' : 'Subir foto de perfil' }}
-          </button>
+      <div class="fields__row">
+        <div class="field">
+          <label class="field__label">Nombre</label>
+
+          <input type="text" pInputText placeholder="Nombre" formControlName="firstName" />
+
+          @if (
+            getFormControl('firstName')?.invalid &&
+            (getFormControl('firstName')?.touched || getFormControl('firstName')?.dirty)
+          ) {
+            @if (getFormControl('firstName')?.hasError('required')) {
+              <p class="field__error">El campo es obligatorio.</p>
+            }
+          }
         </div>
-        @if (avatarError(); as message) {
-          <p class="avatar-picker__error" role="alert">{{ message }}</p>
-        } @else {
-          <p class="avatar-picker__hint">JPG, PNG o WebP de hasta 2 MB.</p>
-        }
+
+        <div class="field">
+          <label class="field__label">Apellido</label>
+
+          <input type="text" pInputText placeholder="Apellido" formControlName="lastName" />
+
+          @if (
+            getFormControl('lastName')?.invalid &&
+            (getFormControl('lastName')?.touched || getFormControl('lastName')?.dirty)
+          ) {
+            @if (getFormControl('lastName')?.hasError('required')) {
+              <p class="field__error">El campo es obligatorio.</p>
+            }
+          }
+        </div>
       </div>
-    </div>
 
-    <div class="fields__row">
       <div class="field">
-        <label class="field__label">Nombre</label>
+        <label class="field__label">Bio</label>
 
-        <input type="text" pInputText placeholder="Nombre" formControlName="firstName" />
+        <textarea pTextarea formControlName="bio"></textarea>
 
         @if (
-          getFormControl('firstName')?.invalid &&
-          (getFormControl('firstName')?.touched || getFormControl('firstName')?.dirty)
+          getFormControl('bio')?.invalid &&
+          (getFormControl('bio')?.touched || getFormControl('bio')?.dirty)
         ) {
-          @if (getFormControl('firstName')?.hasError('required')) {
+          @if (getFormControl('bio')?.hasError('required')) {
             <p class="field__error">El campo es obligatorio.</p>
           }
         }
       </div>
 
       <div class="field">
-        <label class="field__label">Apellido</label>
+        <label class="field__label">Nombre de usuario</label>
 
-        <input type="text" pInputText placeholder="Apellido" formControlName="lastName" />
-
-        @if (
-          getFormControl('lastName')?.invalid &&
-          (getFormControl('lastName')?.touched || getFormControl('lastName')?.dirty)
-        ) {
-          @if (getFormControl('lastName')?.hasError('required')) {
-            <p class="field__error">El campo es obligatorio.</p>
-          }
-        }
-      </div>
-    </div>
-
-    <div class="field">
-      <label class="field__label">Alguna bio para el perfil</label>
-
-      <input type="text" pInputText placeholder="Bio" formControlName="bio" />
-
-      @if (
-        getFormControl('bio')?.invalid &&
-        (getFormControl('bio')?.touched || getFormControl('bio')?.dirty)
-      ) {
-        @if (getFormControl('bio')?.hasError('required')) {
-          <p class="field__error">El campo es obligatorio.</p>
-        }
-      }
-    </div>
-
-    <div class="field">
-      <label class="field__label">Nombre de usuario</label>
-
-      <input type="text" pInputText placeholder="Nombre de usuario" formControlName="username" />
-
-      @if (
-        getFormControl('username')?.invalid &&
-        (getFormControl('username')?.touched || getFormControl('lusernameastName')?.dirty)
-      ) {
-        @if (getFormControl('username')?.hasError('required')) {
-          <p class="field__error">El campo es obligatorio.</p>
-        }
-      }
-    </div>
-
-    <div class="fields__row">
-      <div class="field">
-        <label class="field__label">Correo electrónico</label>
-
-        <input type="text" pInputText placeholder="Correo electrónico" formControlName="email" />
+        <input type="text" pInputText placeholder="Nombre de usuario" formControlName="username" />
 
         @if (
-          getFormControl('email')?.invalid &&
-          (getFormControl('email')?.touched || getFormControl('email')?.dirty)
+          getFormControl('username')?.invalid &&
+          (getFormControl('username')?.touched || getFormControl('lusernameastName')?.dirty)
         ) {
-          @if (getFormControl('email')?.hasError('required')) {
-            <p class="field__error">El campo es obligatorio.</p>
-          }
-
-          @if (getFormControl('email')?.hasError('email')) {
-            <p class="field__error">Ingresá un correo electrónico válido.</p>
-          }
-        }
-      </div>
-
-      <div class="field">
-        <label class="field__label">Fecha de nacimiento</label>
-
-        <input
-          pInputText
-          formControlName="birthDate"
-          pInputMask="99/99/9999"
-          placeholder="mm/dd/yyyy"
-        />
-
-        @if (
-          getFormControl('birthDate')?.invalid &&
-          (getFormControl('birthDate')?.touched || getFormControl('birthDate')?.dirty)
-        ) {
-          @if (getFormControl('birthDate')?.hasError('required')) {
-            <p class="field__error">El campo es obligatorio.</p>
-          }
-
-          @if (getFormControl('birthDate')?.hasError('invalidDate')) {
-            <p class="field__error">Ingresá una fecha válida.</p>
-          }
-
-          @if (getFormControl('birthDate')?.hasError('futureDate')) {
-            <p class="field__error">La fecha no puede ser futura.</p>
-          }
-        }
-      </div>
-    </div>
-
-    <div class="fields__row">
-      <div class="field">
-        <label class="field__label">Contraseña</label>
-
-        <input type="password" pInputText placeholder="Contraseña" formControlName="password" />
-
-        @if (
-          getFormControl('password')?.invalid &&
-          (getFormControl('password')?.touched || getFormControl('password')?.dirty)
-        ) {
-          @if (getFormControl('password')?.hasError('required')) {
+          @if (getFormControl('username')?.hasError('required')) {
             <p class="field__error">El campo es obligatorio.</p>
           }
         }
       </div>
 
-      <div class="field">
-        <label class="field__label">Repetir contraseña</label>
+      <div class="fields__row">
+        <div class="field">
+          <label class="field__label">Correo electrónico</label>
 
-        <input
-          type="password"
-          pInputText
-          placeholder="Contraseña"
-          formControlName="confirmPassword"
-        />
+          <input type="text" pInputText placeholder="Correo electrónico" formControlName="email" />
 
-        @if (
-          getFormControl('confirmPassword')?.hasError('required') &&
-          (getFormControl('confirmPassword')?.touched || getFormControl('confirmPassword')?.dirty)
-        ) {
-          <p class="field__error">Confirmá tu contraseña.</p>
-        }
-        @if (passwordMismatch) {
-          <p class="field__error">Las contraseñas no coinciden.</p>
-        }
+          @if (
+            getFormControl('email')?.invalid &&
+            (getFormControl('email')?.touched || getFormControl('email')?.dirty)
+          ) {
+            @if (getFormControl('email')?.hasError('required')) {
+              <p class="field__error">El campo es obligatorio.</p>
+            }
+
+            @if (getFormControl('email')?.hasError('email')) {
+              <p class="field__error">Ingresá un correo electrónico válido.</p>
+            }
+          }
+        </div>
+
+        <div class="field">
+          <label class="field__label">Fecha de nacimiento</label>
+
+          <input
+            pInputText
+            formControlName="birthDate"
+            pInputMask="99/99/9999"
+            placeholder="mm/dd/yyyy"
+          />
+
+          @if (
+            getFormControl('birthDate')?.invalid &&
+            (getFormControl('birthDate')?.touched || getFormControl('birthDate')?.dirty)
+          ) {
+            @if (getFormControl('birthDate')?.hasError('required')) {
+              <p class="field__error">El campo es obligatorio.</p>
+            }
+
+            @if (getFormControl('birthDate')?.hasError('invalidDate')) {
+              <p class="field__error">Ingresá una fecha válida.</p>
+            }
+
+            @if (getFormControl('birthDate')?.hasError('futureDate')) {
+              <p class="field__error">La fecha no puede ser futura.</p>
+            }
+          }
+        </div>
+      </div>
+
+      <div class="fields__row">
+        <div class="field">
+          <label class="field__label">Contraseña</label>
+
+          <input type="password" pInputText placeholder="Contraseña" formControlName="password" />
+
+          @if (
+            getFormControl('password')?.invalid &&
+            (getFormControl('password')?.touched || getFormControl('password')?.dirty)
+          ) {
+            @if (getFormControl('password')?.hasError('required')) {
+              <p class="field__error">El campo es obligatorio.</p>
+            }
+          }
+        </div>
+
+        <div class="field">
+          <label class="field__label">Repetir contraseña</label>
+
+          <input
+            type="password"
+            pInputText
+            placeholder="Contraseña"
+            formControlName="confirmPassword"
+          />
+
+          @if (
+            getFormControl('confirmPassword')?.hasError('required') &&
+            (getFormControl('confirmPassword')?.touched || getFormControl('confirmPassword')?.dirty)
+          ) {
+            <p class="field__error">Confirmá tu contraseña.</p>
+          }
+          @if (passwordMismatch) {
+            <p class="field__error">Las contraseñas no coinciden.</p>
+          }
+        </div>
       </div>
     </div>
 
@@ -218,7 +169,7 @@
       type="button"
       pButton
       [disabled]="form.invalid || isLoading()"
-      class="button--block"
+      class="button--form"
       (click)="onRegister()"
     >
       @if (isLoading()) {

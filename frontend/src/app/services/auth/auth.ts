@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Service, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+
+type SessionStatus = 'checking' | 'authenticated' | 'unauthenticated';
 
 @Service()
 export class AuthService {
@@ -12,10 +14,15 @@ export class AuthService {
   private readonly _user = signal<any | null>(this.readStoredUser());
   readonly _token = signal<string | null>(localStorage.getItem('token'));
 
+  private readonly _status = signal<SessionStatus>(
+    localStorage.getItem('token') ? 'checking' : 'unauthenticated',
+  );
+
   readonly user = this._user.asReadonly();
   readonly token = this._token.asReadonly();
 
-  readonly isAuthenticated = computed(() => !!this._token());
+  readonly isChecking = computed(() => this._status() === 'checking');
+  readonly isAuthenticated = computed(() => this._status() === 'authenticated');
 
   login(credentials: any) {
     return this.http
@@ -41,13 +48,44 @@ export class AuthService {
       .pipe(tap((response) => this.setSession(response)));
   }
 
+  validateSession(): Observable<boolean> {
+    if (this._status() === 'authenticated') {
+      return of(true);
+    }
+
+    if (!this._token()) {
+      this._status.set('unauthenticated');
+      return of(false);
+    }
+
+    this._status.set('checking');
+
+    return this.http.get<any>(`${environment.apiUrl}/auth/me`).pipe(
+      tap((user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this._user.set(user);
+        this._status.set('authenticated');
+      }),
+      map(() => true),
+      catchError(() => {
+        this.clearSession();
+        return of(false);
+      }),
+    );
+  }
+
   logout() {
+    this.clearSession();
+    this.router.navigate(['/login']);
+  }
+
+  clearSession() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
 
     this._token.set(null);
     this._user.set(null);
-    this.router.navigate(['/']);
+    this._status.set('unauthenticated');
   }
 
   private setSession({ user, token }: any) {
@@ -56,6 +94,7 @@ export class AuthService {
 
     this._token.set(token);
     this._user.set(user);
+    this._status.set('authenticated');
   }
 
   private readStoredUser(): any | null {

@@ -3,54 +3,60 @@
 <app-auth
   headline="Mostrá tu proceso, no solo el resultado."
   description="Una comunidad para compartir ideas de diseño, pedir feedback y aprender de otras miradas."
-  heading="Ingresá a tu cuenta"
-  subtitle="Volvé a tu feed y seguí la conversación."
-  switchText="¿Todavía no tenés cuenta?"
-  switchLinkText="Creá una"
+  heading="Inicio de sesión"
+  switchText="¿Eres un nuevo usuario?"
+  switchLinkText="Crear una cuenta"
   switchLinkPath="/register"
 >
-  <form class="fields" [formGroup]="form">
-    <div class="field">
-      <label class="field__label">Correo electrónico</label>
+  <form class="form" [formGroup]="form" (ngSubmit)="onLogin()">
+    <div class="fields">
+      <div class="field">
+        <label class="field__label" for="login-email">Correo electrónico</label>
+        <input
+          id="login-email"
+          class="field__input"
+          type="email"
+          pInputText
+          autocomplete="email"
+          formControlName="email"
+        />
 
-      <input type="email" pInputText placeholder="Correo electrónico" formControlName="email" />
-
-      @if (
-        getFormControl('email')?.invalid &&
-        (getFormControl('email')?.touched || getFormControl('email')?.dirty)
-      ) {
-        @if (getFormControl('email')?.hasError('required')) {
-          <p class="field__error">El campo es obligatorio.</p>
+        @if (
+          getFormControl('email')?.invalid &&
+          (getFormControl('email')?.touched || getFormControl('email')?.dirty)
+        ) {
+          @if (getFormControl('email')?.hasError('required')) {
+            <p class="field__error">El campo es obligatorio.</p>
+          }
+          @if (getFormControl('email')?.hasError('email')) {
+            <p class="field__error">Ingresá un correo electrónico válido.</p>
+          }
         }
+      </div>
 
-        @if (getFormControl('email')?.hasError('email')) {
-          <p class="field__error">Ingresá un correo electrónico válido.</p>
+      <div class="field">
+        <label class="field__label" for="login-password">Contraseña</label>
+        <input
+          id="login-password"
+          class="field__input"
+          type="password"
+          pInputText
+          autocomplete="current-password"
+          formControlName="password"
+        />
+
+        @if (
+          getFormControl('password')?.invalid &&
+          (getFormControl('password')?.touched || getFormControl('password')?.dirty)
+        ) {
+          @if (getFormControl('password')?.hasError('required')) {
+            <p class="field__error">El campo es obligatorio.</p>
+          }
         }
-      }
+      </div>
     </div>
 
-    <div class="field">
-      <label class="field__label">Contraseña</label>
-
-      <input type="password" pInputText placeholder="Contraseña" formControlName="password" />
-
-      @if (
-        getFormControl('password')?.invalid &&
-        (getFormControl('password')?.touched || getFormControl('password')?.dirty)
-      ) {
-        @if (getFormControl('email')?.hasError('required')) {
-          <p class="field__error">El campo es obligatorio.</p>
-        }
-      }
-    </div>
-
-    <button
-      type="button"
-      pButton
-      [disabled]="form.invalid || isLoading()"
-      class="button--block"
-      (click)="onLogin()"
-    >
+    <button type="submit" class="button--form" pButton [disabled]="form.invalid || isLoading()">
       @if (isLoading()) {
         <div class="spinner">
           <svg

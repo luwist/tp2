@@ -1,4 +1,8 @@
 <div class="auth-layout">
+  <app-auth-illustration />
+
+  <a class="auth-layout__logo" routerLink="/">dessin</a>
+
   <app-brand-panel
     class="auth-layout__brand"
     [headline]="headline()"
@@ -6,20 +10,19 @@
   />
 
   <main class="auth-layout__content">
-    <a class="auth-layout__logo" routerLink="/">
-      <img src="logo.svg" alt="Logo de la red social" />
-    </a>
-
     <section class="auth-card" [class.auth-card--wide]="size() === 'wide'">
+      @if (step()) {
+        <p class="auth-card__step">{{ step() }}</p>
+      }
+
       <h1 class="auth-card__title">{{ heading() }}</h1>
-      <p class="auth-card__subtitle">{{ subtitle() }}</p>
+
+      <p class="auth-card__switch">
+        {{ switchText() }}
+        <a class="auth-card__link" [routerLink]="switchLinkPath()">{{ switchLinkText() }}</a>
+      </p>
 
       <ng-content />
     </section>
-
-    <p class="auth-layout__switch">
-      {{ switchText() }}
-      <a class="auth-layout__switch-link" [routerLink]="switchLinkPath()">{{ switchLinkText() }}</a>
-    </p>
   </main>
 </div>

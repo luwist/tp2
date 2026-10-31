@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '@app/services';
 import { InputTextModule } from '@openng/optimus-ui/inputtext';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -10,18 +10,18 @@ import { Auth } from '@app/components/auth/auth';
 import { InputMaskModule } from '@openng/optimus-ui/inputmask';
 import { dateValidator } from '@app/validators/date.validator';
 import { passwordMatchValidator } from '@app/validators/password-match.validator';
-
-const MAX_AVATAR_SIZE_BYTES = 2 * 1024 * 1024;
-const ALLOWED_AVATAR_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+import { AvatarUploader } from '@app/components/ui';
+import { TextareaModule } from '@openng/optimus-ui/textarea';
 
 @Component({
   imports: [
     ReactiveFormsModule,
-    RouterLink,
     InputTextModule,
     InputMaskModule,
     ButtonModule,
+    TextareaModule,
     ToastModule,
+    AvatarUploader,
     Auth,
   ],
   selector: 'app-register',
@@ -51,6 +51,7 @@ export class Register {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
       confirmPassword: new FormControl('', Validators.required),
+      avatar: new FormControl(null, Validators.required),
     },
     { validators: passwordMatchValidator },
   );
@@ -65,44 +66,10 @@ export class Register {
     return this.form.get(controlName);
   }
 
-  protected onAvatarSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-
-    if (!file) {
-      return;
-    }
-
-    if (!ALLOWED_AVATAR_TYPES.includes(file.type)) {
-      this.avatarError.set('Elegí una imagen JPG, PNG o WebP.');
-      input.value = '';
-      return;
-    }
-
-    if (file.size > MAX_AVATAR_SIZE_BYTES) {
-      this.avatarError.set('La imagen no puede pesar más de 2 MB.');
-      input.value = '';
-      return;
-    }
-
-    this.revokeAvatarPreview();
-    this.avatarFile = file;
-    this.avatarError.set(null);
-    this.avatarPreviewUrl.set(URL.createObjectURL(file));
-  }
-
-  protected removeAvatar(input: HTMLInputElement): void {
-    this.revokeAvatarPreview();
-    this.avatarFile = null;
-    this.avatarPreviewUrl.set(null);
-    input.value = '';
-  }
-
-  private revokeAvatarPreview(): void {
-    const previewUrl = this.avatarPreviewUrl();
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
-    }
+  onfileSelected(file: any) {
+    this.form.patchValue({
+      avatar: file,
+    });
   }
 
   onRegister() {

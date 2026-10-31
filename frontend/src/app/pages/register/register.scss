@@ -1,92 +1,12 @@
-.avatar-picker {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-
-  &__preview {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
-    width: 72px;
-    height: 72px;
-    overflow: hidden;
-    border: 1.5px dashed #5a5a68;
-    border-radius: 50%;
-    color: var(--color-text-subtle);
-  }
-
-  &__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  &__placeholder {
-    width: 28px;
-    height: 28px;
-  }
-
-  &__actions {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 0;
-  }
-
-  &__input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  &__buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  &__button {
-    height: 44px;
-    padding: 0 18px;
-    border: 1px solid var(--color-border-strong);
-    border-radius: 8px;
-    background: var(--color-surface-raised);
-    color: var(--color-text);
-    font: inherit;
-    font-size: 0.875rem;
-    font-weight: 600;
-    cursor: pointer;
-
-    &:focus-visible {
-      outline: 2px solid #fff;
-      outline-offset: 2px;
-    }
-
-    &--danger {
-      background: transparent;
-      color: var(--color-danger);
-    }
-  }
-
-  &__hint,
-  &__error {
-    margin: 0;
-    font-size: 0.8rem;
-    line-height: 1.4;
-  }
-
-  &__hint {
-    color: var(--color-text-subtle);
-  }
-
-  &__error {
-    color: #ffb3ad;
-  }
+.form,
+.button--form {
+  margin-top: 40px;
 }
 
-.button--block {
+.button--form {
   width: 100%;
+}
+
+app-avatar-uploader {
+  margin: 0 auto;
 }

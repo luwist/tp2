@@ -1,7 +1,7 @@
 export const InputTextPreset = {
   root: {
-    background: '#17171B',
-    borderColor: '#4A4A56',
+    background: 'transparent',
+    borderColor: '#232734',
     hoverBorderColor: '#7C5CFF',
     borderRadius: '12px',
     color: '#FFFFFF',
@@ -9,7 +9,7 @@ export const InputTextPreset = {
     focusBorderColor: '#7C5CFF',
     paddingX: '16px',
     paddingY: '18px',
-    invalidBorderColor: '#FE1D3B',
+    invalidBorderColor: '#EB4A4D',
   },
   css: () => `
     .p-inputtext {
