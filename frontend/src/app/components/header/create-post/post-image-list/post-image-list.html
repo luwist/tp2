@@ -1,0 +1,27 @@
+@if (images().length) {
+  <ul class="post-image-list">
+    @for (image of images(); track image.id) {
+      <li class="post-image-list__item">
+        <img class="post-image-list__img" [src]="image.previewUrl" alt="" />
+
+        <button type="button" class="post-image-list__remove" (click)="removed.emit(image.id)">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.5 4.984a85 85 0 0 0-8.35-.417q-2.475 0-4.95.25l-1.7.167m4.583-.842.183-1.092c.134-.792.234-1.383 1.642-1.383h2.183c1.409 0 1.517.625 1.642 1.391l.183 1.084m2.793 3.475-.542 8.392c-.092 1.308-.167 2.325-2.492 2.325h-5.35c-2.325 0-2.4-1.017-2.491-2.325l-.542-8.392m4.316 6.133h2.775m-3.466-3.333h4.167"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="#fff"
+            />
+          </svg>
+        </button>
+      </li>
+    }
+  </ul>
+}

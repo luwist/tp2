@@ -1,0 +1,49 @@
+.post-image-list {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+
+  &__item {
+    position: relative;
+    flex: 0 0 auto;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+
+    &:hover .post-image-list__remove {
+      display: flex;
+    }
+  }
+
+  &__img {
+    display: block;
+    height: 144px;
+    width: 144px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  &__remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 0;
+    border: 0;
+    outline: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 9);
+    }
+  }
+}

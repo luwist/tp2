@@ -9,7 +9,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideOptimus({
-      theme: { preset: CustomPresent },
+      theme: { preset: CustomPresent, options: { darkModeSelector: true } },
       ripple: true,
     }),
   ],

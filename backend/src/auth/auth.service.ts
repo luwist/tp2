@@ -2,26 +2,30 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto.js';
 import { PasswordHasher } from '@nestjs/authentication';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto.js';
-import { UsersRepository } from '../users/user.repository.js';
 import { Role } from '../common/enums/role.enum.js';
 import { StorageService } from '../common/storage/storage.service.js';
+import { UserRepository } from '../users/user.repository.js';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userRepository: UsersRepository,
+    private readonly userRepository: UserRepository,
     private readonly passwordHasher: PasswordHasher,
     private readonly jwtService: JwtService,
     private readonly storageService: StorageService,
   ) {}
 
-  async register(registerDto: RegisterDto, file: any) {
+  async register(registerDto: RegisterDto, file: Express.Multer.File) {
+    console.log(registerDto);
+    console.log(file);
+
     if (registerDto.password !== registerDto.confirmPassword) {
       throw new BadRequestException('Passwords do not match');
     }
@@ -30,11 +34,6 @@ export class AuthService {
       registerDto.email,
       registerDto.username,
     );
-
-    console.log('QQQQQQQQQQQQQQQQQQQQQQQQQ');
-    console.log(registerDto);
-    console.log(existingUser);
-    console.log('QQQQQQQQQQQQQQQQQQQQQQQQQ');
 
     if (existingUser) {
       throw new ConflictException(
@@ -93,6 +92,16 @@ export class AuthService {
       },
       token: token,
     };
+  }
+
+  async validateSession(username: string) {
+    const user = await this.userRepository.findByUsername(username);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return { valid: true, user: user };
   }
 
   generateToken(user: any) {

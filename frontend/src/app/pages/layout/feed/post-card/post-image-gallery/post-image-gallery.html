@@ -1,0 +1,75 @@
+@if (images().length > 0) {
+  <div [class]="layoutClass()">
+    @for (image of visibleImages(); track $index) {
+      <button
+        type="button"
+        class="post-gallery__item"
+        [class.post-gallery__item--featured]="$first && visibleImages().length === 3"
+        [attr.aria-label]="'Ver imagen ' + ($index + 1) + ' de ' + images().length"
+        (click)="openPreview($index)"
+      >
+        <img class="post-gallery__image" [src]="image" [alt]="alt()" loading="lazy" />
+
+        @if (isLastVisibleWithOverflow($index)) {
+          <span class="post-gallery__overlay">+{{ hiddenCount() }}</span>
+        }
+      </button>
+    }
+  </div>
+
+  <!-- <p-galleria
+    [value]="images()"
+    [(visible)]="isPreviewOpen"
+    [(activeIndex)]="activeIndex"
+    [fullScreen]="true"
+    [circular]="true"
+    [showThumbnails]="false"
+    [showItemNavigators]="images().length > 1"
+    [showIndicators]="images().length > 1"
+    [containerStyle]="{ 'max-width': '100vw' }"
+  >
+    <ng-template #item let-image>
+      <img class="post-gallery__preview-image" [src]="image" [alt]="alt()" />
+    </ng-template>
+  </p-galleria> -->
+
+  <p-galleria
+    [value]="images()"
+    [(visible)]="isPreviewOpen"
+    [(activeIndex)]="activeIndex"
+    [fullScreen]="true"
+    [circular]="true"
+    [showThumbnails]="false"
+    [showItemNavigators]="images().length > 1"
+    [showIndicators]="images().length > 1"
+  >
+    <ng-template #item let-image>
+      <div class="post-gallery__preview-frame">
+        <img class="post-gallery__preview-backdrop" [src]="image" alt="" aria-hidden="true" />
+        <img class="post-gallery__preview-image" [src]="image" [alt]="alt()" />
+      </div>
+    </ng-template>
+  </p-galleria>
+
+  <!-- <p-galleria
+    [value]="images()"
+    [(visible)]="isPreviewOpen"
+    [(activeIndex)]="activeIndex"
+    [fullScreen]="true"
+    [circular]="false"
+    [showItemNavigators]="true"
+    [showIndicators]="false"
+    [showThumbnails]="false"
+    [containerStyle]="{ width: '100vw', height: '100vh' }"
+  >
+    <ng-template #item let-item>
+      <img class="image-viewer__img" [src]="item.src" alt="Imagen de la publicación" />
+    </ng-template>
+
+    <ng-template #caption>
+      <p class="image-viewer__counter" aria-live="polite">
+        {{ activeIndex() + 1 }} / {{ images().length }}
+      </p>
+    </ng-template>
+  </p-galleria> -->
+}

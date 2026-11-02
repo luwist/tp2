@@ -28,7 +28,7 @@ export class User {
   bio: string;
 
   @Prop()
-  avatarUrl?: string;
+  avatarUrl: string;
 
   @Prop({ type: String, enum: Role, default: Role.User })
   role: Role;

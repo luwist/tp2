@@ -1,0 +1,36 @@
+@if (user(); as currentUser) {
+  <button
+    type="button"
+    class="user-menu__trigger"
+    aria-label="Abrir menú de usuario"
+    aria-haspopup="true"
+    (click)="popover.toggle($event)"
+  >
+    <img class="user-menu__avatar" [src]="currentUser.avatarUrl" alt="" />
+  </button>
+
+  <p-popover #popover>
+    <div class="user-menu__panel">
+      <div class="user-menu__profile">
+        <img
+          class="user-menu__avatar user-menu__avatar--large"
+          [src]="currentUser.avatarUrl"
+          alt=""
+        />
+        <div class="user-menu__identity">
+          <span class="user-menu__name">
+            {{ currentUser.firstName }} {{ currentUser.lastName }}
+          </span>
+          <span class="user-menu__username">&#64;{{ currentUser.username }}</span>
+        </div>
+      </div>
+
+      <hr class="user-menu__divider" />
+
+      <button type="button" class="user-menu__logout" (click)="logout(popover)">
+        <i class="pi pi-sign-out" aria-hidden="true"></i>
+        Cerrar sesión
+      </button>
+    </div>
+  </p-popover>
+}

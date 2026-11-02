@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema, Types } from 'mongoose';
-import { User } from '../../users/entities/user.entity.js';
 
 @Schema()
 export class Post {
@@ -15,13 +14,16 @@ export class Post {
   title: string;
 
   @Prop({ required: true, trim: true, maxlength: 1000 })
-  message: string;
+  body: string;
 
-  @Prop({ type: String, default: null })
-  imageUrl: string | null;
+  @Prop({ type: [String], default: [] })
+  images: string[];
 
   @Prop({ default: true, index: true })
   isActive: boolean;
+
+  @Prop({ default: Date.now })
+  createdAt: Date;
 }
 
 export type PostDocument = HydratedDocument<Post>;

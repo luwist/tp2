@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from './entities/user.entity.js';
 
 @Injectable()
-export class UsersRepository {
+export class UserRepository {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
@@ -19,6 +19,10 @@ export class UsersRepository {
 
   async findByEmail(email: string): Promise<UserDocument | null> {
     return await this.userModel.findOne({ email: email }).exec();
+  }
+
+  async findByUsername(username: string): Promise<UserDocument | null> {
+    return await this.userModel.findOne({ username: username }).exec();
   }
 
   async findByEmailOrUsername(

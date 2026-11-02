@@ -8,8 +8,29 @@ export class PostService {
   private readonly http = inject(HttpClient);
   private readonly auth = inject(AuthService);
 
-  getPosts() {
+  getFeed() {
+    console.log(this.auth._token());
+
     return this.http.get<any>(`${environment.apiUrl}/posts`, {
+      headers: { Authorization: `Bearer ${this.auth._token()}` },
+    });
+  }
+
+  create(data: any, images: File[] = []) {
+    const formData = new FormData();
+
+    formData.append('title', data.title);
+    formData.append('body', data.body);
+
+    images.forEach((image) => formData.append('images', image));
+
+    console.log(data);
+    console.log(images);
+    console.log(formData);
+
+    console.log(this.auth._token());
+
+    return this.http.post<any>(`${environment.apiUrl}/posts`, formData, {
       headers: { Authorization: `Bearer ${this.auth._token()}` },
     });
   }

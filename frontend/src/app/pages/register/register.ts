@@ -34,8 +34,6 @@ export class Register {
   private _authService = inject(AuthService);
   private _messageService = inject(MessageService);
 
-  private avatarFile: File | null = null;
-
   protected readonly avatarPreviewUrl = signal<string | null>(null);
   protected readonly avatarError = signal<string | null>(null);
 
@@ -83,7 +81,9 @@ export class Register {
 
     this.form.markAsPending();
 
-    this._authService.register(data, this.avatarFile).subscribe({
+    this.isLoading.set(true);
+
+    this._authService.register(data).subscribe({
       next: (data) => {
         console.log(data);
         console.log('paso jeje');

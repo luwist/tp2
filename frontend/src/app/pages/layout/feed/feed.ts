@@ -17,8 +17,9 @@ export class Feed {
   protected readonly posts = signal<any[]>([]);
 
   ngOnInit() {
-    this._postService.getPosts().subscribe((data) => {
+    this._postService.getFeed().subscribe((data) => {
       this.posts.set(data);
+
       this.isLoading.set(false);
     });
   }

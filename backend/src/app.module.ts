@@ -4,7 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthenticationModule } from '@nestjs/authentication';
 import { AuthModule } from './auth/auth.module.js';
 import { PostsModule } from './posts/post.module.js';
-import { StorageService } from './common/storage/storage.service.js';
 
 @Module({
   imports: [
@@ -21,6 +20,6 @@ import { StorageService } from './common/storage/storage.service.js';
     PostsModule,
   ],
   controllers: [],
-  providers: [StorageService],
+  providers: [],
 })
 export class AppModule {}

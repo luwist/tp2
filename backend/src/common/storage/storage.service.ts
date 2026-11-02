@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { v2 as cloudinary } from 'cloudinary';
-import { parse } from 'node:path';
+import { randomUUID } from 'node:crypto';
 
 @Injectable()
 export class StorageService {
+  private readonly folder = 'images';
+
   constructor(private readonly config: ConfigService) {
     cloudinary.config({
       cloud_name: this.config.get<string>('CLOUDINARY_CLOUD_NAME'),
@@ -17,15 +19,15 @@ export class StorageService {
     return new Promise<string>((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
         {
-          folder: 'images',
-          public_id: parse(file.originalname).name,
+          folder: this.folder,
+          public_id: randomUUID(),
           resource_type: 'image',
         },
         (error, result) => {
           if (error) {
-            reject(new Error('No se pudo subir la foto a Cloudinary'));
+            reject(new Error('Failed to upload the image to Cloudinary'));
           } else if (!result?.secure_url) {
-            reject(new Error('Cloudinary no devolvió la URL de la foto'));
+            reject(new Error('Cloudinary did not return the image URL'));
           } else {
             resolve(result.secure_url);
           }
@@ -33,7 +35,7 @@ export class StorageService {
       );
 
       stream.on('error', () => {
-        reject(new Error('No se pudo enviar la foto a Cloudinary'));
+        reject(new Error('Failed to send the image to Cloudinary'));
       });
 
       stream.end(file.buffer);

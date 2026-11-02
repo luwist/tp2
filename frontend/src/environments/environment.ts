@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://vercel.com',
+  apiUrl: 'https://dessin-api.vercel.app',
 };

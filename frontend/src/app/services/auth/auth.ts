@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Service, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, delay, map, Observable, of, tap } from 'rxjs';
+import avatar from '@openng/optimus-ui-themes/nora/avatar';
 
 type SessionStatus = 'checking' | 'authenticated' | 'unauthenticated';
 
@@ -30,21 +31,24 @@ export class AuthService {
       .pipe(tap((response) => this.setSession(response)));
   }
 
-  register(datita: any, file: any) {
-    const datas = new FormData();
+  register(data: any) {
+    const formData = new FormData();
 
-    datas.append('avatar', file);
-    datas.append('firstName', datita.firstName);
-    datas.append('lastName', datita.lastName);
-    datas.append('username', datita.username);
-    datas.append('email', datita.email);
-    datas.append('password', datita.password);
-    datas.append('confirmPassword', datita.confirmPassword);
-    datas.append('birthDate', datita.birthDate);
-    datas.append('bio', datita.bio);
+    console.log(data);
+
+    Object.entries(data).forEach(([key, value]) => {
+      console.log(key);
+      console.log(value);
+
+      if (value !== undefined && value !== null) {
+        formData.append(key, value as any);
+      }
+    });
+
+    console.log(formData);
 
     return this.http
-      .post<any>(`${environment.apiUrl}/auth/register`, datas)
+      .post<any>(`${environment.apiUrl}/auth/register`, formData)
       .pipe(tap((response) => this.setSession(response)));
   }
 
@@ -60,18 +64,32 @@ export class AuthService {
 
     this._status.set('checking');
 
-    return this.http.get<any>(`${environment.apiUrl}/auth/me`).pipe(
-      tap((user) => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this._user.set(user);
-        this._status.set('authenticated');
-      }),
-      map(() => true),
-      catchError(() => {
-        this.clearSession();
-        return of(false);
-      }),
-    );
+    console.log('AUTH | STATUS');
+    console.log(this._status());
+    console.log(this.isChecking);
+
+    return this.http
+      .get<any>(`${environment.apiUrl}/auth/me`, {
+        headers: { Authorization: `Bearer ${this._token()}` },
+      })
+      .pipe(
+        delay(5000),
+        tap((data) => {
+          console.log(data);
+
+          localStorage.setItem('user', JSON.stringify(data.user));
+          this._user.set(data.user);
+          this._status.set('authenticated');
+
+          console.log(this._status());
+          console.log(this.isChecking);
+        }),
+        map(() => true),
+        catchError(() => {
+          this.clearSession();
+          return of(false);
+        }),
+      );
   }
 
   logout() {

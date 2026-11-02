@@ -1,94 +1,86 @@
+<p-toast position="top-center">
+  <ng-template let-message #message>
+    <!-- <p>erorrrrr</p> -->
+    <p>{{ message.summary }}</p>
+    <!-- <p>{{ message.data.fileName }}</p> -->
+  </ng-template>
+</p-toast>
+
 <p-dialog
   [(visible)]="visible"
   [modal]="true"
-  [closable]="false"
-  [draggable]="false"
-  [resizable]="false"
-  [showHeader]="false"
+  [style]="{ width: '800px' }"
+  (onHide)="onHide()"
   [dismissableMask]="true"
-  styleClass="create-post-dialog"
 >
-  <form class="post-composer">
-    <header class="post-composer__header">
-      <div class="post-composer__author">
-        <!-- <img
-          class="post-composer__avatar"
-          [src]="auth.user()?.avatarUrl"
-          alt=""
-        />
-        <div class="post-composer__author-info">
-          <span class="post-composer__name">{{ auth.user()?.name }}</span>
-          <span class="post-composer__handle">@{{ auth.user()?.username }}</span>
-        </div> -->
+  <ng-template #header>
+    <div class="post-author">
+      <img class="post-author__avatar" [src]="auth.user()?.avatarUrl ?? ''" alt="" />
+
+      <div class="post-author__info">
+        <span class="post-author__name"
+          >{{ auth.user()?.firstName ?? '' }} {{ auth.user()?.lastName ?? '' }}</span
+        >
+        <span class="post-author__handle">&#64;{{ auth.user()?.username ?? '' }}</span>
       </div>
-
-      <button type="button" class="post-composer__close" aria-label="Cerrar">
-        <i class="pi pi-times"></i>
-      </button>
-    </header>
-
-    <div class="post-composer__body">
-      <input
-        class="post-composer__title"
-        type="text"
-        formControlName="title"
-        placeholder="¿Sobre qué quieres debatir hoy?"
-        aria-label="Título de la publicación"
-      />
-
-      <textarea
-        class="post-composer__content"
-        formControlName="content"
-        placeholder="Comienza a escribir los detalles de tu consulta, idea o aporte..."
-        aria-label="Contenido de la publicación"
-      ></textarea>
-
-      <!-- @if (attachments().length) {
-        <ul class="post-composer__attachments">
-          @for (attachment of attachments(); track attachment.id) {
-            <li class="post-composer__attachment">
-              <img
-                class="post-composer__attachment-image"
-                [src]="attachment.url"
-                alt=""
-              />
-              <button
-                type="button"
-                class="post-composer__attachment-remove"
-                aria-label="Quitar imagen"
-                (click)="removeAttachment(attachment.id)"
-              >
-                <i class="pi pi-times"></i>
-              </button>
-            </li>
-          }
-        </ul>
-      } -->
     </div>
+  </ng-template>
 
-    <div class="post-composer__toolbar">
-      <button
-        type="button"
-        class="post-composer__tool post-composer__tool--filled"
-        aria-label="Agregar imagen"
-        (click)="imageInput.click()"
-      >
-        <i class="pi pi-image"></i>
-      </button>
-      <input #imageInput class="post-composer__file-input" type="file" accept="image/*" multiple />
+  <form class="post-composer" [formGroup]="form">
+    <input
+      class="post-composer__title"
+      formControlName="title"
+      placeholder="¿Qué estás creando?"
+      maxlength="120"
+    />
 
-      <button type="button" class="post-composer__tool" aria-label="Agregar código">
-        <i class="pi pi-code"></i>
-      </button>
-    </div>
+    <textarea
+      class="post-composer__description"
+      formControlName="body"
+      placeholder="Compartí tu proceso, inspiración o ideas..."
+    ></textarea>
 
-    <footer class="post-composer__footer">
-      <button type="button" class="post-composer__button post-composer__button--ghost">
-        Cancelar
-      </button>
-      <button type="submit" class="post-composer__button post-composer__button--primary">
-        Publicar
-      </button>
-    </footer>
+    <app-post-image-list [images]="images()" (removed)="removeImage($event)" />
+
+    <app-image-upload-button
+      [disabled]="isImageLimitReached()"
+      (filesSelected)="onFilesSelected($event)"
+      (filesRejected)="onFilesRejected($event)"
+    />
   </form>
+
+  <ng-template #footer>
+    <div class="post-composer__footer">
+      <button
+        pButton
+        type="button"
+        severity="secondary"
+        label="Cancelar"
+        (click)="close()"
+      ></button>
+
+      <button pButton [disabled]="form.invalid || isLoading()" (click)="onPublish()">
+        @if (isLoading()) {
+          <div class="spinner">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 12C22 13.3132 21.7413 14.6136 21.2388 15.8268C20.7362 17.0401 19.9997 18.1425 19.0711 19.0711C18.1425 19.9997 17.0401 20.7362 15.8268 21.2388C14.6136 21.7413 13.3132 22 12 22"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        } @else {
+          Publicar
+        }
+      </button>
+    </div>
+  </ng-template>
 </p-dialog>
