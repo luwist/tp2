@@ -1,0 +1,61 @@
+<div class="design-collage" aria-hidden="true">
+  <div class="design-collage__row">
+    <div class="design-collage__card design-collage__card--palette">
+      <p class="design-collage__label">Paleta</p>
+      <ul class="design-collage__swatches">
+        @for (color of palette; track color) {
+          <li class="design-collage__swatch" [style.--swatch-color]="color">{{ color }}</li>
+        }
+      </ul>
+    </div>
+
+    <div class="design-collage__card design-collage__card--type">
+      <p class="design-collage__label">Tipografía</p>
+      <p class="design-collage__glyph">A<span class="design-collage__glyph-accent">a</span></p>
+      <p class="design-collage__caption">Sora · Bold</p>
+    </div>
+
+    <div class="design-collage__card design-collage__card--wireframe">
+      <p class="design-collage__label">Wireframe</p>
+      <div class="design-collage__wire-hero"></div>
+      <div class="design-collage__wire-line design-collage__wire-line--long"></div>
+      <div class="design-collage__wire-line design-collage__wire-line--short"></div>
+      <div class="design-collage__wire-button"></div>
+    </div>
+  </div>
+
+  <div class="design-collage__row">
+    <div class="design-collage__card design-collage__card--pen">
+      <p class="design-collage__label">Pluma</p>
+      <svg class="design-collage__pen" viewBox="0 0 240 90">
+        <line class="design-collage__pen-handle" x1="16" y1="78" x2="64" y2="8" />
+        <line class="design-collage__pen-handle" x1="224" y1="70" x2="156" y2="8" />
+        <path class="design-collage__pen-curve" pathLength="1" d="M16 78 C 64 8, 156 8, 224 70" />
+        <circle class="design-collage__pen-control" cx="64" cy="8" r="5" />
+        <circle class="design-collage__pen-control" cx="156" cy="8" r="5" />
+        <rect class="design-collage__pen-anchor" x="10" y="72" width="12" height="12" />
+        <rect class="design-collage__pen-anchor" x="218" y="64" width="12" height="12" />
+      </svg>
+    </div>
+
+    <div class="design-collage__card design-collage__card--comment">
+      <span class="design-collage__pin">3</span>
+      <p class="design-collage__author">
+        <span class="design-collage__avatar">A</span>
+        Agus
+      </p>
+      <p class="design-collage__comment">¿Probaste más contraste en el botón? Lo veo flojo.</p>
+      <div class="design-collage__cursor">
+        <svg
+          class="design-collage__cursor-icon"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke-linejoin="round"
+        >
+          <path d="M4 3l16 7-7 2-2 7z" />
+        </svg>
+        <span class="design-collage__cursor-label">Joaco</span>
+      </div>
+    </div>
+  </div>
+</div>

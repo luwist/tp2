@@ -1,6 +1,54 @@
 <div class="brand-panel">
   <div class="brand-panel__text">
-    <p class="brand-panel__headline">{{ headline() }}</p>
+    @if (badge()) {
+      <p class="brand-panel__badge">
+        <svg
+          class="brand-panel__badge-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 19l7-7 3 3-7 7-3-3z" />
+          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+          <path d="M2 2l7.6 7.6" />
+          <circle cx="11" cy="11" r="2" />
+        </svg>
+        {{ badge() }}
+      </p>
+    }
+
+    <p class="brand-panel__headline">
+      {{ headlineParts().before }}
+      @if (headlineParts().highlight) {
+        <span class="brand-panel__highlight"
+          >{{ headlineParts().highlight
+          }}<span
+            class="brand-panel__handle brand-panel__handle--top-left"
+            aria-hidden="true"
+          ></span
+          ><span
+            class="brand-panel__handle brand-panel__handle--top-right"
+            aria-hidden="true"
+          ></span
+          ><span
+            class="brand-panel__handle brand-panel__handle--bottom-left"
+            aria-hidden="true"
+          ></span
+          ><span
+            class="brand-panel__handle brand-panel__handle--bottom-right"
+            aria-hidden="true"
+          ></span
+        ></span>
+      }
+      {{ headlineParts().after }}
+    </p>
+
     <p class="brand-panel__description">{{ description() }}</p>
+
+    <app-design-collage class="brand-panel__collage" />
   </div>
 </div>

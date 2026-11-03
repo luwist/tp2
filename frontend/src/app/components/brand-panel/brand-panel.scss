@@ -1,3 +1,6 @@
+$color-selection: #6b4df0;
+$color-accent: #2ee6a8;
+
 :host {
   display: block;
 }
@@ -9,27 +12,100 @@
   padding: 96px 48px 48px;
 
   &__text {
-    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 7px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #d9dce8;
+    border: 1px solid rgb(255 255 255 / 20%);
+    border-radius: 999px;
+  }
+
+  &__badge-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: $color-accent;
   }
 
   &__headline {
     margin: 0;
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1.1;
+    font-size: clamp(2.5rem, 4.4vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
     text-wrap: balance;
   }
 
+  // Selection box, like the one a design tool draws around a layer
+  &__highlight {
+    position: relative;
+    display: inline-block;
+    padding: 0 10px;
+    border: 2px solid $color-selection;
+  }
+
+  &__handle {
+    position: absolute;
+    box-sizing: border-box;
+    width: 9px;
+    height: 9px;
+    background: #fff;
+    border: 2px solid $color-selection;
+
+    &--top-left {
+      top: -6px;
+      left: -6px;
+    }
+
+    &--top-right {
+      top: -6px;
+      right: -6px;
+    }
+
+    &--bottom-left {
+      bottom: -6px;
+      left: -6px;
+    }
+
+    &--bottom-right {
+      right: -6px;
+      bottom: -6px;
+    }
+  }
+
   &__description {
-    margin: 16px 0 0;
-    font-size: 16px;
-    line-height: 24px;
-    color: #C9C9D6;
+    max-width: 520px;
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #c9c9d6;
+  }
+
+  &__collage {
+    margin-top: 4px;
   }
 }
 
+// One column: the collage would push the form down, so only the text remains
 @media (max-width: 900px) {
   .brand-panel {
     padding: 96px 24px 0;
+
+    &__collage {
+      display: none;
+    }
   }
 }

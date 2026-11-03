@@ -1,0 +1,314 @@
+// Same tokens as the auth illustration
+$color-violet: #6b4df0;
+$color-pink: #ff3d81;
+$color-yellow: #ffd166;
+$color-mint: #2ee6a8;
+$color-surface: #1a1d27;
+$color-bg: #0f121b;
+
+:host {
+  display: block;
+  width: 560px;
+  max-width: 100%;
+}
+
+.design-collage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__row {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__card {
+    position: relative;
+    display: flex;
+    flex: var(--grow, 1) 1 0;
+    flex-direction: column;
+    gap: 9px;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 140px;
+    padding: 14px;
+    background: $color-surface;
+    border: 1px solid rgb(255 255 255 / 10%);
+    border-radius: 16px;
+
+    &--palette {
+      --grow: 19;
+      --delay: 0ms;
+    }
+
+    &--type {
+      --grow: 15;
+      --delay: 80ms;
+
+      justify-content: space-between;
+    }
+
+    &--wireframe {
+      --grow: 18;
+      --delay: 160ms;
+    }
+
+    &--pen {
+      --delay: 240ms;
+    }
+
+    &--comment {
+      --delay: 320ms;
+
+      padding: 18px 16px 14px 20px;
+    }
+  }
+
+  &__label {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #aeb4c8;
+    text-transform: uppercase;
+  }
+
+  // Palette
+  &__swatches {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__swatch {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    color: #e6e8f0;
+
+    &::before {
+      content: '';
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      background: var(--swatch-color);
+      border-radius: 50%;
+    }
+  }
+
+  // Typography
+  &__glyph {
+    margin: 0;
+    font-family: var(--font-heading, 'Sora', system-ui, sans-serif);
+    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  &__glyph-accent {
+    color: $color-pink;
+  }
+
+  &__caption {
+    margin: 0;
+    font-size: 13px;
+    color: #e6e8f0;
+  }
+
+  // Wireframe
+  &__wire-hero {
+    height: 44px;
+    background: $color-violet;
+    border-radius: 8px;
+  }
+
+  &__wire-line {
+    height: 8px;
+    border-radius: 4px;
+
+    &--long {
+      width: 80%;
+      background: rgb(255 255 255 / 35%);
+    }
+
+    &--short {
+      width: 55%;
+      background: rgb(255 255 255 / 20%);
+    }
+  }
+
+  &__wire-button {
+    width: 60px;
+    height: 18px;
+    background: $color-pink;
+    border-radius: 9px;
+  }
+
+  // Pen tool
+  &__pen {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+
+    &-handle {
+      stroke: rgb(255 255 255 / 45%);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 3;
+    }
+
+    &-curve {
+      fill: none;
+      stroke: $color-yellow;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+    }
+
+    &-control {
+      fill: $color-pink;
+    }
+
+    &-anchor {
+      fill: #fff;
+      stroke: $color-violet;
+      stroke-width: 2;
+    }
+  }
+
+  // Feedback comment
+  &__pin {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 800;
+    color: $color-bg;
+    background: $color-pink;
+    border-radius: 50% 50% 50% 0;
+  }
+
+  &__author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    font-weight: 800;
+    color: $color-bg;
+    background: $color-mint;
+    border-radius: 50%;
+  }
+
+  &__comment {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #d9dce8;
+  }
+
+  &__cursor {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+
+    &-icon {
+      width: 18px;
+      height: 18px;
+      fill: $color-violet;
+      stroke: #fff;
+    }
+
+    &-label {
+      margin-top: 12px;
+      padding: 3px 9px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background: $color-violet;
+      border-radius: 999px;
+    }
+  }
+}
+
+// Subtle motion: the cards settle in once, then only the pin and the cursor move a little,
+// so the login card keeps the user's attention.
+@media (prefers-reduced-motion: no-preference) {
+  .design-collage {
+    &__card {
+      animation: design-collage-rise 0.7s ease-out var(--delay, 0ms) both;
+    }
+
+    &__pen-curve {
+      animation: design-collage-draw 1.4s ease-out 500ms both;
+    }
+
+    &__pin {
+      animation: design-collage-pin 3.6s ease-in-out infinite;
+    }
+
+    &__cursor {
+      animation: design-collage-cursor 7s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes design-collage-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes design-collage-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes design-collage-pin {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.12;
+  }
+}
+
+@keyframes design-collage-cursor {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-8px, -5px);
+  }
+}
