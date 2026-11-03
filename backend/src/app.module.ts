@@ -6,23 +6,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { PostsModule } from './posts/post.module.js';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    AuthenticationModule.forRoot({
-      globalGuard: false,
-      session: {
-        absoluteTtl: '14d',
-        idleTtl: '3d',
-      },
-    }),
-    MongooseModule.forRoot(process.env.MONGO_URI!, {
-      serverSelectionTimeoutMS: 5000,
-      connectTimeoutMS: 5000,
-      retryAttempts: 0,
-    }),
-    AuthModule,
-    PostsModule,
-  ],
+  imports: [],
   controllers: [],
   providers: [],
 })

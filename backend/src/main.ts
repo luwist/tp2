@@ -12,7 +12,7 @@ console.log('[boot] 4 AppModule ok');
 try {
   const app = await NestFactory.create(AppModule, { cors: true });
   console.log('[boot] 5 Nest created');
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  // app.useGlobalPipes(new ValidationPipe({ transform: true }));
   await app.listen(process.env.PORT ?? 3000);
   console.log('[boot] 6 listening');
 } catch (error) {
