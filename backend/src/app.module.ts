@@ -15,7 +15,11 @@ import { PostsModule } from './posts/post.module.js';
         idleTtl: '3d',
       },
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI!),
+    MongooseModule.forRoot(process.env.MONGO_URI!, {
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+      retryAttempts: 0,
+    }),
     AuthModule,
     PostsModule,
   ],
