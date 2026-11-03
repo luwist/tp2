@@ -1,32 +1,20 @@
+console.log('QQQQQQQQQQQQQQQQQQQQQ');
 import { NestFactory } from '@nestjs/core';
+console.log('QEEEEEEEEEEEEEEEEEE');
 import { AppModule } from './app.module.js';
+console.log('RRRRRRRRRRRRRRRRRRRRRRRRRRRRR');
 import { ValidationPipe } from '@nestjs/common';
-
-// async function bootstrap() {
-//   const app = await NestFactory.create(AppModule, { cors: true });
-
-//   app.enableCors();
-//   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-
-//   await app.listen(process.env.PORT ?? 3000);
-// }
+console.log('ENTRA EN MAIN');
 
 async function bootstrap() {
-  console.log('[boot] starting, node', process.version);
-  console.log('[boot] MONGO_URI defined:', !!process.env.MONGO_URI);
-
+  console.log('EGGGGGGGGGGGGGGGGGGGGGGGGGG');
   const app = await NestFactory.create(AppModule, { cors: true });
-  console.log('[boot] Nest created');
+  console.log('GGGGGGGGGGGGGGGGGGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
 
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(process.env.PORT ?? 3000);
-  console.log('[boot] listening');
 }
 
-try {
-  await bootstrap();
-} catch (error) {
-  console.error('Failed to start application:', error);
-  process.exit(1);
-}
+await bootstrap();
