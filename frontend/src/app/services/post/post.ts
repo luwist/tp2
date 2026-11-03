@@ -34,4 +34,18 @@ export class PostService {
       headers: { Authorization: `Bearer ${this.auth._token()}` },
     });
   }
+
+  like(postId: string) {
+    console.log(this.auth._token());
+
+    return this.http.post<any>(`${environment.apiUrl}/posts/${postId}/like`, {
+      headers: { Authorization: `Bearer ${this.auth._token()}` },
+    });
+  }
+
+  unlike(postId: string) {
+    return this.http.delete<any>(`${environment.apiUrl}/posts/${postId}/like`, {
+      headers: { Authorization: `Bearer ${this.auth._token()}` },
+    });
+  }
 }

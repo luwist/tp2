@@ -8,7 +8,7 @@
       <h1 class="posts-page__title">Publicaciones</h1>
     </div>
     @for (post of posts(); track post._id) {
-      <app-post-card [post]="post" />
+      <app-post-card [post]="post" (likeToggled)="onLikeToggled(post)" />
     }
 
     @if (isLoading()) {

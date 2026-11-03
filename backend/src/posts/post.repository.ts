@@ -21,6 +21,20 @@ export class PostRepository {
       })
       .sort({ createdAt: -1 })
       .populate('author', 'firstName lastName username avatarUrl')
+      .lean()
       .exec();
+  }
+
+  async findByIdAndUpdate(postId: string, update: any) {
+    return await this.postModel
+      .findByIdAndUpdate(
+        {
+          _id: postId,
+        },
+        update,
+        { new: true },
+      )
+      .select('likes')
+      .lean();
   }
 }

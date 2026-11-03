@@ -2,7 +2,9 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   Req,
   UploadedFiles,
@@ -52,5 +54,15 @@ export class PostController {
   @Get()
   findAll(@Req() request: any) {
     return this.postService.findMany(request.user.username);
+  }
+
+  @Post(':id/like')
+  like(@Param('id') id: string, @Req() req: any) {
+    return this.postService.like(id, req.user.username);
+  }
+
+  @Delete(':id/like')
+  unlike(@Param('id') id: string, @Req() req: any) {
+    return this.postService.unlike(id, req.user.username);
   }
 }

@@ -22,6 +22,16 @@ export class Post {
   @Prop({ default: true, index: true })
   isActive: boolean;
 
+  @Prop({
+    type: [{ type: Types.ObjectId, ref: 'User' }],
+    default: [],
+    index: true,
+  })
+  likes: Types.ObjectId[];
+
+  @Prop({ default: 0 })
+  commentsCount: number;
+
   @Prop({ default: Date.now })
   createdAt: Date;
 }

@@ -114,40 +114,90 @@
   }
 }
 
-.post-card__heart {
+.heart {
   position: relative;
   display: inline-flex;
 }
 
-.heart-icon {
+.heart__icon {
   display: block;
-  transition: transform 150ms ease;
+  overflow: visible;
 }
 
-.heart-icon--pop {
-  animation: heart-pop 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+.heart__path {
+  fill: transparent;
+  stroke: #fff;
+  transition:
+    fill 300ms ease,
+    stroke 300ms ease;
+}
+
+.heart--liked .heart__path {
+  fill: #ea333e;
+  stroke: #ea333e;
+}
+
+.heart--pop .heart__icon {
+  animation: heart-pop 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes heart-pop {
-  0%   { transform: scale(0.4); }
-  50%  { transform: scale(1.35); }
+  0%   { transform: scale(1); }
+  25%  { transform: scale(0.7) rotate(-8deg); }
+  55%  { transform: scale(1.4) rotate(6deg); }
+  80%  { transform: scale(0.95) rotate(0); }
   100% { transform: scale(1); }
 }
 
-.heart-burst {
+.heart__ring {
   position: absolute;
   inset: 0;
   border-radius: 50%;
   border: 2px solid #ea333e;
   pointer-events: none;
-  animation: heart-burst 450ms ease-out forwards;
+  animation: heart-ring 500ms ease-out forwards;
 }
 
-@keyframes heart-burst {
+@keyframes heart-ring {
   from { transform: scale(0.3); opacity: 0.9; }
-  to   { transform: scale(2.2); opacity: 0; }
+  to   { transform: scale(2.4); opacity: 0; }
 }
 
-.post-card__action:active .heart-icon {
+.heart__particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: #ea333e;
+  pointer-events: none;
+  animation: heart-particle 550ms ease-out forwards;
+
+  &:nth-child(even) {
+    background: #ff8a93;
+  }
+}
+
+@keyframes heart-particle {
+  from {
+    transform: rotate(var(--angle)) translateY(-6px) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--angle)) translateY(-20px) scale(0);
+    opacity: 0;
+  }
+}
+
+.post-card__action:active .heart__icon {
   transform: scale(0.85);
 }
+
+// @media (prefers-reduced-motion: reduce) {
+//   .heart__path { transition: none; }
+//   .heart--pop .heart__icon { animation: none; }
+//   .heart__ring,
+//   .heart__particle { display: none; }
+// }
