@@ -7,17 +7,17 @@ import { PostsModule } from './posts/post.module.js';
 
 @Module({
   imports: [
-    // ConfigModule.forRoot(),
-    // AuthenticationModule.forRoot({
-    //   globalGuard: false,
-    //   session: {
-    //     absoluteTtl: '14d',
-    //     idleTtl: '3d',
-    //   },
-    // }),
-    // MongooseModule.forRoot(process.env.MONGO_URI!),
-    // AuthModule,
-    // PostsModule,
+    ConfigModule.forRoot(),
+    AuthenticationModule.forRoot({
+      globalGuard: false,
+      session: {
+        absoluteTtl: '14d',
+        idleTtl: '3d',
+      },
+    }),
+    MongooseModule.forRoot(process.env.MONGO_URI!),
+    AuthModule,
+    PostsModule,
   ],
   controllers: [],
   providers: [],
