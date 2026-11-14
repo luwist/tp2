@@ -1,3 +1,6 @@
+<p-confirmdialog />
+<p-toast position="top-center" />
+
 <section class="posts-page">
   <aside class="posts-page__side posts-page__side--left">
     <!-- ProfileCard if logged in, GuestCard if not -->
@@ -6,15 +9,40 @@
   <div class="posts-page__feed" [attr.aria-busy]="isLoading()">
     <div class="posts-page__header">
       <h1 class="posts-page__title">Publicaciones</h1>
+
+      <p-select
+        [options]="sortOptions"
+        optionLabel="label"
+        optionValue="value"
+        [ngModel]="sortBy()"
+        (ngModelChange)="onSortChange($event)"
+        ariaLabel="Ordenar publicaciones"
+      />
     </div>
     @for (post of posts(); track post._id) {
-      <app-post-card [post]="post" (likeToggled)="onLikeToggled(post)" />
+      <app-post-card
+        [post]="post"
+        (click)="openPost(post)"
+        (likeToggled)="onLikeToggled(post)"
+        (deleteRequested)="onDeleteRequested($event)"
+      />
     }
 
     @if (isLoading()) {
       @for (item of skeletons; track item) {
         <app-post-card-skeleton />
       }
+    }
+
+    @if (hasMore() && !isLoading()) {
+      <button
+        type="button"
+        class="posts-page__load-more"
+        [disabled]="isLoadingMore()"
+        (click)="loadMore()"
+      >
+        {{ isLoadingMore() ? 'Cargando...' : 'Cargar más' }}
+      </button>
     }
   </div>
 

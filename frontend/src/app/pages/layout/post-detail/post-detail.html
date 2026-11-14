@@ -1,0 +1,73 @@
+<p-confirmdialog />
+<p-toast position="top-center" />
+
+<section class="post-detail">
+  <a class="post-detail__back" routerLink="/">← Volver a publicaciones</a>
+
+  @if (isLoading()) {
+    <app-post-card-skeleton />
+  } @else if (notFound()) {
+    <p class="post-detail__empty">Esta publicación no existe o fue eliminada.</p>
+  } @else if (post(); as currentPost) {
+    <app-post-card
+      [post]="currentPost"
+      (likeToggled)="onLikeToggled(currentPost)"
+      (deleteRequested)="onDeleteRequested($event)"
+    />
+
+    <section class="post-detail__comments">
+      <h2 class="post-detail__comments-title">
+        Comentarios ({{ currentPost.commentsCount ?? comments().length }})
+      </h2>
+
+      <form class="comment-form" (submit)="$event.preventDefault(); submitComment()">
+        <textarea
+          class="comment-form__textarea"
+          rows="3"
+          placeholder="Escribí un comentario..."
+          aria-label="Escribir un comentario"
+          [maxlength]="maxLength"
+          [formControl]="commentControl"
+        ></textarea>
+
+        <div class="comment-form__footer">
+          <span class="comment-form__counter">
+            {{ commentControl.value.length }}/{{ maxLength }}
+          </span>
+          <button
+            type="submit"
+            class="comment-form__submit"
+            [disabled]="commentControl.invalid || isSubmitting()"
+          >
+            {{ isSubmitting() ? 'Publicando...' : 'Comentar' }}
+          </button>
+        </div>
+      </form>
+
+      @if (comments().length === 0) {
+        <p class="post-detail__empty">Todavía no hay comentarios. ¡Sé el primero!</p>
+      } @else {
+        <ul class="comment-list">
+          @for (comment of comments(); track comment._id) {
+            <li class="comment">
+              @if (comment.author.avatarUrl) {
+                <img class="comment__avatar" [src]="comment.author.avatarUrl" alt="" />
+              }
+              <div class="comment__body">
+                <div class="comment__header">
+                  <a class="comment__author" [routerLink]="['/profile', comment.author.username]">
+                    {{ comment.author.firstName }} {{ comment.author.lastName }}
+                  </a>
+                  <time class="comment__date" [attr.datetime]="comment.createdAt">
+                    {{ comment.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+                  </time>
+                </div>
+                <p class="comment__content">{{ comment.content }}</p>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  }
+</section>

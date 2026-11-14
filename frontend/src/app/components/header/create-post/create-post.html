@@ -14,16 +14,16 @@
   [dismissableMask]="true"
 >
   <ng-template #header>
-    <div class="post-author">
-      <img class="post-author__avatar" [src]="auth.user()?.avatarUrl ?? ''" alt="" />
+    @if (user(); as user) {
+      <div class="post-author">
+        <img class="post-author__avatar" [src]="user.avatarUrl" alt="" />
 
-      <div class="post-author__info">
-        <span class="post-author__name"
-          >{{ auth.user()?.firstName ?? '' }} {{ auth.user()?.lastName ?? '' }}</span
-        >
-        <span class="post-author__handle">&#64;{{ auth.user()?.username ?? '' }}</span>
+        <div class="post-author__info">
+          <span class="post-author__name">{{ user.firstName }} {{ user.lastName }}</span>
+          <span class="post-author__handle">&#64;{{ user.username }}</span>
+        </div>
       </div>
-    </div>
+    }
   </ng-template>
 
   <form class="post-composer" [formGroup]="form">

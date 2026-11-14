@@ -1,12 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '@app/services';
 import { InputTextModule } from '@openng/optimus-ui/inputtext';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { ToastModule } from '@openng/optimus-ui/toast';
 import { MessageService } from '@openng/optimus-ui/api';
 import { Auth } from '@app/components/auth/auth';
+import { AuthService } from '@app/services/auth/auth.service';
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink, InputTextModule, ButtonModule, ToastModule, Auth],
@@ -23,8 +23,14 @@ export class Login {
   isLoading = signal(false);
 
   form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   });
 
   getFormControl(controlName: string) {
@@ -38,30 +44,27 @@ export class Login {
       return;
     }
 
-    const { email, password } = this.form.getRawValue();
+    const data = this.form.getRawValue();
 
     this.form.markAsPending();
 
     this.isLoading.set(true);
 
-    this._authService
-      .login({
-        email: email,
-        password: password,
-      })
-      .subscribe({
-        next: (data) => {
-          this._router.navigateByUrl('/');
-        },
-        error: (err) => {
-          this._messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Credenciales incorrectas.',
-          });
+    this._authService.login(data).subscribe({
+      next: (data) => {
+        console.log(data);
 
-          this.isLoading.set(false);
-        },
-      });
+        this._router.navigateByUrl('/');
+      },
+      error: (err) => {
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Credenciales incorrectas.',
+        });
+
+        this.isLoading.set(false);
+      },
+    });
   }
 }

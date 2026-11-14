@@ -1,6 +1,6 @@
 import { Component, computed, inject, model, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService, PostService } from '@app/services';
+import { PostService } from '@app/services';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { DialogModule } from '@openng/optimus-ui/dialog';
 import { InputTextModule } from '@openng/optimus-ui/inputtext';
@@ -9,9 +9,12 @@ import { ImageUploadButton } from './image-upload-button/image-upload-button';
 import { PostImageList } from './post-image-list/post-image-list';
 import { ToastModule } from '@openng/optimus-ui/toast';
 import { MessageService } from '@openng/optimus-ui/api';
+import { AuthService } from '@app/services/auth/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     DialogModule,
     ButtonModule,
@@ -29,7 +32,10 @@ import { MessageService } from '@openng/optimus-ui/api';
 export class CreatePost {
   private readonly messageService = inject(MessageService);
 
-  readonly auth = inject(AuthService);
+  // readonly auth = inject(AuthService);
+  private readonly auth = inject(AuthService);
+
+  protected readonly user = this.auth.currentUser;
 
   readonly images = signal<any[]>([]);
 

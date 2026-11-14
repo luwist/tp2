@@ -1,4 +1,4 @@
-@if (user(); as currentUser) {
+@if (user(); as user) {
   <button
     type="button"
     class="user-menu__trigger"
@@ -6,26 +6,25 @@
     aria-haspopup="true"
     (click)="popover.toggle($event)"
   >
-    <img class="user-menu__avatar" [src]="currentUser.avatarUrl" alt="" />
+    <img class="user-menu__avatar" [src]="user.avatarUrl" alt="" />
   </button>
 
   <p-popover #popover>
     <div class="user-menu__panel">
       <div class="user-menu__profile">
-        <img
-          class="user-menu__avatar user-menu__avatar--large"
-          [src]="currentUser.avatarUrl"
-          alt=""
-        />
+        <img class="user-menu__avatar user-menu__avatar--large" [src]="user.avatarUrl" alt="" />
         <div class="user-menu__identity">
-          <span class="user-menu__name">
-            {{ currentUser.firstName }} {{ currentUser.lastName }}
-          </span>
-          <span class="user-menu__username">&#64;{{ currentUser.username }}</span>
+          <span class="user-menu__name"> {{ user.firstName }} {{ user.lastName }} </span>
+          <span class="user-menu__username">&#64;{{ user.username }}</span>
         </div>
       </div>
 
       <hr class="user-menu__divider" />
+
+      <a class="user-menu__logout" [routerLink]="['/', user.username]">
+        <i class="pi pi-sign-out" aria-hidden="true"></i>
+        Mi perfil
+      </a>
 
       <button type="button" class="user-menu__logout" (click)="logout(popover)">
         <i class="pi pi-sign-out" aria-hidden="true"></i>

@@ -1,0 +1,57 @@
+<p-confirmdialog />
+<p-toast position="top-center" />
+
+<main class="profile">
+  @if (loading()) {
+    <div class="profile__card">
+      <p-skeleton shape="circle" size="96px" />
+      <div class="profile__info">
+        <p-skeleton width="12rem" height="1.5rem" />
+        <p-skeleton width="8rem" />
+        <p-skeleton width="100%" height="3rem" />
+      </div>
+    </div>
+  } @else if (notFound()) {
+    <div class="profile__empty">
+      <i class="pi pi-user-minus"></i>
+      <p>No encontramos este perfil.</p>
+    </div>
+  } @else if (profile(); as p) {
+    <header class="profile__card">
+      <img class="profile__avatar" [src]="p.avatarUrl" [alt]="'Foto de perfil de ' + p.username" />
+
+      <div class="profile__info">
+        <h1 class="profile__name">{{ p.firstName }} {{ p.lastName }}</h1>
+        <span class="profile__username">&#64;{{ p.username }}</span>
+
+        @if (p.bio) {
+          <p class="profile__bio">{{ p.bio }}</p>
+        } @else if (isOwn()) {
+          <p class="profile__bio profile__bio--empty">Todavía no escribiste tu bio.</p>
+        }
+
+        <span class="profile__stat">
+          <strong>{{ p.postsCount }}</strong>
+          {{ p.postsCount === 1 ? 'publicación' : 'publicaciones' }}
+        </span>
+      </div>
+    </header>
+
+    <h2 class="profile__section-title">Publicaciones</h2>
+
+    @for (post of posts(); track post.id) {
+      <app-post-card
+        [post]="post"
+        (likeToggled)="onLikeToggled($event)"
+        (deleteRequested)="onDeleteRequested($event)"
+      />
+    } @empty {
+      <div class="profile__empty">
+        <i class="pi pi-image"></i>
+        <p>
+          {{ isOwn() ? 'Todavía no publicaste nada.' : 'Este usuario todavía no publicó nada.' }}
+        </p>
+      </div>
+    }
+  }
+</main>

@@ -11,31 +11,31 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto.js';
 import { Role } from '../common/enums/role.enum.js';
 import { StorageService } from '../common/storage/storage.service.js';
-import { UserRepository } from '../users/user.repository.js';
+import { UsersRepository } from '../users/users.repository.js';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userRepository: UserRepository,
+    private readonly usersRepository: UsersRepository,
     private readonly passwordHasher: PasswordHasher,
     private readonly jwtService: JwtService,
     private readonly storageService: StorageService,
   ) {}
 
   async register(registerDto: RegisterDto, file: Express.Multer.File) {
-    console.log(registerDto);
-    console.log(file);
-
     if (registerDto.password !== registerDto.confirmPassword) {
       throw new BadRequestException('Passwords do not match');
     }
 
-    const existingUser = await this.userRepository.findByEmailOrUsername(
+    const existingEmail = await this.usersRepository.findByEmailOrUsername(
       registerDto.email,
+    );
+
+    const existingUsername = await this.usersRepository.findByEmailOrUsername(
       registerDto.username,
     );
 
-    if (existingUser) {
+    if (existingEmail || existingUsername) {
       throw new ConflictException(
         'Registration could not be completed with the provided data',
       );
@@ -45,7 +45,7 @@ export class AuthService {
 
     const passwordHash = await this.passwordHasher.hash(registerDto.password);
 
-    const createdUser = await this.userRepository.create({
+    const createdUser = await this.usersRepository.create({
       firstName: registerDto.firstName,
       lastName: registerDto.lastName,
       username: registerDto.username,
@@ -71,7 +71,7 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto) {
-    const user = await this.userRepository.findByEmail(loginDto.email);
+    const user = await this.usersRepository.findByEmail(loginDto.email);
 
     if (
       !user ||
@@ -95,7 +95,7 @@ export class AuthService {
   }
 
   async validateSession(username: string) {
-    const user = await this.userRepository.findByUsername(username);
+    const user = await this.usersRepository.findByEmailOrUsername(username);
 
     if (!user) {
       throw new NotFoundException('User not found');

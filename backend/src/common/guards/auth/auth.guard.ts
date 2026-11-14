@@ -27,6 +27,7 @@ export class AuthGuard implements CanActivate {
 
       console.log('VALIDACION DEL TOKEN');
       console.log(payload);
+      console.log('=================================================');
 
       context.switchToHttp().getRequest().user = payload;
 

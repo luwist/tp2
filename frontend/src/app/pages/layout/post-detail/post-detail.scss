@@ -1,0 +1,118 @@
+.post-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 42rem;
+  margin: 0 auto;
+
+  &__back {
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+
+  &__empty {
+    text-align: center;
+    opacity: 0.7;
+  }
+
+  &__comments {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__comments-title {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--p-content-border-color, #e5e7eb);
+    border-radius: 0.5rem;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    resize: vertical;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__counter {
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+
+  &__submit {
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: 0.5rem;
+    background: var(--p-primary-color, #6366f1);
+    color: var(--p-primary-contrast-color, #fff);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.comment {
+  display: flex;
+  gap: 0.75rem;
+
+  &__avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__body {
+    flex: 1;
+  }
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  &__author {
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__date {
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+
+  &__content {
+    margin: 0.25rem 0 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}

@@ -7,9 +7,31 @@
       </span>
       <span class="post-card__username">&#64;{{ post().author.username }}</span>
     </div>
-    <button type="button" class="post-card__menu" aria-label="Más opciones">
-      <i class="pi pi-ellipsis-h"></i>
-    </button>
+
+    @if (isOwner() || isAdmin()) {
+      <button
+        type="button"
+        class="post-card__menu"
+        aria-label="Más opciones"
+        aria-haspopup="true"
+        (click)="menu.toggle($event)"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4.167 11.667a1.667 1.667 0 1 0 0-3.334 1.667 1.667 0 0 0 0 3.334m11.666 0a1.667 1.667 0 1 0 0-3.334 1.667 1.667 0 0 0 0 3.334m-5.833 0a1.667 1.667 0 1 0 0-3.334 1.667 1.667 0 0 0 0 3.334"
+            fill="#fff"
+          />
+        </svg>
+      </button>
+
+      <p-menu #menu [model]="menuItems" [popup]="true" />
+    }
   </header>
 
   <h2 class="post-card__title">{{ post().title }}</h2>

@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '@app/services';
 import { InputTextModule } from '@openng/optimus-ui/inputtext';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { ToastModule } from '@openng/optimus-ui/toast';
@@ -12,6 +11,8 @@ import { dateValidator } from '@app/validators/date.validator';
 import { passwordMatchValidator } from '@app/validators/password-match.validator';
 import { AvatarUploader } from '@app/components/ui';
 import { TextareaModule } from '@openng/optimus-ui/textarea';
+import { AuthService } from '@app/services/auth/auth.service';
+import { RegisterRequestDTO } from '@app/dto/requests';
 
 @Component({
   imports: [
@@ -41,15 +42,42 @@ export class Register {
 
   form = new FormGroup(
     {
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      username: new FormControl('', Validators.required),
-      bio: new FormControl('', Validators.required),
-      birthDate: new FormControl('', [Validators.required, dateValidator]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
-      confirmPassword: new FormControl('', Validators.required),
-      avatar: new FormControl(null, Validators.required),
+      firstName: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      lastName: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      username: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      bio: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      birthDate: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, dateValidator],
+      }),
+      email: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.email],
+      }),
+      password: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      confirmPassword: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      avatar: new FormControl<File | null>(null, {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
     },
     { validators: passwordMatchValidator },
   );
@@ -77,27 +105,43 @@ export class Register {
       return;
     }
 
-    const data = this.form.getRawValue();
+    const { avatar, ...rest } = this.form.getRawValue();
 
-    this.form.markAsPending();
+    if (!avatar) {
+      return;
+    }
+
+    const data: RegisterRequestDTO = { ...rest, avatar };
 
     this.isLoading.set(true);
 
     this._authService.register(data).subscribe({
-      next: (data) => {
-        console.log(data);
-        console.log('paso jeje');
-        this._router.navigateByUrl('/');
-      },
-      error: (err) => {
+      next: () => this._router.navigateByUrl('/'),
+      error: () => {
         this._messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Ocurrio un error',
+          detail: 'Ocurrió un error',
         });
-
         this.isLoading.set(false);
       },
     });
+
+    // this._authService.register(data).subscribe({
+    //   next: (data) => {
+    //     console.log(data);
+    //     console.log('paso jeje');
+    //     this._router.navigateByUrl('/');
+    //   },
+    //   error: (err) => {
+    //     this._messageService.add({
+    //       severity: 'error',
+    //       summary: 'Error',
+    //       detail: 'Ocurrio un error',
+    //     });
+
+    //     this.isLoading.set(false);
+    //   },
+    // });
   }
 }
