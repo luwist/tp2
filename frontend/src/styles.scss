@@ -1,7 +1,8 @@
 html{
   box-sizing: border-box;
   font-size: 16px;
-  font-family: "Figtree", sans-serif;
+  font-family: "Inter", sans-serif;
+  // font-family: "Figtree", sans-serif;
 }
 
 *,
@@ -13,8 +14,12 @@ html{
 }
 
 body {
-  background-color: #11131C;
-  color: #FFFFFF;
+  // background-color: #11131C;
+  background-color: #FFF3D3;
+  background-image: radial-gradient(at 50% 12%, rgba(255, 197, 49, 0.35), transparent 60%), linear-gradient(rgba(23, 23, 31, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(23, 23, 31, 0.05) 1px, transparent 1px);
+  background-size: auto, 36px 36px, 36px 36px;
+  color: #17171F;
+  // color: #FFFFFF;
 }
 
 .fields {

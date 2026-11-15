@@ -2,20 +2,30 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 16px;
-  background: #161820;
+  padding: 24px;
+  // background: #161820;
+  background: #FFFDF7;
+  border: 2px solid #17171F;
   border-radius: 24px;
 
   &__header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
+  }
+  
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   &__author {
     display: flex;
-    flex: 1;
+    // flex: 1;
     flex-direction: column;
+    gap: 4px;
     min-width: 0;
     line-height: 1.25;
   }
@@ -30,12 +40,15 @@
   &__name {
     font-size: 14px;
     font-weight: 600;
-    color: #FFFFFF;
+    color: #17171F;
   }
 
   &__username {
     font-size: 14px;
-    color: #C9C9D6;
+    color: #17171F;
+    background-color: #FFE98A;
+    padding: 1px 8px;
+    border-radius: 6px;
   }
 
   &__menu {
@@ -54,13 +67,14 @@
   &__title {
     margin: 0;
     font-size: 18px;
-    font-weight: 600;
-    line-height: 140%;
+    font-weight: 800;
+    font-family: "Bricolage Grotesque", sans-serif;
   }
 
   &__message {
     margin: 0;
     font-size: 14px;
+    color: #2B2A3A;
     line-height: 20px;
     white-space: pre-line;
     overflow-wrap: anywhere;
@@ -76,26 +90,29 @@
 
   &__date {
     font-size: 12px;
-    color: #C9C9D6;
+    color: #4A4860;
   }
 
   &__footer {
     display: flex;
+    gap: 12px;
     padding-top: 16px;
-    border-top: 1px solid #212530;
+    border-top: 2px solid #17171F;
   }
 
   &__action {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 8px 12px;
-    border: 0;
-    border-radius: 50px;
-    font-family: "Lato", sans-serif;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 2px solid #17171F;
+    border-radius: 14px;
+    font-family: "Bricolage Grotesque", sans-serif;
     background: none;
-    color: var(--color-text);
-    font-size: 0.875rem;
+    background-color: #FFFFFF;
+    color: #17171F;
+    font-size: 16px;
+    font-weight: 800;
     cursor: pointer;
     transition: background-color 0.15s ease;
 
@@ -126,7 +143,7 @@
 
 .heart__path {
   fill: transparent;
-  stroke: #fff;
+  stroke: #17171F;
   transition:
     fill 300ms ease,
     stroke 300ms ease;

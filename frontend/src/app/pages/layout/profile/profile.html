@@ -16,8 +16,44 @@
       <i class="pi pi-user-minus"></i>
       <p>No encontramos este perfil.</p>
     </div>
-  } @else if (profile(); as p) {
-    <header class="profile__card">
+  } @else if (profile(); as user) {
+    <header class="profile-header">
+      <div
+        class="profile-header__banner"
+        [style.background-color]="user.bannerColor || '#7c3aed'"
+      ></div>
+
+      <div class="profile-header__container">
+        <div class="profile-header__avatar-wrapper">
+          <img [src]="user.avatarUrl" [alt]="user.name" class="profile-header__avatar" />
+        </div>
+
+        <div class="profile-header__info">
+          <h1 class="profile-header__name">{{ user.firstName }} {{ user.lastName }}</h1>
+          <span class="profile-header__username">@{{ user.username }}</span>
+          <p class="profile-header__bio">{{ user.bio }}</p>
+        </div>
+
+        <div class="profile-header__stats">
+          <div class="profile-header__stat-box">
+            <span class="profile-header__stat-value">0</span>
+            <span class="profile-header__stat-label">Publicaciones</span>
+          </div>
+
+          <div class="profile-header__stat-box">
+            <span class="profile-header__stat-value">0</span>
+            <span class="profile-header__stat-label">Me gusta recibidos</span>
+          </div>
+
+          <div class="profile-header__stat-box">
+            <span class="profile-header__stat-value">0</span>
+            <span class="profile-header__stat-label">Comentarios</span>
+          </div>
+        </div>
+      </div>
+    </header>
+  }
+  <!-- <header class="profile__card">
       <img class="profile__avatar" [src]="p.avatarUrl" [alt]="'Foto de perfil de ' + p.username" />
 
       <div class="profile__info">
@@ -52,6 +88,5 @@
           {{ isOwn() ? 'Todavía no publicaste nada.' : 'Este usuario todavía no publicó nada.' }}
         </p>
       </div>
-    }
-  }
+    } -->
 </main>

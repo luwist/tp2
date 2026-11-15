@@ -10,6 +10,7 @@ import { SelectModule } from '@openng/optimus-ui/select';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from '@openng/optimus-ui/toast';
 import { Router, RouterLink } from '@angular/router';
+import { ProfileCard } from './profile-card/profile-card';
 
 @Component({
   imports: [
@@ -20,6 +21,7 @@ import { Router, RouterLink } from '@angular/router';
     SelectModule,
     ToastModule,
     RouterLink,
+    ProfileCard
   ],
   selector: 'app-feed',
   styleUrl: './feed.scss',

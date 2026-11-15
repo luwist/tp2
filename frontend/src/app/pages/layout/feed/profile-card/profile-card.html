@@ -1,0 +1,27 @@
+@if (user(); as user) {
+  <aside class="profile-card">
+    <div class="profile-card__avatar-wrapper">
+      <img [src]="user.avatarUrl" [alt]="user.avatarUrl" class="profile-card__avatar" />
+    </div>
+
+    <h2 class="profile-card__name">{{ user.firstName }} {{ user.lastName }}</h2>
+
+    <span class="profile-card__username">@{{ user.username }}</span>
+
+    <p class="profile-card__bio">
+      {{ user.bio }}
+    </p>
+
+    <div class="profile-card__stats">
+      <div class="profile-card__stat-box">
+        <span class="profile-card__stat-value">0</span>
+        <span class="profile-card__stat-label">Publicaciones</span>
+      </div>
+
+      <div class="profile-card__stat-box">
+        <span class="profile-card__stat-value">0</span>
+        <span class="profile-card__stat-label">Me gustas</span>
+      </div>
+    </div>
+  </aside>
+}
