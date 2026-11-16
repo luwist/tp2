@@ -1,54 +1,230 @@
 <div class="brand-panel">
-  <div class="brand-panel__text">
-    @if (badge()) {
-      <p class="brand-panel__badge">
-        <svg
-          class="brand-panel__badge-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M12 19l7-7 3 3-7 7-3-3z" />
-          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-          <path d="M2 2l7.6 7.6" />
-          <circle cx="11" cy="11" r="2" />
-        </svg>
-        {{ badge() }}
-      </p>
+  @if (badge()) {
+    <p class="brand-panel__badge">{{ badge() }}</p>
+  }
+
+  <h2 class="brand-panel__headline">
+    {{ headlineParts().before }}
+    @if (headlineParts().highlight) {
+      <span class="brand-panel__highlight">{{ headlineParts().highlight }}</span>
     }
+    {{ headlineParts().after }}
+  </h2>
 
-    <p class="brand-panel__headline">
-      {{ headlineParts().before }}
-      @if (headlineParts().highlight) {
-        <span class="brand-panel__highlight"
-          >{{ headlineParts().highlight
-          }}<span
-            class="brand-panel__handle brand-panel__handle--top-left"
-            aria-hidden="true"
-          ></span
-          ><span
-            class="brand-panel__handle brand-panel__handle--top-right"
-            aria-hidden="true"
-          ></span
-          ><span
-            class="brand-panel__handle brand-panel__handle--bottom-left"
-            aria-hidden="true"
-          ></span
-          ><span
-            class="brand-panel__handle brand-panel__handle--bottom-right"
-            aria-hidden="true"
-          ></span
-        ></span>
-      }
-      {{ headlineParts().after }}
-    </p>
+  <p class="brand-panel__description">{{ description() }}</p>
 
-    <p class="brand-panel__description">{{ description() }}</p>
+  <svg
+    class="design-collage"
+    viewBox="0 0 480 300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label="Collage de tarjetas de diseño"
+  >
+    <path
+      d="M52 14v30M37 29h30M41 18l22 22M63 18L41 40"
+      stroke="#7C5CFF"
+      stroke-width="5"
+      stroke-linecap="round"
+    />
+    <path
+      d="M440 30q3 17 17 20-14 3-17 20-3-17-17-20 14-3 17-20z"
+      fill="#FF7EB6"
+      stroke="#17171F"
+      stroke-width="2.5"
+      stroke-linejoin="round"
+    />
 
-    <app-design-collage class="brand-panel__collage" />
-  </div>
+    <g transform="rotate(-6 105 145)">
+      <rect
+        x="30"
+        y="52"
+        width="150"
+        height="184"
+        rx="16"
+        fill="#17171F"
+        transform="translate(5 5)"
+      />
+      <rect
+        x="30"
+        y="52"
+        width="150"
+        height="184"
+        rx="16"
+        fill="#FFFDF7"
+        stroke="#17171F"
+        stroke-width="3"
+      />
+      <path d="M62 128l-16-22" stroke="#17171F" stroke-width="3" stroke-linecap="round" />
+      <circle cx="44" cy="103" r="6" fill="#7C5CFF" stroke="#17171F" stroke-width="3" />
+      <circle cx="105" cy="150" r="44" fill="#7C5CFF" stroke="#17171F" stroke-width="3" />
+      <circle cx="91" cy="142" r="4.5" fill="#17171F" />
+      <circle cx="119" cy="142" r="4.5" fill="#17171F" />
+      <circle cx="82" cy="157" r="6" fill="#FF7EB6" />
+      <circle cx="128" cy="157" r="6" fill="#FF7EB6" />
+      <path d="M95 160q10 11 20 0" stroke="#17171F" stroke-width="3" stroke-linecap="round" />
+      <g transform="rotate(32 160 100)">
+        <rect
+          x="153"
+          y="62"
+          width="14"
+          height="52"
+          rx="2"
+          fill="#FFC531"
+          stroke="#17171F"
+          stroke-width="3"
+        />
+        <path
+          d="M153 114h14l-7 14z"
+          fill="#FFFDF7"
+          stroke="#17171F"
+          stroke-width="3"
+          stroke-linejoin="round"
+        />
+      </g>
+    </g>
+
+    <g transform="rotate(5 270 125)">
+      <rect
+        x="195"
+        y="22"
+        width="150"
+        height="198"
+        rx="16"
+        fill="#17171F"
+        transform="translate(5 5)"
+      />
+      <rect
+        x="195"
+        y="22"
+        width="150"
+        height="198"
+        rx="16"
+        fill="#FFFDF7"
+        stroke="#17171F"
+        stroke-width="3"
+      />
+      <path
+        d="M228 112l-14-16M312 112l14-16"
+        stroke="#17171F"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+      <circle cx="212" cy="93" r="6" fill="#7C5CFF" stroke="#17171F" stroke-width="3" />
+      <circle cx="328" cy="93" r="6" fill="#7C5CFF" stroke="#17171F" stroke-width="3" />
+      <rect
+        x="228"
+        y="62"
+        width="84"
+        height="116"
+        rx="22"
+        fill="#FF7EB6"
+        stroke="#17171F"
+        stroke-width="3"
+      />
+      <rect x="237" y="96" width="30" height="20" rx="6" fill="#17171F" />
+      <rect x="273" y="96" width="30" height="20" rx="6" fill="#17171F" />
+      <circle cx="241" cy="133" r="6" fill="#FFC531" />
+      <circle cx="299" cy="133" r="6" fill="#FFC531" />
+      <path d="M255 141q15 14 30 0" stroke="#17171F" stroke-width="3" stroke-linecap="round" />
+    </g>
+
+    <g transform="rotate(10 392 122)">
+      <path
+        d="M392 82L401 93 414 88 415 102 428 106 420 118 428 130 415 134 414 148 401 143 392 154 383 143 370 148 369 134 356 130 364 118 356 106 369 102 370 88 383 93Z"
+        fill="#FF6B35"
+        stroke="#17171F"
+        stroke-width="3"
+        stroke-linejoin="round"
+      />
+      <text
+        x="392"
+        y="124"
+        text-anchor="middle"
+        font-family="Bricolage Grotesque, sans-serif"
+        font-size="15"
+        font-weight="800"
+        fill="#17171F"
+      >
+        HOLA
+      </text>
+    </g>
+
+    <g transform="rotate(7 424 205)">
+      <rect
+        x="401"
+        y="182"
+        width="52"
+        height="52"
+        rx="14"
+        fill="#17171F"
+        transform="translate(3 3)"
+      />
+      <rect
+        x="401"
+        y="182"
+        width="52"
+        height="52"
+        rx="14"
+        fill="#C6F432"
+        stroke="#17171F"
+        stroke-width="3"
+      />
+      <text
+        x="427"
+        y="219"
+        text-anchor="middle"
+        font-family="Bricolage Grotesque, sans-serif"
+        font-size="26"
+        font-weight="800"
+        fill="#17171F"
+      >
+        Aa
+      </text>
+    </g>
+
+    <g transform="rotate(-4 125 268)">
+      <rect x="28" y="252" width="190" height="32" fill="#FF7EB6" />
+      <text
+        x="123"
+        y="274"
+        text-anchor="middle"
+        font-family="Bricolage Grotesque, sans-serif"
+        font-size="16"
+        font-weight="800"
+        font-style="italic"
+        fill="#17171F"
+      >
+        mostrá tu proceso
+      </text>
+    </g>
+    <g transform="rotate(3 330 270)">
+      <rect x="232" y="250" width="190" height="38" fill="#17171F" />
+      <text
+        x="327"
+        y="266"
+        text-anchor="middle"
+        font-family="Bricolage Grotesque, sans-serif"
+        font-size="10"
+        font-weight="800"
+        fill="#FFFDF7"
+        letter-spacing="0.5"
+      >
+        PEQUEÑOS PASOS,
+      </text>
+      <text
+        x="327"
+        y="280"
+        text-anchor="middle"
+        font-family="Bricolage Grotesque, sans-serif"
+        font-size="10"
+        font-weight="800"
+        fill="#FFFDF7"
+        letter-spacing="0.5"
+      >
+        GRANDES DISEÑOS
+      </text>
+    </g>
+  </svg>
+  <!-- <app-design-collage class="brand-panel__collage" /> -->
 </div>

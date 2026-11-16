@@ -15,6 +15,7 @@ export class PostCard {
   private readonly auth = inject(AuthService);
 
   readonly post = input.required<any>();
+  readonly showAuthor = input<boolean>(true);
   readonly likeToggled = output<any>();
   readonly deleteRequested = output<any>();
   readonly popping = signal(false);

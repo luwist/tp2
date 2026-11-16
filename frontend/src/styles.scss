@@ -20,6 +20,10 @@ body {
   background-size: auto, 36px 36px, 36px 36px;
   color: #17171F;
   // color: #FFFFFF;
+  
+  .p-component {
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
 }
 
 .fields {
@@ -42,7 +46,7 @@ body {
   .field__label {
     font-size: 14px;
     font-weight: 600;
-    color: #FFFFFF;
+    color: #17171F;
   }
 
   .field__error {

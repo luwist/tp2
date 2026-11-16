@@ -1,3 +1,5 @@
+$ink: #17171F;
+
 .user-menu {
   &__trigger {
     display: block;
@@ -8,8 +10,8 @@
     cursor: pointer;
 
     &:focus-visible {
-      outline: 2px solid var(--p-primary-color);
-      outline-offset: 2px;
+      outline: 2px solid $ink;
+      outline-offset: 3px;
     }
   }
 
@@ -17,12 +19,14 @@
     display: block;
     width: 3rem;
     height: 3rem;
+    box-sizing: border-box;
+    border: 2px solid $ink;
     border-radius: 50%;
     object-fit: cover;
 
     &--large {
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 2.75rem;
+      height: 2.75rem;
       flex-shrink: 0;
     }
   }
@@ -30,63 +34,92 @@
   &__panel {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    min-width: 14rem;
+    gap: 4px;
+    min-width: 15rem;
   }
 
   &__profile {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 12px;
+    padding: 8px;
   }
 
   &__identity {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    line-height: 1.2;
   }
 
   &__name {
-    font-weight: 600;
     overflow: hidden;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: $ink;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   &__username {
-    font-size: 0.875rem;
-    color: var(--p-text-muted-color);
     overflow: hidden;
+    margin-top: 2px;
+    font-size: 13px;
+    color: #6B6B76;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   &__divider {
-    margin: 0;
+    margin: 4px 0;
     border: 0;
-    border-top: 1px solid var(--p-content-border-color);
+    border-top: 2px dashed $ink;
   }
 
-  &__logout {
+  &__item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0.75rem;
+    gap: 12px;
+    padding: 8px;
     border: 0;
-    border-radius: var(--p-border-radius-md, 0.5rem);
+    border-radius: 12px;
     background: none;
-    color: inherit;
-    font: inherit;
+    color: $ink;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 14px;
+    font-weight: 800;
     text-align: left;
+    text-decoration: none;
     cursor: pointer;
+    transition: background 0.15s ease;
 
     &:hover {
-      background: var(--p-content-hover-background);
+      background: #FFEFBF;
     }
 
     &:focus-visible {
-      outline: 2px solid var(--p-primary-color);
+      outline: 2px solid $ink;
       outline-offset: -2px;
+    }
+  }
+
+  &__item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border: 2px solid $ink;
+    border-radius: 10px;
+
+    &--profile {
+      background: #FFC531;
+    }
+
+    &--logout {
+      background: #FF7EB6;
     }
   }
 }

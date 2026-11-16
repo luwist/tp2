@@ -2,12 +2,19 @@
 <p-toast position="top-center" />
 
 <section class="post-detail">
-  <a class="post-detail__back" routerLink="/">← Volver a publicaciones</a>
+  <nav class="post-detail__nav">
+    <a class="post-detail__back" routerLink="/">
+      <span class="post-detail__back-icon" aria-hidden="true">←</span>
+      <span>Volver a publicaciones</span>
+    </a>
+  </nav>
 
   @if (isLoading()) {
     <app-post-card-skeleton />
   } @else if (notFound()) {
-    <p class="post-detail__empty">Esta publicación no existe o fue eliminada.</p>
+    <div class="post-detail__empty-card">
+      <p class="post-detail__empty-text">Esta publicación no existe o fue eliminada.</p>
+    </div>
   } @else if (post(); as currentPost) {
     <app-post-card
       [post]="currentPost"
@@ -16,9 +23,12 @@
     />
 
     <section class="post-detail__comments">
-      <h2 class="post-detail__comments-title">
-        Comentarios ({{ currentPost.commentsCount ?? comments().length }})
-      </h2>
+      <header class="post-detail__comments-header">
+        <h2 class="post-detail__comments-title">Comentarios</h2>
+        <span class="post-detail__comments-badge">
+          {{ currentPost.commentsCount ?? comments().length }}
+        </span>
+      </header>
 
       <form class="comment-form" (submit)="$event.preventDefault(); submitComment()">
         <textarea
@@ -45,23 +55,42 @@
       </form>
 
       @if (comments().length === 0) {
-        <p class="post-detail__empty">Todavía no hay comentarios. ¡Sé el primero!</p>
+        <div class="post-detail__empty-card">
+          <p class="post-detail__empty-text">Todavía no hay comentarios. ¡Sé el primero!</p>
+        </div>
       } @else {
         <ul class="comment-list">
           @for (comment of comments(); track comment._id) {
             <li class="comment">
-              @if (comment.author.avatarUrl) {
-                <img class="comment__avatar" [src]="comment.author.avatarUrl" alt="" />
-              }
+              <div class="comment__avatar-wrapper">
+                @if (comment.author.avatarUrl) {
+                  <img
+                    class="comment__avatar"
+                    [src]="comment.author.avatarUrl"
+                    [alt]="comment.author.firstName"
+                  />
+                } @else {
+                  <span class="comment__avatar-fallback">
+                    {{ comment.author.firstName.charAt(0) }}
+                  </span>
+                }
+              </div>
+
               <div class="comment__body">
                 <div class="comment__header">
-                  <a class="comment__author" [routerLink]="['/profile', comment.author.username]">
-                    {{ comment.author.firstName }} {{ comment.author.lastName }}
-                  </a>
+                  <div class="comment__author-group">
+                    <span class="comment__author">
+                      {{ comment.author.firstName }} {{ comment.author.lastName }}
+                    </span>
+                    @if (comment.author.username) {
+                      <span class="comment__username">@{{ comment.author.username }}</span>
+                    }
+                  </div>
                   <time class="comment__date" [attr.datetime]="comment.createdAt">
-                    {{ comment.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+                    {{ comment.createdAt | date: 'dd/MM/yyyy · HH:mm' }}
                   </time>
                 </div>
+
                 <p class="comment__content">{{ comment.content }}</p>
               </div>
             </li>

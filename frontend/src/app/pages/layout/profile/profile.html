@@ -53,6 +53,42 @@
       </div>
     </header>
   }
+
+  <section class="user-posts">
+    <div class="user-posts__header-section">
+      <h2 class="user-posts__title">Mis últimas publicaciones</h2>
+      @if (posts().length > 0) {
+        <span class="user-posts__badge">{{ posts().length }}</span>
+      }
+    </div>
+
+    <div class="user-posts__grid">
+      @for (post of posts(); track post.id) {
+        <app-post-card
+          [post]="post"
+          [showAuthor]="false"
+          (deleteRequested)="onDeleteRequested($event)"
+          /* [showAuthor]="false" 
+        [category]="post.category" */
+        />
+      }
+    </div>
+
+    @if (!loading() && posts().length == 0) {
+      <div class="empty-feed">
+        <div class="empty-feed__badge-wrapper">
+          <span class="empty-feed__badge">TODAVÍA VACÍO</span>
+        </div>
+
+        <h2 class="empty-feed__title">Acá van a vivir tus publicaciones</h2>
+
+        <p class="empty-feed__description">
+          Todavía no compartiste nada. Tu primera publicación puede ser una duda, un proceso a
+          medias o una idea que no sabés cómo resolver.
+        </p>
+      </div>
+    }
+  </section>
   <!-- <header class="profile__card">
       <img class="profile__avatar" [src]="p.avatarUrl" [alt]="'Foto de perfil de ' + p.username" />
 

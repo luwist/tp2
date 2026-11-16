@@ -1,8 +1,14 @@
-$color-bg: #0f121b;
-$color-pink: #ff3d7f;
-$color-violet: #6d4af0;
-$color-green: #2ee6a8;
-$color-yellow: #ffcb57;
+// Tokens del sistema visual de dessin
+$bg-paper: #fdf6dc;
+$grid-line: rgb(24 24 27 / 6%);
+$surface-card: #ffffff;
+$ink-primary: #18181b;
+$ink-secondary: #52525b;
+$accent-yellow: #facc15;
+$accent-yellow-soft: #fef08a;
+$border-stroke: 1.5px solid $ink-primary;
+$radius-card: 1.25rem;
+$radius-pill: 9999px;
 
 $wave-stagger: 90ms;
 $wave-duration: 1.8s;
@@ -25,164 +31,136 @@ $float-duration: 5s;
   place-items: center;
   width: 100%;
   height: 100%;
+  padding: 1.5rem;
   overflow: hidden;
-  color: #fff;
+  color: $ink-primary;
   font-family: var(--font-heading, 'Sora', system-ui, sans-serif);
-  background-color: $color-bg;
-  background-image: radial-gradient(rgb(255 255 255 / 8%) 1px, transparent 1px);
-  background-size: 24px 24px;
+  // Fondo crema cuadriculado idéntico al de la app
+  background-color: $bg-paper;
+  background-image:
+    linear-gradient(to right, $grid-line 1px, transparent 1px),
+    linear-gradient(to bottom, $grid-line 1px, transparent 1px);
+  background-size: 32px 32px;
 
-  // Decorative shapes
+  // Bocetos geométricos con contorno negro sólido
   &__shape {
     position: absolute;
+    border: $border-stroke;
     will-change: transform;
 
-    &--pink-corner {
-      top: -90px;
-      right: -90px;
-      width: 260px;
-      height: 260px;
-      background: $color-pink;
-      border-radius: 50%;
-    }
-
-    &--green-circle {
-      top: 40px;
-      right: 226px;
+    &--circle {
+      top: 14%;
+      right: 16%;
       width: 56px;
       height: 56px;
-      background: $color-green;
+      background-color: $accent-yellow;
       border-radius: 50%;
 
       @include float;
     }
 
-    &--violet-arc {
-      bottom: -110px;
-      left: 40px;
-      width: 260px;
-      height: 260px;
-      background: $color-violet;
-      border-radius: 50%;
+    &--square {
+      bottom: 16%;
+      left: 15%;
+      width: 48px;
+      height: 48px;
+      background-color: $surface-card;
+      border-radius: 12px;
+      rotate: -12deg;
+
+      @include float(-2.5s);
     }
+  }
 
-    &--pink-circle {
-      bottom: 36px;
-      left: 330px;
-      width: 96px;
-      height: 96px;
-      background: $color-pink;
-      border-radius: 50%;
+  &__doodle {
+    position: absolute;
+    will-change: transform;
 
-      @include float(-1s);
-    }
-
-    &--yellow-ring {
-      top: 34%;
-      left: 110px;
-      box-sizing: content-box;
-      width: 52px;
-      height: 52px;
-      border: 10px solid $color-yellow;
-      border-radius: 50%;
-
-      @include float(-3s);
-    }
-
-    // The individual `rotate` property composes with the `transform` of the float
-    &--violet-square {
+    &--squiggle {
+      bottom: 18%;
       right: 14%;
-      bottom: 120px;
-      box-sizing: border-box;
+      width: 96px;
+      height: 36px;
+      color: $ink-primary;
+
+      @include float(-1.5s);
+    }
+
+    &--star {
+      top: 18%;
+      left: 16%;
       width: 44px;
       height: 44px;
-      border: 4px solid $color-violet;
-      border-radius: 10px;
-      rotate: 12deg;
+      color: $accent-yellow-soft;
 
-      @include float(-4s);
-    }
-
-    &--yellow-dot {
-      right: 56px;
-      bottom: 60px;
-      width: 14px;
-      height: 14px;
-      background: $color-yellow;
-      border-radius: 50%;
-    }
-
-    &--green-dot {
-      right: 90px;
-      bottom: 90px;
-      width: 8px;
-      height: 8px;
-      background: $color-green;
-      border-radius: 50%;
+      @include float(-3.5s);
     }
   }
 
-  // Decorative SVGs (colored through `currentColor`)
-  &__squiggle {
-    position: absolute;
-    top: 52px;
-    right: 290px;
-    width: 110px;
-    height: 40px;
-    color: $color-yellow;
-  }
-
-  &__triangle {
-    position: absolute;
-
-    &--outline {
-      top: 320px;
-      right: 90px;
-      width: 52px;
-      height: 48px;
-      color: $color-violet;
-
-      @include float(-2s);
-    }
-
-    &--solid {
-      bottom: 0;
-      left: 450px;
-      width: 104px;
-      height: 92px;
-      color: $color-green;
-    }
-  }
-
-  // position: relative keeps the content painted above the absolutely positioned shapes
-  &__content {
+  // Contenedor estilo lienzo/tarjeta de la app
+  &__card {
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    animation: splash-rise 0.8s ease-out both;
+    width: 100%;
+    max-width: 26rem;
+    background-color: $surface-card;
+    border: $border-stroke;
+    border-radius: $radius-card;
+    box-shadow: 4px 4px 0 $ink-primary;
+    animation: splash-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
+  &__card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.75rem 1rem;
+    border-bottom: $border-stroke;
+  }
+
+  &__card-dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border: $border-stroke;
+    border-radius: 50%;
+    background-color: $surface-card;
+
+    &:first-child {
+      background-color: $accent-yellow;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.125rem;
+    padding: 2.25rem 1.75rem 2rem;
+  }
+
+  // Isotipo re-coloreado a la paleta crema/amarillo/tinta
   &__mark {
-    width: 100px;
-    height: 80px;
+    width: 88px;
+    height: 70px;
 
     @include float;
 
     &-part {
-      &--pink {
-        fill: $color-pink;
-      }
-
-      &--green {
-        fill: $color-green;
-      }
+      stroke: $ink-primary;
+      stroke-width: 2.5;
+      stroke-linejoin: round;
 
       &--yellow {
-        fill: none;
-        stroke: $color-yellow;
-        stroke-width: 4;
+        fill: $accent-yellow;
+      }
+
+      &--white {
+        fill: $surface-card;
+      }
+
+      &--ink {
+        fill: $accent-yellow-soft;
       }
     }
   }
@@ -190,7 +168,8 @@ $float-duration: 5s;
   &__logo {
     display: flex;
     margin: 0;
-    font-size: clamp(4rem, 9vw, 7rem);
+    color: $ink-primary;
+    font-size: clamp(3rem, 7vw, 4.25rem);
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1;
@@ -199,51 +178,65 @@ $float-duration: 5s;
   &__letter {
     display: inline-block;
     animation: splash-wave $wave-duration ease-in-out infinite;
-    // Must come after the shorthand, which resets the delay
     animation-delay: calc(var(--index) * #{$wave-stagger});
   }
 
-  // Vector curve that draws itself under the logo
+  // Curva Bézier estilo herramienta vectorial sobre papel
   &__curve {
-    width: 340px;
-    max-width: 80vw;
+    width: 260px;
+    max-width: 100%;
     height: auto;
 
     &-handle {
-      stroke: rgb(255 255 255 / 40%);
+      stroke: $ink-secondary;
       stroke-width: 1.5;
       stroke-dasharray: 4 3;
     }
 
     &-path {
       fill: none;
-      stroke: $color-yellow;
-      stroke-width: 5;
+      stroke: $ink-primary;
+      stroke-width: 3.5;
       stroke-linecap: round;
       stroke-dasharray: 1;
-      animation: splash-draw 2.4s ease-in-out infinite;
+      animation: splash-draw 2.2s ease-in-out infinite;
     }
 
     &-point {
-      fill: $color-pink;
+      fill: $accent-yellow;
+      stroke: $ink-primary;
+      stroke-width: 1.5;
     }
 
     &-anchor {
-      fill: #fff;
-      stroke: $color-violet;
+      fill: $surface-card;
+      stroke: $ink-primary;
       stroke-width: 2;
     }
   }
 
-  // Visually hidden, announced by screen readers
-  &__status {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
+  // Píldora visible de estado de validación de sesión
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    padding: 0.4rem 1rem;
+    background-color: $accent-yellow-soft;
+    border: $border-stroke;
+    border-radius: $radius-pill;
+    color: $ink-primary;
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  &__badge-spinner {
+    width: 0.875rem;
+    height: 0.875rem;
+    border: 2px solid rgb(24 24 27 / 20%);
+    border-top-color: $ink-primary;
+    border-radius: 50%;
+    animation: splash-spin 0.75s linear infinite;
   }
 }
 
@@ -253,7 +246,7 @@ $float-duration: 5s;
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-12px);
+    transform: translateY(-10px);
   }
 }
 
@@ -264,7 +257,7 @@ $float-duration: 5s;
     transform: translateY(0);
   }
   30% {
-    transform: translateY(-12px);
+    transform: translateY(-8px);
   }
 }
 
@@ -281,7 +274,7 @@ $float-duration: 5s;
 @keyframes splash-rise {
   from {
     opacity: 0;
-    transform: translateY(16px) scale(0.96);
+    transform: translateY(14px) scale(0.97);
   }
   to {
     opacity: 1;
@@ -289,28 +282,15 @@ $float-duration: 5s;
   }
 }
 
-// Small screens: drop the decorations that would collide with the logo
-@media (width <= 640px) {
-  .splash__squiggle,
-  .splash__triangle--outline,
-  .splash__shape--yellow-ring,
-  .splash__shape--violet-square {
-    display: none;
+@keyframes splash-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-// Reduced motion: everything stays still
-// @media (prefers-reduced-motion: reduce) {
-//   .splash__content,
-//   .splash__shape,
-//   .splash__mark,
-//   .splash__letter,
-//   .splash__triangle--outline {
-//     animation: none;
-//   }
-
-//   .splash__curve-path {
-//     stroke-dashoffset: 0;
-//     animation: none;
-//   }
-// }
+@media (width <= 640px) {
+  .splash__shape,
+  .splash__doodle {
+    display: none;
+  }
+}

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastModule } from '@openng/optimus-ui/toast';
 import { Router, RouterLink } from '@angular/router';
 import { ProfileCard } from './profile-card/profile-card';
+import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
 
 @Component({
   imports: [
@@ -21,7 +22,8 @@ import { ProfileCard } from './profile-card/profile-card';
     SelectModule,
     ToastModule,
     RouterLink,
-    ProfileCard
+    ProfileCard,
+    SelectButtonModule,
   ],
   selector: 'app-feed',
   styleUrl: './feed.scss',
@@ -49,7 +51,7 @@ export class Feed {
   private readonly messageService = inject(MessageService);
 
   protected readonly sortOptions = [
-    { label: 'Más recientes', value: 'date' },
+    { label: 'Recientes', value: 'date' },
     { label: 'Más me gusta', value: 'likes' },
   ];
 
@@ -58,7 +60,7 @@ export class Feed {
   }
 
   protected onSortChange(sort: any) {
-    this.sortBy.set(sort);
+    this.sortBy.set(sort.value);
     this.posts.set([]);
     this.pagination.set(null);
     this.loadPage(1);
@@ -86,9 +88,6 @@ export class Feed {
   }
 
   onLikeToggled(post: any) {
-    console.log('POST LIKE TOGGLEADO');
-    console.log(post);
-
     if (this.pendingLikes.has(post._id)) return;
 
     this.pendingLikes.add(post._id);

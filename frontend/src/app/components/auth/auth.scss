@@ -1,83 +1,116 @@
+$ink: #17171F;
+$cream: #FFFDF7;
+
 .auth-layout {
-  position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  place-items: center;
   min-height: 100vh;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-
-  &__logo {
-    position: absolute;
-    top: 24px;
-    left: 48px;
-    font-family: "Sora", sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: #FFFFFF;
-    text-decoration: none;
-    z-index: 1;
-  }
-
-  &__content {
-    display: grid;
-    place-items: center;
-    padding: 24px 48px;
-  }
+  padding: 32px 24px;
 }
 
 .auth-card {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
   width: 100%;
-  max-width: 496px;
-  padding: 40px 56px;
-  background-color: #161820;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 16px;
+  max-width: 1040px;
+  overflow: hidden;
+  background: $cream;
+  color: $ink;
+  border: 2px solid $ink;
+  border-radius: 28px;
+  box-shadow: 6px 6px 0 $ink;
 
   &--wide {
-    max-width: 520px;
+    max-width: 1120px;
   }
 
+  // Panel izquierdo: amarillo con puntitos, como papel cuadriculado
+  &__brand {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 40px 0;
+    background-color: #FFD966;
+    background-image: radial-gradient(rgb(23 23 31 / 14%) 1px, transparent 1px);
+    background-size: 16px 16px;
+    border-right: 2px solid $ink;
+  }
+
+  &__logo {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: $ink;
+    text-decoration: none;
+  }
+
+  // Panel derecho: formulario
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 48px 40px;
+  }
+
+  // Etiqueta tipo sticker (reutiliza el input `step`)
   &__step {
-    margin: 0 0 4px;
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
+    align-self: flex-start;
+    margin: 0 0 12px;
+    padding: 4px 12px;
+    background: #C6F432;
+    border: 2px solid $ink;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transform: rotate(-2deg);
   }
 
   &__title {
     margin: 0;
-    font-family: "Sora", sans-serif;
-    font-size: 24px;
-    font-weight: 600;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.1;
   }
 
   &__switch {
     margin: 8px 0 0;
     font-size: 14px;
-    color: #C9C9D6;
+    color: #3A3A44;
   }
 
   &__link {
-    color: #654AEB;
-    font-weight: 600;
-    text-decoration: none;
+    color: $ink;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
 
     &:hover {
-      text-decoration: underline;
+      background: #FFEFBF;
     }
   }
 }
 
 @media (max-width: 900px) {
   .auth-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    place-items: start center;
+    padding: 16px;
+  }
 
-    &__logo {
-      left: 24px;
+  .auth-card {
+    grid-template-columns: 1fr;
+
+    &__brand {
+      padding: 24px 24px 0;
+      border-right: 0;
+      border-bottom: 2px solid $ink;
     }
 
     &__content {
-      padding: 24px;
+      padding: 32px 24px;
     }
   }
 }

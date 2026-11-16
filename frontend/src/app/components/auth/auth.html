@@ -1,16 +1,12 @@
 <div class="auth-layout">
-  <app-auth-illustration />
+  <div class="auth-card" [class.auth-card--wide]="size() === 'wide'">
+    <div class="auth-card__brand">
+      <a class="auth-card__logo" routerLink="/">dessin</a>
 
-  <a class="auth-layout__logo" routerLink="/">dessin</a>
+      <app-brand-panel [headline]="headline()" [description]="description()" />
+    </div>
 
-  <app-brand-panel
-    class="auth-layout__brand"
-    [headline]="headline()"
-    [description]="description()"
-  />
-
-  <main class="auth-layout__content">
-    <section class="auth-card" [class.auth-card--wide]="size() === 'wide'">
+    <main class="auth-card__content">
       @if (step()) {
         <p class="auth-card__step">{{ step() }}</p>
       }
@@ -23,6 +19,6 @@
       </p>
 
       <ng-content />
-    </section>
-  </main>
+    </main>
+  </div>
 </div>

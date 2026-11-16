@@ -10,13 +10,12 @@
     <div class="posts-page__header">
       <h1 class="posts-page__title">Publicaciones</h1>
 
-      <p-select
+      <p-selectbutton
         [options]="sortOptions"
         optionLabel="label"
         optionValue="value"
         [ngModel]="sortBy()"
-        (ngModelChange)="onSortChange($event)"
-        ariaLabel="Ordenar publicaciones"
+        (onChange)="onSortChange($event)"
       />
     </div>
     @for (post of posts(); track post._id) {

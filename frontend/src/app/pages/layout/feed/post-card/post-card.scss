@@ -21,6 +21,11 @@
     gap: 8px;
   }
 
+  &__time-ago {
+    font-size: 14px;
+    color: #4A4860;
+  }
+
   &__author {
     display: flex;
     // flex: 1;

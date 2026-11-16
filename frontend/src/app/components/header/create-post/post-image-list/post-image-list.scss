@@ -1,49 +1,71 @@
+$ink: #17171F;
+
 .post-image-list {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   margin: 0;
-  padding: 0;
+  padding: 10px 12px 10px 2px; // aire para la sombra y el botón que sobresale
   list-style: none;
   overflow-x: auto;
 
   &__item {
     position: relative;
     flex: 0 0 auto;
-    cursor: pointer;
-    transition: all 0.1s ease-in-out;
+    transition: transform 0.1s ease;
 
-    &:hover .post-image-list__remove {
-      display: flex;
+    // Inclinación leve, como la etiqueta y la píldora de la app
+    &:nth-child(odd) {
+      transform: rotate(-1.5deg);
+    }
+
+    &:nth-child(even) {
+      transform: rotate(1.5deg);
+    }
+
+    &:hover {
+      transform: rotate(0deg) translateY(-2px);
     }
   }
 
   &__img {
     display: block;
-    height: 144px;
     width: 144px;
-    border-radius: 12px;
+    height: 144px;
+    border: 2px solid $ink;
+    border-radius: 14px;
+    box-shadow: 3px 3px 0 $ink;
     object-fit: cover;
   }
 
   &__remove {
     position: absolute;
-    top: 4px;
-    right: 4px;
-    display: none;
+    top: -10px;
+    right: -10px;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 32px;
     height: 32px;
-    background-color: rgba(0, 0, 0, 0.6);
     padding: 0;
-    border: 0;
-    outline: 0;
+    background: #FF7EB6;
+    color: $ink;
+    border: 2px solid $ink;
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.1s ease-in-out;
+    transition: background 0.15s ease, transform 0.1s ease;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 9);
+      background: #FF9CC7;
+      transform: scale(1.08);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $ink;
+      outline-offset: 2px;
     }
   }
 }

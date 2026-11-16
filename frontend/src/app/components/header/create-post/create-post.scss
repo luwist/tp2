@@ -1,11 +1,15 @@
+$ink: #17171F;
+$cream: #FFFDF7;
+
 .post-author {
   display: flex;
   align-items: center;
   gap: 12px;
 
   &__avatar {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+    border: 2px solid $ink;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -17,21 +21,23 @@
   }
 
   &__name {
-    font-size: 14px;
-    font-weight: 600;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: $ink;
   }
-  
+
   &__handle {
-    margin-top: 4px;
-    font-size: 14px;
-    color: #8697AC;
+    margin-top: 2px;
+    font-size: 13px;
+    color: #6B6B76;
   }
 }
 
 .post-composer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
 
   &__title,
   &__description {
@@ -40,6 +46,7 @@
     border: 0;
     background: transparent;
     box-shadow: none;
+    color: $ink;
 
     &:focus {
       outline: 0;
@@ -47,27 +54,36 @@
     }
 
     &::placeholder {
-      color: #535D79;
+      color: #9A9AA5;
     }
   }
 
   &__title {
-    font-family: "Sora", sans-serif;
-    font-size: 18px;
-    font-weight: 600;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.15;
   }
 
   &__description {
     min-height: 144px;
-    font-family: "Figtree", sans-serif;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 15px;
+    line-height: 22px;
+    color: #3A3A44;
     resize: none;
+    field-sizing: content; // crece con el texto; el scroll pasa al contenido del dialog
+  }
+
+  // Línea punteada que separa el editor de la barra de acciones
+  &__tools {
+    display: block;
+    padding-top: 16px;
+    border-top: 2px dashed $ink;
   }
 
   &__footer {
     display: flex;
     justify-content: flex-end;
-    gap: 0.75rem;
+    gap: 12px;
   }
 }
