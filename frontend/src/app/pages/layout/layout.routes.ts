@@ -11,6 +11,11 @@ export const routes: Routes = [
         loadComponent: () => import('./feed/feed').then((m) => m.Feed),
       },
       {
+        path: 'admin',
+        title: 'Administracion',
+        loadChildren: () => import('./admin/admin.routes').then((m) => m.routes),
+      },
+      {
         path: ':username',
         title: 'Profile',
         loadComponent: () => import('./profile/profile').then((m) => m.Profile),

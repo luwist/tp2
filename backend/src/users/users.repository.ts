@@ -18,6 +18,13 @@ export class UsersRepository {
       .exec();
   }
 
+  async findAll() {
+    return await this.userModel
+      .find()
+      .select('_id firstName lastName avatarUrl role isActive')
+      .exec();
+  }
+
   async findByEmailOrUsername(
     identifier: string,
   ): Promise<UserDocument | null> {

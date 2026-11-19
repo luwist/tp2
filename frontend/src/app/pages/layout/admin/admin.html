@@ -1,0 +1,18 @@
+<main class="dashboard">
+  <header class="dashboard__header">
+    <div>
+      <h1 class="dashboard__title">Panel de administración</h1>
+      <p class="dashboard__subtitle">Gestioná cuentas, permisos y métricas de dessin</p>
+    </div>
+
+    <p-selectbutton
+      [options]="sortOptions"
+      optionLabel="label"
+      optionValue="value"
+      [ngModel]="sortBy()"
+      (onChange)="onSortChange($event)"
+    />
+  </header>
+
+  <router-outlet />
+</main>

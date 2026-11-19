@@ -60,8 +60,4 @@ export class RegisterDto {
   @IsString()
   @MaxLength(200)
   bio: string;
-
-  @IsOptional()
-  @IsEnum(Role)
-  role?: Role;
 }

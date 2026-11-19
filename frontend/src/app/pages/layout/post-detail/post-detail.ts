@@ -10,6 +10,7 @@ import { finalize, forkJoin } from 'rxjs';
 import { PostCard } from '../feed/post-card/post-card';
 import { PostCardSkeleton } from '../feed/post-card-skeleton/post-card-skeleton';
 import { CommentService, PostComment } from '@app/services';
+import { TimeAgoPipe } from '@app/pipes';
 
 const MAX_COMMENT_LENGTH = 500;
 
@@ -22,6 +23,7 @@ const MAX_COMMENT_LENGTH = 500;
     ReactiveFormsModule,
     RouterLink,
     DatePipe,
+    TimeAgoPipe,
   ],
   selector: 'app-post-detail',
   templateUrl: './post-detail.html',

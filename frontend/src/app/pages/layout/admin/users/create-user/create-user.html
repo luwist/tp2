@@ -1,0 +1,198 @@
+<p-toast position="top-center" />
+
+<p-dialog
+  header="Crear usuario"
+  styleClass="create-user__dialog"
+  [draggable]="false"
+  [modal]="true"
+  [resizable]="false"
+  [style]="{ width: '36rem', maxWidth: '95vw' }"
+  [visible]="visible()"
+  (onHide)="close()"
+  (visibleChange)="visible.set($event)"
+>
+  <form class="fields" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="field">
+      <app-avatar-uploader (fileSelected)="onfileSelected($event)" />
+    </div>
+
+    <div class="fields__row">
+      <div class="field">
+        <label class="field__label">Nombre</label>
+
+        <input type="text" pInputText placeholder="Nombre" formControlName="firstName" />
+
+        @if (
+          getFormControl('firstName')?.invalid &&
+          (getFormControl('firstName')?.touched || getFormControl('firstName')?.dirty)
+        ) {
+          @if (getFormControl('firstName')?.hasError('required')) {
+            <p class="field__error">El campo es obligatorio.</p>
+          }
+        }
+      </div>
+
+      <div class="field">
+        <label class="field__label">Apellido</label>
+
+        <input type="text" pInputText placeholder="Apellido" formControlName="lastName" />
+
+        @if (
+          getFormControl('lastName')?.invalid &&
+          (getFormControl('lastName')?.touched || getFormControl('lastName')?.dirty)
+        ) {
+          @if (getFormControl('lastName')?.hasError('required')) {
+            <p class="field__error">El campo es obligatorio.</p>
+          }
+        }
+      </div>
+    </div>
+
+    <div class="fields__row">
+      <div class="field">
+        <label class="field__label">Correo electrónico</label>
+
+        <input type="text" pInputText placeholder="Correo electrónico" formControlName="email" />
+
+        @if (
+          getFormControl('email')?.invalid &&
+          (getFormControl('email')?.touched || getFormControl('email')?.dirty)
+        ) {
+          @if (getFormControl('email')?.hasError('required')) {
+            <p class="field__error">El campo es obligatorio.</p>
+          }
+
+          @if (getFormControl('email')?.hasError('email')) {
+            <p class="field__error">Ingresá un correo electrónico válido.</p>
+          }
+        }
+      </div>
+
+      <div class="field">
+        <label class="field__label">Nombre de usuario</label>
+
+        <input type="text" pInputText placeholder="Nombre de usuario" formControlName="username" />
+
+        @if (
+          getFormControl('username')?.invalid &&
+          (getFormControl('username')?.touched || getFormControl('lusernameastName')?.dirty)
+        ) {
+          @if (getFormControl('username')?.hasError('required')) {
+            <p class="field__error">El campo es obligatorio.</p>
+          }
+        }
+      </div>
+    </div>
+
+    <div class="fields__row">
+      <div class="field">
+        <label class="field__label">Contraseña</label>
+
+        <input type="password" pInputText placeholder="Contraseña" formControlName="password" />
+
+        @if (
+          getFormControl('password')?.invalid &&
+          (getFormControl('password')?.touched || getFormControl('password')?.dirty)
+        ) {
+          @if (getFormControl('password')?.hasError('required')) {
+            <p class="field__error">El campo es obligatorio.</p>
+          }
+        }
+      </div>
+
+      <div class="field">
+        <label class="field__label">Repetir contraseña</label>
+
+        <input
+          type="password"
+          pInputText
+          placeholder="Contraseña"
+          formControlName="confirmPassword"
+        />
+
+        @if (
+          getFormControl('confirmPassword')?.hasError('required') &&
+          (getFormControl('confirmPassword')?.touched || getFormControl('confirmPassword')?.dirty)
+        ) {
+          <p class="field__error">Confirmá tu contraseña.</p>
+        }
+        @if (passwordMismatch) {
+          <p class="field__error">Las contraseñas no coinciden.</p>
+        }
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field__label">Fecha de nacimiento</label>
+
+      <input
+        pInputText
+        formControlName="birthDate"
+        pInputMask="99/99/9999"
+        placeholder="mm/dd/yyyy"
+      />
+
+      @if (
+        getFormControl('birthDate')?.invalid &&
+        (getFormControl('birthDate')?.touched || getFormControl('birthDate')?.dirty)
+      ) {
+        @if (getFormControl('birthDate')?.hasError('required')) {
+          <p class="field__error">El campo es obligatorio.</p>
+        }
+
+        @if (getFormControl('birthDate')?.hasError('invalidDate')) {
+          <p class="field__error">Ingresá una fecha válida.</p>
+        }
+
+        @if (getFormControl('birthDate')?.hasError('futureDate')) {
+          <p class="field__error">La fecha no puede ser futura.</p>
+        }
+      }
+    </div>
+
+    <div class="field">
+      <label class="field__label">Bio</label>
+
+      <textarea pTextarea formControlName="bio"></textarea>
+
+      @if (
+        getFormControl('bio')?.invalid &&
+        (getFormControl('bio')?.touched || getFormControl('bio')?.dirty)
+      ) {
+        @if (getFormControl('bio')?.hasError('required')) {
+          <p class="field__error">El campo es obligatorio.</p>
+        }
+      }
+    </div>
+
+    <fieldset class="create-user__field">
+      <legend class="create-user__label">Rol</legend>
+      <div class="create-user__radios">
+        <div class="create-user__radio">
+          <p-radiobutton formControlName="role" inputId="create-user-role-user" value="user" />
+          <label for="create-user-role-user">Usuario</label>
+        </div>
+
+        <div class="create-user__radio">
+          <p-radiobutton formControlName="role" inputId="create-user-role-admin" value="admin" />
+          <label for="create-user-role-admin">Administrador</label>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="create-user__actions">
+      <p-button
+        label="Cancelar"
+        styleClass="create-user__button"
+        type="button"
+        (onClick)="close()"
+      />
+      <p-button
+        label="Crear usuario"
+        [disabled]="form.invalid"
+        styleClass="create-user__button create-user__button--primary"
+        type="submit"
+      />
+    </div>
+  </form>
+</p-dialog>

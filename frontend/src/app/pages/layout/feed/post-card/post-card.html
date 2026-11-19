@@ -11,7 +11,7 @@
         </div>
       </div>
     } @else {
-      <span class="post-card__time-ago">{{ post().createdAt | date: 'dd/MM/yyyy · hh:mm a' }}</span>
+      <span class="post-card__time-ago">{{ post().createdAt | timeAgo }}</span>
     }
 
     @if (isOwner() || isAdmin()) {

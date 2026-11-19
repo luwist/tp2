@@ -7,6 +7,7 @@ import { UsersRepository } from './users.repository.js';
 import { UsersService } from './users.service.js';
 import { PostsModule } from '../posts/posts.module.js';
 import { CommentsModule } from '../comments/comments.module.js';
+import { StorageService } from '../common/storage/storage.service.js';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { CommentsModule } from '../comments/comments.module.js';
     forwardRef(() => CommentsModule),
   ],
   controllers: [UsersController],
-  providers: [UsersService, UsersRepository],
+  providers: [UsersService, UsersRepository, StorageService],
   exports: [UsersRepository],
 })
 export class UsersModule {}

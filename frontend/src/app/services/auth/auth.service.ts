@@ -15,6 +15,10 @@ export class AuthService {
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
 
+  readonly _token = signal<string | null>(this.getToken());
+
+  readonly token = this._token.asReadonly();
+
   private readonly _status = signal<SessionStatus>(
     localStorage.getItem('token') ? 'checking' : 'unauthenticated',
   );
@@ -39,7 +43,24 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('currentUser');
 
+    this._token.set(null);
     this.currentUserSubject.next(null);
+  }
+
+  refreshToken() {
+    return this.http.post<{ token: string }>(`${environment.apiUrl}/auth/refresh`, {}).pipe(
+      tap((data) => {
+        localStorage.setItem(
+          'currentUser',
+          JSON.stringify({
+            user: this.currentUser(),
+            token: data.token,
+          }),
+        );
+
+        this._token.set(data.token);
+      }),
+    );
   }
 
   validateSession() {
@@ -88,6 +109,7 @@ export class AuthService {
     localStorage.setItem('currentUser', JSON.stringify(response));
 
     this.currentUser.set(response.user);
+    this._token.set(response.token);
   }
 
   clearSession() {

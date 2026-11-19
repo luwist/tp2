@@ -1,0 +1,50 @@
+.dashboard {
+      max-width: 68rem;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 4rem;
+
+      &__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      &__title {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #17171F;
+      }
+
+      &__subtitle {
+        margin: 0.25rem 0 0;
+        font-size: 0.875rem;
+        color: #52525b;
+      }
+
+      &__tabs {
+        display: inline-flex;
+        padding: 0.25rem;
+        background-color: #ffffff;
+        border: 1.5px solid #17171F;
+        border-radius: 9999px;
+      }
+
+      &__tab {
+        padding: 0.45rem 1.125rem;
+        border-radius: 9999px;
+        color: #17171F;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background-color 0.15s ease;
+
+        &--active {
+          background-color: #facc15;
+          font-weight: 700;
+        }
+      }
+    }

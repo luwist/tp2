@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { PostCard } from './post-card/post-card';
 import { PostCardSkeleton } from './post-card-skeleton/post-card-skeleton';
 import { ConfirmDialogModule } from '@openng/optimus-ui/confirmdialog';
-import { finalize } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { ConfirmationService, MessageService } from '@openng/optimus-ui/api';
 import { Pagination } from '@app/dto/responses/paginated.response';
 import { PostService } from '@app/services/post/post.service';
@@ -12,6 +12,7 @@ import { ToastModule } from '@openng/optimus-ui/toast';
 import { Router, RouterLink } from '@angular/router';
 import { ProfileCard } from './profile-card/profile-card';
 import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
+import { InfiniteScroll } from '@app/directives';
 
 @Component({
   imports: [
@@ -24,6 +25,7 @@ import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
     RouterLink,
     ProfileCard,
     SelectButtonModule,
+    InfiniteScroll,
   ],
   selector: 'app-feed',
   styleUrl: './feed.scss',
@@ -34,6 +36,9 @@ export class Feed {
   private _postService = inject(PostService);
   private _router = inject(Router);
   private readonly confirmation = inject(ConfirmationService);
+
+  private loadSub?: Subscription;
+  protected readonly loadFailed = signal(false);
 
   protected readonly skeletons = [1, 2, 3];
 
@@ -60,6 +65,7 @@ export class Feed {
   }
 
   protected onSortChange(sort: any) {
+    this.loadSub?.unsubscribe();
     this.sortBy.set(sort.value);
     this.posts.set([]);
     this.pagination.set(null);
@@ -76,14 +82,19 @@ export class Feed {
 
   private loadPage(page: number) {
     const loadingFlag = page === 1 ? this.isLoading : this.isLoadingMore;
-    loadingFlag.set(true);
 
-    this._postService
+    loadingFlag.set(true);
+    this.loadFailed.set(false);
+
+    this.loadSub = this._postService
       .getFeed(page, this.sortBy())
       .pipe(finalize(() => loadingFlag.set(false)))
-      .subscribe(({ data, pagination }) => {
-        this.posts.update((current) => [...current, ...data]);
-        this.pagination.set(pagination);
+      .subscribe({
+        next: ({ data, pagination }) => {
+          this.posts.update((current) => [...current, ...data]);
+          this.pagination.set(pagination);
+        },
+        error: () => this.loadFailed.set(true),
       });
   }
 

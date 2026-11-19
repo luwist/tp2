@@ -1,0 +1,37 @@
+<p-dialog
+  styleClass="session-expiring__dialog"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [draggable]="false"
+  [modal]="true"
+  [resizable]="false"
+  [showHeader]="false"
+  [style]="{ width: '28rem', maxWidth: '95vw' }"
+  [visible]="session.expiringDialogVisible()"
+>
+  <div class="session-expiring">
+    <p class="session-expiring__time" aria-live="off">{{ timeLeft() }}</p>
+
+    <h2 class="session-expiring__title">Tu sesión está por vencer</h2>
+
+    <p class="session-expiring__text">
+      Por seguridad, tu sesión se cierra automáticamente. ¿Querés extenderla para seguir en dessin?
+    </p>
+
+    <div class="session-expiring__actions">
+      <p-button
+        label="Cerrar sesión"
+        styleClass="session-expiring__button"
+        type="button"
+        (onClick)="onCancel()"
+      />
+      <p-button
+        label="Extender sesión"
+        styleClass="session-expiring__button session-expiring__button--primary"
+        type="button"
+        [loading]="session.isExtending()"
+        (onClick)="session.extend()"
+      />
+    </div>
+  </div>
+</p-dialog>

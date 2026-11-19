@@ -1,0 +1,155 @@
+:host {
+  display: block;
+}
+
+.users {
+  --users-ink: #1a1a1a;
+  --users-surface: #ffffff;
+  --users-accent: #fbbf24;
+  --users-muted: #5b5b5b;
+  --users-radius: 16px;
+  --users-border: 2px solid var(--users-ink);
+  --users-shadow: 4px 4px 0 var(--users-ink);
+
+  background: var(--users-surface);
+  border: var(--users-border);
+  border-radius: var(--users-radius);
+  box-shadow: var(--users-shadow);
+  overflow: hidden;
+
+  &__toolbar {
+    align-items: center;
+    border-bottom: var(--users-border);
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+  }
+
+  &__count {
+    color: var(--users-muted);
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  &__identity {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  &__name {
+    font-weight: 700;
+  }
+
+  &__status {
+    align-items: center;
+    display: inline-flex;
+    gap: 0.75rem;
+  }
+
+  // &__status-label {
+  //   color: var(--users-muted);
+  //   font-size: 0.875rem;
+  //   min-width: 6.5rem;
+  // }
+
+  // &__cell--status {
+  //   text-align: right;
+  // }
+
+  &__row--disabled &__name,
+  &__row--disabled &__status-label {
+    color: var(--users-muted);
+  }
+
+  &__row--disabled &__name {
+    font-weight: 500;
+  }
+
+  &__empty {
+    color: var(--users-muted);
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  // Optimus UI component overrides (rendered outside this component's view encapsulation)
+  ::ng-deep {
+    .users__create {
+      background: var(--users-surface);
+      border: var(--users-border);
+      border-radius: 12px;
+      box-shadow: 3px 3px 0 var(--users-ink);
+      color: var(--users-ink);
+      font-weight: 700;
+      transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease;
+
+      &:hover {
+        background: var(--users-accent);
+      }
+
+      &:active {
+        box-shadow: 0 0 0 var(--users-ink);
+        transform: translate(3px, 3px);
+      }
+    }
+
+    .users__table {
+      .p-datatable-table {
+        width: 100%;
+      }
+
+      .p-datatable-thead > tr > th {
+        background: transparent;
+        border-bottom: var(--users-border);
+        color: var(--users-ink);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        padding: 0.875rem 1.25rem;
+        text-transform: uppercase;
+      }
+
+      .p-datatable-tbody > tr {
+        background: transparent;
+        transition: background-color 0.15s ease;
+
+        &:hover {
+          background: rgb(251 191 36 / 12%);
+        }
+
+        > td {
+          border-bottom: 1px solid rgb(26 26 26 / 12%);
+          padding: 0.875rem 1.25rem;
+        }
+
+        &:last-child > td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    .users__avatar {
+      background: var(--users-accent);
+      border: var(--users-border);
+      color: var(--users-ink);
+      font-weight: 800;
+    }
+
+    .users__role {
+      border: 2px solid var(--users-ink);
+      color: var(--users-ink);
+      font-weight: 700;
+    }
+
+    .users__role.p-tag-warn {
+      background: var(--users-accent);
+    }
+
+    .users__role.p-tag-secondary {
+      background: #FFFFFF;
+    }
+  }
+}

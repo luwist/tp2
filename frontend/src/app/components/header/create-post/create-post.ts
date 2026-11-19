@@ -81,9 +81,7 @@ export class CreatePost {
       this.messageService.add({
         severity: 'error',
         summary: 'Imagen demasiado grande',
-        data: {
-          fileName: f.name,
-        },
+        detail: `"${f.name}" supera el tamaño máximo permitido.`,
       });
     });
   }
@@ -122,14 +120,19 @@ export class CreatePost {
           this.isLoading.set(false);
 
           this.messageService.add({
-            severity: 'error',
+            severity: 'success',
             summary: 'Publicación creada',
+            detail: 'Ya podés verla en el feed.',
           });
-
           this.close();
         },
         error: (error) => {
           console.error('Error creating post:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'No pudimos publicar',
+            detail: 'Algo salió mal. Intentá de nuevo.',
+          });
           this.isLoading.set(false);
         },
       });

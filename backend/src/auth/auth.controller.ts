@@ -15,6 +15,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { JwtGuard } from '../common/guards/jwt/jwt.guard.js';
 import { AuthGuard } from '../common/guards/auth/auth.guard.js';
+import { CurrentUser } from '@nestjs/authentication';
 
 @Controller('auth')
 export class AuthController {
@@ -42,5 +43,11 @@ export class AuthController {
   @Get('me')
   me(@Req() request: any) {
     return this.authService.validateSession(request.user.username);
+  }
+
+  @Post('refresh')
+  @UseGuards(AuthGuard)
+  refresh(@Req() request: any) {
+    return this.authService.refresh(request.user.username);
   }
 }

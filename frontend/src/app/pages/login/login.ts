@@ -7,9 +7,18 @@ import { ToastModule } from '@openng/optimus-ui/toast';
 import { MessageService } from '@openng/optimus-ui/api';
 import { Auth } from '@app/components/auth/auth';
 import { AuthService } from '@app/services/auth/auth.service';
+import { AccountDisabled } from './account-disabled/account-disabled';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, InputTextModule, ButtonModule, ToastModule, Auth],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    InputTextModule,
+    ButtonModule,
+    ToastModule,
+    Auth,
+    AccountDisabled,
+  ],
   selector: 'app-login',
   styleUrl: './login.scss',
   templateUrl: './login.html',
@@ -19,6 +28,7 @@ export class Login {
   private _router = inject(Router);
   private _authService = inject(AuthService);
   private _messageService = inject(MessageService);
+  protected readonly disabledDialogVisible = signal(false);
 
   isLoading = signal(false);
 
@@ -57,11 +67,17 @@ export class Login {
         this._router.navigateByUrl('/');
       },
       error: (err) => {
-        this._messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Credenciales incorrectas.',
-        });
+        console.log('ERRORRRR');
+        console.log(err);
+        if (err.error.code == 'ACCOUNT_DISABLED') {
+          this.disabledDialogVisible.set(true);
+        } else {
+          this._messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Credenciales incorrectas.',
+          });
+        }
 
         this.isLoading.set(false);
       },

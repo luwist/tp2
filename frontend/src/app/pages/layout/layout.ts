@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from '@app/components';
+import { Header, SessionExpiringDialog } from '@app/components';
 
 @Component({
-  imports: [RouterOutlet, Header],
+  imports: [RouterOutlet, Header, SessionExpiringDialog],
   selector: 'app-layout',
   styleUrl: './layout.scss',
   templateUrl: './layout.html',

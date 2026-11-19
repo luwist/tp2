@@ -1,10 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '@app/services';
 import { AvatarModule } from '@openng/optimus-ui/avatar';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { CreatePost } from './create-post/create-post';
 import { UserMenu } from './user-menu/user-menu';
+import { AuthService } from '@app/services/auth/auth.service';
 
 @Component({
   imports: [RouterLink, ButtonModule, AvatarModule, CreatePost, UserMenu],
@@ -14,6 +14,7 @@ import { UserMenu } from './user-menu/user-menu';
 })
 export class Header {
   protected readonly auth = inject(AuthService);
+  protected readonly user = this.auth.currentUser;
   readonly createDialogVisible = signal(false);
 
   protected readonly menuItems: any[] = [

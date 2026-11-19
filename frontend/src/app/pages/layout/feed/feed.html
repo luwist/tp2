@@ -27,21 +27,16 @@
       />
     }
 
-    @if (isLoading()) {
-      @for (item of skeletons; track item) {
-        <app-post-card-skeleton />
-      }
+    @if (isLoadingMore()) {
+      <app-post-card-skeleton />
     }
 
-    @if (hasMore() && !isLoading()) {
-      <button
-        type="button"
-        class="posts-page__load-more"
-        [disabled]="isLoadingMore()"
-        (click)="loadMore()"
-      >
-        {{ isLoadingMore() ? 'Cargando...' : 'Cargar más' }}
+    @if (loadFailed() && !isLoading()) {
+      <button type="button" class="posts-page__load-more" (click)="loadMore()">
+        No se pudo cargar. Reintentar
       </button>
+    } @else if (hasMore() && !isLoading() && !isLoadingMore()) {
+      <div class="posts-page__sentinel" appInfiniteScroll (scrolled)="loadMore()"></div>
     }
   </div>
 

@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -80,6 +81,15 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
+    if (!user.isActive) {
+      throw new ForbiddenException({
+        code: 'ACCOUNT_DISABLED',
+        message: 'Account is disabled',
+      });
+    }
+
+    console.log('ÑAOÑAO');
+
     const token = await this.generateToken(user);
 
     return {
@@ -102,6 +112,23 @@ export class AuthService {
     }
 
     return { valid: true, user: user };
+  }
+
+  async refresh(username: any) {
+    const user = await this.usersRepository.findByEmailOrUsername(username);
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid token');
+    }
+
+    if (!user.isActive) {
+      throw new ForbiddenException({
+        code: 'ACCOUNT_DISABLED',
+        message: 'Account is disabled',
+      });
+    }
+
+    return { token: await this.generateToken(user) };
   }
 
   generateToken(user: any) {
