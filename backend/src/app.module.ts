@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
 import { PostsModule } from './posts/posts.module.js';
 import { CommentsModule } from './comments/comments.module.js';
+import { StatsModule } from './stats/stats.module.js';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CommentsModule } from './comments/comments.module.js';
     UsersModule,
     PostsModule,
     CommentsModule,
+    StatsModule,
   ],
   controllers: [],
   providers: [],

@@ -40,4 +40,11 @@ export class UsersRepository {
   async create(data: User): Promise<UserDocument> {
     return await this.userModel.create(data);
   }
+
+  async setActive(id: string, isActive: boolean) {
+    return await this.userModel
+      .findByIdAndUpdate(id, { isActive }, { new: true })
+      .select('_id firstName lastName avatarUrl role isActive')
+      .exec();
+  }
 }

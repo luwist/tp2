@@ -8,6 +8,7 @@ import { PostsService } from './posts.service.js';
 import { UsersModule } from '../users/users.module.js';
 import { StorageService } from '../common/storage/storage.service.js';
 import { CommentsModule } from '../comments/comments.module.js';
+import { StatsModule } from '../stats/stats.module.js';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CommentsModule } from '../comments/comments.module.js';
     MongooseModule.forFeature([{ name: Post.name, schema: PostSchema }]),
     forwardRef(() => UsersModule),
     forwardRef(() => CommentsModule),
+    StatsModule,
   ],
   controllers: [PostsController],
   providers: [PostsService, PostsRepository, StorageService],

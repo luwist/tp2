@@ -11,6 +11,8 @@ import { PostSort } from '../common/enums/post-sort.enum.js';
 import { isValidObjectId, Types } from 'mongoose';
 import { Post, PostDocument } from './entities/post.entity.js';
 import { CommentsRepository } from '../comments/comments.repository.js';
+import { EventsRepository } from '../stats/events.repository.js';
+import { EventType } from '../stats/entities/stat-event.entity.js';
 
 const FEED_PAGE_SIZE = 5;
 
@@ -21,6 +23,7 @@ export class PostsService {
     private readonly postsRepository: PostsRepository,
     private readonly usersRepository: UsersRepository,
     private readonly commentsRepository: CommentsRepository,
+    private readonly eventsRepository: EventsRepository,
   ) {}
 
   async create(dto: any, files: Express.Multer.File[], username: string) {
@@ -134,6 +137,12 @@ export class PostsService {
     if (!post) {
       throw new NotFoundException('Post not found');
     }
+
+    await this.eventsRepository.record({
+      type: EventType.Like,
+      user: user._id,
+      post: new Types.ObjectId(postId),
+    });
 
     return {
       likesCount: post.likes.length,

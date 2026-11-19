@@ -23,10 +23,41 @@ export class CommentsRepository {
     return comment.toObject();
   }
 
-  async findByPost(postId: Types.ObjectId) {
+  async findByPost(postId: Types.ObjectId, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+
     return await this.commentModel
       .find({ post: postId, isActive: true })
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: -1, _id: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate('author', AUTHOR_FIELDS)
+      .lean()
+      .exec();
+  }
+
+  async countByPost(postId: Types.ObjectId) {
+    return await this.commentModel.countDocuments({
+      post: postId,
+      isActive: true,
+    });
+  }
+
+  async findActiveById(commentId: string) {
+    return await this.commentModel
+      .findOne({ _id: commentId, isActive: true })
+      .select('author')
+      .lean()
+      .exec();
+  }
+
+  async update(commentId: string, content: string) {
+    return await this.commentModel
+      .findOneAndUpdate(
+        { _id: commentId, isActive: true },
+        { $set: { content, editedAt: new Date() } },
+        { new: true },
+      )
       .populate('author', AUTHOR_FIELDS)
       .lean()
       .exec();

@@ -49,11 +49,18 @@
   }
 
   &__username {
+    display: inline-block;
     font-size: 14px;
     color: #17171F;
     background-color: #FFE98A;
     padding: 1px 8px;
     border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: #facc15;
+    }
   }
 
   &__menu {

@@ -7,7 +7,12 @@
           <span class="post-card__name">
             {{ post().author.firstName }} {{ post().author.lastName }}
           </span>
-          <span class="post-card__username">&#64;{{ post().author.username }}</span>
+          <a
+            class="post-card__username"
+            [routerLink]="['/', post().author.username]"
+            [attr.aria-label]="'Ver perfil de @' + post().author.username"
+            (click)="$event.stopPropagation()"
+          >&#64;{{ post().author.username }}</a>
         </div>
       </div>
     } @else {

@@ -5,6 +5,7 @@ import { provideOptimus } from '@openng/optimus-ui/config';
 import { CustomPresent } from './theme/theme';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './interceptors';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,5 +16,6 @@ export const appConfig: ApplicationConfig = {
       ripple: true,
     }),
     provideHttpClient(withInterceptors([jwtInterceptor])),
+    provideCharts(withDefaultRegisterables()),
   ],
 };

@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, input, output, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PostImageGallery } from './post-image-gallery/post-image-gallery';
 import { finalize } from 'rxjs';
 import { MenuModule } from '@openng/optimus-ui/menu';
@@ -7,7 +8,7 @@ import { AuthService } from '@app/services/auth/auth.service';
 import { TimeAgoPipe } from '@app/pipes';
 
 @Component({
-  imports: [DatePipe, PostImageGallery, MenuModule, TimeAgoPipe],
+  imports: [DatePipe, PostImageGallery, MenuModule, TimeAgoPipe, RouterLink],
   selector: 'app-post-card',
   styleUrl: './post-card.scss',
   templateUrl: './post-card.html',

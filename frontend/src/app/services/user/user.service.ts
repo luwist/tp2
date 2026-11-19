@@ -24,4 +24,10 @@ export class UserService {
   create(data: any) {
     return this.http.post<any>(`${environment.apiUrl}/users`, toFormData(data));
   }
+
+  setActive(id: string, isActive: boolean) {
+    return this.http.patch<any>(`${environment.apiUrl}/users/${id}/status`, {
+      isActive,
+    });
+  }
 }

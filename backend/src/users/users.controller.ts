@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Req,
   UploadedFile,
@@ -10,8 +11,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '../common/guards/auth/auth.guard.js';
+import { AdminGuard } from '../common/guards/admin/admin.guard.js';
 import { UsersService } from './users.service.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
+import { UpdateUserStatusDto } from './dto/update-user-status.dto.js';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users')
@@ -25,8 +28,8 @@ export class UsersController {
   }
 
   @Get(':username')
-  getProfile(@Param('username') username: string) {
-    return this.usersService.getProfile(username);
+  getProfile(@Param('username') username: string, @Req() req: any) {
+    return this.usersService.getProfile(username, req.user?.username);
   }
 
   @Post()
@@ -37,5 +40,11 @@ export class UsersController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     return await this.usersService.create(dto, file, req.user.username);
+  }
+
+  @Patch(':id/status')
+  @UseGuards(AdminGuard)
+  setActive(@Param('id') id: string, @Body() dto: UpdateUserStatusDto) {
+    return this.usersService.setActive(id, dto.isActive);
   }
 }

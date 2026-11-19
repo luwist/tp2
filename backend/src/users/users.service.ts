@@ -10,6 +10,8 @@ import { Role } from '../common/enums/role.enum.js';
 import { PasswordHasher } from '@nestjs/authentication';
 import { StorageService } from '../common/storage/storage.service.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
+import { EventsRepository } from '../stats/events.repository.js';
+import { EventType } from '../stats/entities/stat-event.entity.js';
 
 @Injectable()
 export class UsersService {
@@ -18,6 +20,7 @@ export class UsersService {
     private readonly postsRepository: PostsRepository,
     private readonly passwordHasher: PasswordHasher,
     private readonly storageService: StorageService,
+    private readonly eventsRepository: EventsRepository,
   ) {}
 
   async findAll(username: string) {
@@ -34,11 +37,33 @@ export class UsersService {
     return this.usersRepository.findAll();
   }
 
-  async getProfile(username: string) {
+  async setActive(id: string, isActive: boolean) {
+    const user = await this.usersRepository.setActive(id, isActive);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
+  }
+
+  async getProfile(username: string, viewerUsername?: string) {
     const user = await this.usersRepository.findByEmailOrUsername(username);
 
     if (!user) {
       throw new NotFoundException('User not found');
+    }
+
+    if (viewerUsername) {
+      const viewer = await this.usersRepository.findByEmailOrUsername(viewerUsername);
+
+      if (viewer && !viewer._id.equals(user._id)) {
+        await this.eventsRepository.record({
+          type: EventType.ProfileVisit,
+          user: viewer._id,
+          targetUser: user._id,
+        });
+      }
     }
 
     const posts = await this.postsRepository.findListPostByUserId(user._id);

@@ -13,6 +13,8 @@ import { LoginDto } from './dto/login.dto.js';
 import { Role } from '../common/enums/role.enum.js';
 import { StorageService } from '../common/storage/storage.service.js';
 import { UsersRepository } from '../users/users.repository.js';
+import { EventsRepository } from '../stats/events.repository.js';
+import { EventType } from '../stats/entities/stat-event.entity.js';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +23,7 @@ export class AuthService {
     private readonly passwordHasher: PasswordHasher,
     private readonly jwtService: JwtService,
     private readonly storageService: StorageService,
+    private readonly eventsRepository: EventsRepository,
   ) {}
 
   async register(registerDto: RegisterDto, file: Express.Multer.File) {
@@ -88,7 +91,10 @@ export class AuthService {
       });
     }
 
-    console.log('ÑAOÑAO');
+    await this.eventsRepository.record({
+      type: EventType.Login,
+      user: user._id,
+    });
 
     const token = await this.generateToken(user);
 

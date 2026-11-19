@@ -26,7 +26,7 @@
       <header class="post-detail__comments-header">
         <h2 class="post-detail__comments-title">Comentarios</h2>
         <span class="post-detail__comments-badge">
-          {{ currentPost.commentsCount ?? comments().length }}
+          {{ totalComments() }}
         </span>
       </header>
 
@@ -85,17 +85,78 @@
                     @if (comment.author.username) {
                       <span class="comment__username">@{{ comment.author.username }}</span>
                     }
+                    @if (comment.editedAt) {
+                      <span class="comment__username">editado</span>
+                    }
                   </div>
-                  <time class="comment__date" [attr.datetime]="comment.createdAt">
-                    {{ comment.createdAt | timeAgo }}
-                  </time>
+                  <div class="comment__author-group">
+                    <time class="comment__date" [attr.datetime]="comment.createdAt">
+                      {{ comment.createdAt | timeAgo }}
+                    </time>
+                    @if (currentUsername() === comment.author.username) {
+                      <button
+                        type="button"
+                        class="post-detail__back"
+                        [attr.aria-label]="'Editar comentario de ' + comment.author.firstName"
+                        (click)="startEdit(comment)"
+                      >
+                        Editar
+                      </button>
+                    }
+                  </div>
                 </div>
 
-                <p class="comment__content">{{ comment.content }}</p>
+                @if (editingCommentId() === comment._id) {
+                  <form class="comment-form" (submit)="$event.preventDefault(); saveEdit(comment)">
+                    <textarea
+                      class="comment-form__textarea"
+                      rows="3"
+                      placeholder="Editá tu comentario..."
+                      aria-label="Editar comentario"
+                      [maxlength]="maxLength"
+                      [formControl]="editControl"
+                    ></textarea>
+
+                    <div class="comment-form__footer">
+                      <span class="comment-form__counter">
+                        {{ editControl.value.length }}/{{ maxLength }}
+                      </span>
+                      <div class="comment__author-group">
+                        <button type="button" class="post-detail__back" (click)="cancelEdit()">
+                          Cancelar
+                        </button>
+                        <button
+                          type="submit"
+                          class="comment-form__submit"
+                          [disabled]="editControl.invalid || isUpdatingComment()"
+                        >
+                          {{ isUpdatingComment() ? 'Guardando...' : 'Guardar' }}
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                } @else {
+                  <p class="comment__content">
+                    {{ comment.content }}
+                  </p>
+                }
               </div>
             </li>
           }
         </ul>
+      }
+
+      @if (hasMoreComments()) {
+        <div class="post-detail__empty-card">
+          <button
+            type="button"
+            class="comment-form__submit"
+            [disabled]="isLoadingMore()"
+            (click)="loadMoreComments()"
+          >
+            {{ isLoadingMore() ? 'Cargando...' : 'Cargar más comentarios' }}
+          </button>
+        </div>
       }
     </section>
   }

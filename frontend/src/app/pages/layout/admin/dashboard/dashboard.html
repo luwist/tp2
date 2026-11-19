@@ -1,1 +1,186 @@
-<p>dashboard works!</p>
+<section class="stats">
+  <div class="stats__filters">
+    <div>
+      <h2 class="stats__filters-title">Estadísticas</h2>
+      <p class="stats__filters-hint">Elegí el período para las gráficas con rango de fechas.</p>
+    </div>
+
+    <div class="stats__date-fields">
+      <label class="stats__date-field">
+        <span>Período</span>
+        <p-datepicker
+          inputId="stats-date-range"
+          ariaLabel="Rango de fechas de las estadísticas"
+          placeholder="Elegí el período"
+          selectionMode="range"
+          dateFormat="dd/mm/yy"
+          rangeSeparator=" - "
+          [showIcon]="true"
+          [showButtonBar]="true"
+          [showClear]="true"
+          [numberOfMonths]="2"
+          [ngModel]="dateRange()"
+          (ngModelChange)="onDateRangeChange($event)"
+        />
+      </label>
+    </div>
+  </div>
+
+  @if (rangeError()) {
+    <p class="stats__alert">Elegí un rango de fechas válido (desde y hasta).</p>
+  }
+
+  @if (rangedError()) {
+    <div class="stats__alert stats__alert--action">
+      <span>No se pudieron cargar las estadísticas con rango de fechas.</span>
+      <button type="button" (click)="retryRanged()">Reintentar</button>
+    </div>
+  }
+
+  @if (generalError()) {
+    <div class="stats__alert stats__alert--action">
+      <span>No se pudieron cargar las estadísticas generales.</span>
+      <button type="button" (click)="retryGeneral()">Reintentar</button>
+    </div>
+  }
+
+  <div class="stats__grid">
+    <article class="chart-card">
+      <header class="chart-card__header">
+        <h3 class="chart-card__title">Publicaciones por usuario</h3>
+        <p class="chart-card__subtitle">Cantidad de publicaciones en el período elegido</p>
+      </header>
+      <div class="chart-card__canvas">
+        @if (isLoadingRanged()) {
+          <span class="chart-card__loading">Cargando...</span>
+        } @else if (postsByUser().length === 0) {
+          <p class="chart-card__empty">Sin datos para el período</p>
+        } @else {
+          <canvas
+            baseChart
+            role="img"
+            aria-label="Gráfico de barras de publicaciones por usuario"
+            [data]="postsChart()"
+            [options]="barOptions"
+            [type]="barType"
+          ></canvas>
+        }
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <header class="chart-card__header">
+        <h3 class="chart-card__title">Comentarios por día</h3>
+        <p class="chart-card__subtitle">Actividad diaria en el período elegido</p>
+      </header>
+      <div class="chart-card__canvas">
+        @if (isLoadingRanged()) {
+          <span class="chart-card__loading">Cargando...</span>
+        } @else if (commentsByDay().length === 0) {
+          <p class="chart-card__empty">Sin datos para el período</p>
+        } @else {
+          <canvas
+            baseChart
+            role="img"
+            aria-label="Gráfico de línea de comentarios por día"
+            [data]="commentsChart()"
+            [options]="lineOptions"
+            [type]="lineType"
+          ></canvas>
+        }
+      </div>
+    </article>
+
+    <article class="chart-card chart-card--wide">
+      <header class="chart-card__header">
+        <h3 class="chart-card__title">Comentarios por publicación</h3>
+        <p class="chart-card__subtitle">Publicaciones con más comentarios en el período elegido</p>
+      </header>
+      <div class="chart-card__canvas chart-card__canvas--tall">
+        @if (isLoadingRanged()) {
+          <span class="chart-card__loading">Cargando...</span>
+        } @else if (commentsPerPost().length === 0) {
+          <p class="chart-card__empty">Sin datos para el período</p>
+        } @else {
+          <canvas
+            baseChart
+            role="img"
+            aria-label="Gráfico de barras horizontales de comentarios por publicación"
+            [data]="commentsPerPostChart()"
+            [options]="horizontalBarOptions"
+            [type]="barType"
+          ></canvas>
+        }
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <header class="chart-card__header">
+        <h3 class="chart-card__title">Ingresos por usuario</h3>
+        <p class="chart-card__subtitle">Inicios de sesión exitosos registrados</p>
+      </header>
+      <div class="chart-card__canvas">
+        @if (isLoadingGeneral()) {
+          <span class="chart-card__loading">Cargando...</span>
+        } @else if (loginsByUser().length === 0) {
+          <p class="chart-card__empty">Sin datos registrados</p>
+        } @else {
+          <canvas
+            baseChart
+            role="img"
+            aria-label="Gráfico de dona de ingresos por usuario"
+            [data]="loginsChart()"
+            [options]="doughnutOptions"
+            [type]="doughnutType"
+          ></canvas>
+        }
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <header class="chart-card__header">
+        <h3 class="chart-card__title">Visitas a perfiles</h3>
+        <p class="chart-card__subtitle">Visitas recibidas por usuario, sin contar las propias</p>
+      </header>
+      <div class="chart-card__canvas">
+        @if (isLoadingGeneral()) {
+          <span class="chart-card__loading">Cargando...</span>
+        } @else if (profileVisits().length === 0) {
+          <p class="chart-card__empty">Sin datos registrados</p>
+        } @else {
+          <canvas
+            baseChart
+            role="img"
+            aria-label="Gráfico de torta de visitas a perfiles"
+            [data]="visitsChart()"
+            [options]="pieOptions"
+            [type]="pieType"
+          ></canvas>
+        }
+      </div>
+    </article>
+
+    <article class="chart-card chart-card--wide">
+      <header class="chart-card__header">
+        <h3 class="chart-card__title">Me gusta por día</h3>
+        <p class="chart-card__subtitle">Cantidad de me gusta otorgados cada día</p>
+      </header>
+      <div class="chart-card__canvas">
+        @if (isLoadingGeneral()) {
+          <span class="chart-card__loading">Cargando...</span>
+        } @else if (likesPerDay().length === 0) {
+          <p class="chart-card__empty">Sin datos registrados</p>
+        } @else {
+          <canvas
+            baseChart
+            role="img"
+            aria-label="Gráfico de área de me gusta por día"
+            [data]="likesChart()"
+            [options]="lineOptions"
+            [type]="lineType"
+          ></canvas>
+        }
+      </div>
+    </article>
+  </div>
+</section>

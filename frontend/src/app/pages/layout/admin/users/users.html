@@ -12,7 +12,7 @@
 
   <p-table
     styleClass="users__table"
-    dataKey="id"
+    dataKey="_id"
     [value]="users()"
     [paginator]="users().length > 10"
     [rows]="5"
@@ -26,7 +26,7 @@
     </ng-template>
 
     <ng-template #body let-user>
-      <tr [class.users__row--disabled]="!user.enabled">
+      <tr [class.users__row--disabled]="!user.isActive">
         <td>
           <div class="users__identity">
             <p-avatar
@@ -55,7 +55,7 @@
               (onChange)="onToggleEnabled(user, $event.checked)"
             />
             <span class="users__status-label">
-              {{ user.enabled ? 'Habilitado' : 'Deshabilitado' }}
+              {{ user.isActive ? 'Habilitado' : 'Deshabilitado' }}
             </span>
           </div>
         </td>

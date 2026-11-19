@@ -5,6 +5,7 @@ import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 import { StorageService } from '../common/storage/storage.service.js';
 import { UsersModule } from '../users/users.module.js';
+import { StatsModule } from '../stats/stats.module.js';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UsersModule } from '../users/users.module.js';
       signOptions: { expiresIn: '1m' },
     }),
     UsersModule,
+    StatsModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, StorageService],

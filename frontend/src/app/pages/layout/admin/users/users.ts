@@ -42,8 +42,6 @@ export class Users {
 
   ngOnInit() {
     this._userService.getAll().subscribe((data) => {
-      console.log(data);
-      // this.posts.update((current) => [...current, ...data]);
       this.users.set(data);
     });
   }
@@ -61,11 +59,29 @@ export class Users {
   }
 
   protected onToggleEnabled(user: any, isActive: boolean): void {
-    console.log('ACTUALIZAR USUARIO JEJE');
-    console.log(user._id);
-    console.log(user.isActive);
-    // this.users.update((users) =>
-    //   users.map((current) => (current.id === user.id ? { ...current, isActive } : current)),
-    // );
+    this.users.update((users) =>
+      users.map((current) =>
+        current._id === user._id ? { ...current, isActive } : current,
+      ),
+    );
+
+    this._userService.setActive(user._id, isActive).subscribe({
+      next: (updated) => {
+        this.users.update((users) =>
+          users.map((current) =>
+            current._id === updated._id ? { ...current, ...updated } : current,
+          ),
+        );
+      },
+      error: () => {
+        this.users.update((users) =>
+          users.map((current) =>
+            current._id === user._id
+              ? { ...current, isActive: !isActive }
+              : current,
+          ),
+        );
+      },
+    });
   }
 }
