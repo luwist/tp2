@@ -1,50 +1,64 @@
 .dashboard {
-      max-width: 68rem;
-      margin: 0 auto;
-      padding: 1rem 1.5rem 4rem;
+  --dashboard-ink: #17171f;
+  --dashboard-muted: #52525b;
+  --dashboard-accent: #fbbf24;
 
-      &__header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-      }
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
 
-      &__title {
-        margin: 0;
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #17171F;
-      }
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
 
-      &__subtitle {
-        margin: 0.25rem 0 0;
-        font-size: 0.875rem;
-        color: #52525b;
-      }
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-      &__tabs {
-        display: inline-flex;
-        padding: 0.25rem;
-        background-color: #ffffff;
-        border: 1.5px solid #17171F;
-        border-radius: 9999px;
-      }
+  &__title {
+    position: relative;
+    align-self: flex-start;
+    margin: 0;
+    color: var(--dashboard-ink);
+    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
 
-      &__tab {
-        padding: 0.45rem 1.125rem;
-        border-radius: 9999px;
-        color: #17171F;
-        font-size: 0.875rem;
-        font-weight: 600;
-        text-decoration: none;
-        transition: background-color 0.15s ease;
-
-        &--active {
-          background-color: #facc15;
-          font-weight: 700;
-        }
-      }
+    // Marca amarilla detrás del texto, mismo acento que los botones
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0.05em;
+      z-index: -1;
+      height: 0.35em;
+      background: var(--dashboard-accent);
+      border-radius: 2px;
+      opacity: 0.85;
     }
+  }
+
+  &__subtitle {
+    margin: 0;
+    color: var(--dashboard-muted);
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 640px) {
+    padding-top: 1.5rem;
+
+    &__header {
+      align-items: stretch;
+    }
+  }
+}

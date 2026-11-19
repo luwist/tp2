@@ -1,27 +1,24 @@
+<p-toast position="top-center" />
+
 <section class="users">
   <header class="users__toolbar">
     <p class="users__count">{{ users().length }} cuentas registradas</p>
 
-    <p-button
-      styleClass="users__create"
-      label="Crear usuario"
-      (onClick)="onCreateUser()"
-      (created)="onUserCreated($event)"
-    />
+    <p-button styleClass="users__create" label="Crear usuario" (onClick)="onCreateUser()" />
   </header>
 
   <p-table
     styleClass="users__table"
     dataKey="_id"
     [value]="users()"
-    [paginator]="users().length > 10"
+    [paginator]="users().length > 5"
     [rows]="5"
   >
     <ng-template #header>
       <tr>
         <th>Usuario</th>
-        <th>Rol</th>
-        <th class="users__cell--status">Estado</th>
+        <th class="users__col users__col--role">Rol</th>
+        <th class="users__col users__col--status">Estado</th>
       </tr>
     </ng-template>
 
@@ -48,7 +45,7 @@
           />
         </td>
 
-        <td class="users__cell--status">
+        <td>
           <div class="users__status">
             <p-toggleswitch
               [ngModel]="user.isActive"
@@ -70,4 +67,4 @@
   </p-table>
 </section>
 
-<app-create-user [(visible)]="createDialogVisible" />
+<app-create-user [(visible)]="createDialogVisible" (created)="onUserCreated($event)" />

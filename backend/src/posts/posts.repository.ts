@@ -21,6 +21,7 @@ export class PostsRepository {
         author: { $eq: userId },
       })
       .sort({ createdAt: -1 })
+      .limit(3)
       .populate('author', 'firstName lastName username avatarUrl')
       .lean()
       .exec();

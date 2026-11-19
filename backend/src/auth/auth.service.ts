@@ -104,6 +104,7 @@ export class AuthService {
         lastName: user.lastName,
         username: user.username,
         avatarUrl: user.avatarUrl,
+        bio: user.bio,
         role: user.role,
       },
       token: token,

@@ -11,4 +11,10 @@ export class ProfileCard {
   private readonly auth = inject(AuthService);
 
   protected readonly user = this.auth.currentUser;
+
+  ngOnInit() {
+    console.log('CURRENT USER');
+    console.log(this.auth.currentUser());
+    console.log('CURRENT USER');
+  }
 }

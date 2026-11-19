@@ -29,9 +29,15 @@ export class AuthService {
   currentUser = signal<User | null>(null);
 
   login(request: LoginRequestDTO) {
-    return this.http
-      .post<AuthResponse>(`${environment.apiUrl}/auth/login`, request)
-      .pipe(tap((response) => this.handleAuthResponse(response)));
+    return this.http.post<any>(`${environment.apiUrl}/auth/login`, request).pipe(
+      tap((response) => {
+        console.log('LOGIN RESPONSE');
+        console.log(response);
+        console.log('LOGIN RESPONSE');
+
+        this.handleAuthResponse(response);
+      }),
+    );
   }
 
   register(request: RegisterRequestDTO) {
@@ -107,6 +113,10 @@ export class AuthService {
   }
   private handleAuthResponse(response: AuthResponse): void {
     localStorage.setItem('currentUser', JSON.stringify(response));
+
+    console.log('HANDLE AUTH RESPONSE');
+    console.log(response);
+    console.log('HANDLE AUTH RESPONSE');
 
     this.currentUser.set(response.user);
     this._token.set(response.token);

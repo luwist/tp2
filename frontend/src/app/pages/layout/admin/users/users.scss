@@ -32,6 +32,16 @@
     margin: 0;
   }
 
+  &__col {
+    &--role {
+      width: 14rem;
+    }
+
+    &--status {
+      width: 16rem;
+    }
+  }
+
   &__identity {
     align-items: center;
     display: flex;
@@ -39,6 +49,7 @@
   }
 
   &__name {
+    color: var(--users-ink);
     font-weight: 700;
   }
 
@@ -48,22 +59,16 @@
     gap: 0.75rem;
   }
 
-  // &__status-label {
-  //   color: var(--users-muted);
-  //   font-size: 0.875rem;
-  //   min-width: 6.5rem;
-  // }
-
-  // &__cell--status {
-  //   text-align: right;
-  // }
+  &__status-label {
+    color: var(--users-ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+    min-width: 6.5rem;
+  }
 
   &__row--disabled &__name,
   &__row--disabled &__status-label {
     color: var(--users-muted);
-  }
-
-  &__row--disabled &__name {
     font-weight: 500;
   }
 
@@ -73,7 +78,7 @@
     text-align: center;
   }
 
-  // Optimus UI component overrides (rendered outside this component's view encapsulation)
+  // Overrides de PrimeNG (se renderizan fuera de la encapsulación del componente)
   ::ng-deep {
     .users__create {
       background: var(--users-surface);
@@ -97,6 +102,10 @@
     }
 
     .users__table {
+      // Pisa el color de texto del tema de PrimeNG
+      --p-datatable-row-color: var(--users-ink);
+      --p-datatable-body-cell-color: var(--users-ink);
+
       .p-datatable-table {
         width: 100%;
       }
@@ -114,6 +123,7 @@
 
       .p-datatable-tbody > tr {
         background: transparent;
+        color: var(--users-ink);
         transition: background-color 0.15s ease;
 
         &:hover {
@@ -129,6 +139,45 @@
           border-bottom: 0;
         }
       }
+
+      // Paginador integrado al card
+      .p-paginator {
+        background: transparent;
+        border-top: var(--users-border);
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+
+        .p-paginator-first,
+        .p-paginator-prev,
+        .p-paginator-next,
+        .p-paginator-last,
+        .p-paginator-page {
+          background: var(--users-surface);
+          border: 2px solid var(--users-ink);
+          border-radius: 10px;
+          color: var(--users-ink);
+          font-weight: 700;
+          height: 2.25rem;
+          min-width: 2.25rem;
+          transition:
+            transform 0.1s ease,
+            box-shadow 0.1s ease;
+
+          &:not(.p-disabled):hover {
+            background: var(--users-accent);
+          }
+        }
+
+        .p-paginator-page.p-paginator-page-selected {
+          background: var(--users-accent);
+          box-shadow: 2px 2px 0 var(--users-ink);
+        }
+
+        .p-disabled {
+          border-color: rgb(26 26 26 / 25%);
+          opacity: 0.5;
+        }
+      }
     }
 
     .users__avatar {
@@ -136,6 +185,12 @@
       border: var(--users-border);
       color: var(--users-ink);
       font-weight: 800;
+    }
+
+    // Avatar de usuarios deshabilitados
+    .users__row--disabled .users__avatar {
+      filter: grayscale(1);
+      opacity: 0.55;
     }
 
     .users__role {
@@ -149,7 +204,7 @@
     }
 
     .users__role.p-tag-secondary {
-      background: #FFFFFF;
+      background: #ffffff;
     }
   }
 }

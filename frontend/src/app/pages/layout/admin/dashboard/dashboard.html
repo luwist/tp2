@@ -8,10 +8,25 @@
     <div class="stats__date-fields">
       <label class="stats__date-field">
         <span>Período</span>
+        <!-- <p-datepicker
+          inputId="stats-date-range"
+          ariaLabel="Rango de fechas de las estadísticas"
+          placeholder="Elegí el período"
+          selectionMode="range"
+          dateFormat="dd/mm/yy"
+          rangeSeparator=" - "
+          [showIcon]="true"
+          [showButtonBar]="true"
+          [showClear]="true"
+          [numberOfMonths]="2"
+          [ngModel]="dateRange()"
+          (ngModelChange)="onDateRangeChange($event)"
+        /> -->
         <p-datepicker
           inputId="stats-date-range"
           ariaLabel="Rango de fechas de las estadísticas"
           placeholder="Elegí el período"
+          panelStyleClass="stats__datepicker-panel"
           selectionMode="range"
           dateFormat="dd/mm/yy"
           rangeSeparator=" - "

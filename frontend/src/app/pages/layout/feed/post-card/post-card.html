@@ -2,17 +2,22 @@
   <header class="post-card__header">
     @if (showAuthor()) {
       <div class="post-card__user">
-        <img [src]="post().author.avatarUrl" alt="" class="post-card__avatar" />
+        <img
+          [src]="post().author.avatarUrl"
+          alt=""
+          class="post-card__avatar"
+          [routerLink]="['/', post().author.username]"
+        />
         <div class="post-card__author">
-          <span class="post-card__name">
+          <span class="post-card__name" [routerLink]="['/', post().author.username]">
             {{ post().author.firstName }} {{ post().author.lastName }}
           </span>
           <a
             class="post-card__username"
-            [routerLink]="['/', post().author.username]"
             [attr.aria-label]="'Ver perfil de @' + post().author.username"
             (click)="$event.stopPropagation()"
-          >&#64;{{ post().author.username }}</a>
+            >&#64;{{ post().author.username }}</a
+          >
         </div>
       </div>
     } @else {
