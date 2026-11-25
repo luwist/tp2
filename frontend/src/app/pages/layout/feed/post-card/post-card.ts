@@ -5,10 +5,10 @@ import { PostImageGallery } from './post-image-gallery/post-image-gallery';
 import { finalize } from 'rxjs';
 import { MenuModule } from '@openng/optimus-ui/menu';
 import { AuthService } from '@app/services/auth/auth.service';
-import { TimeAgoPipe } from '@app/pipes';
+import { TimeAgoPipe, TruncatePipe } from '@app/pipes';
 
 @Component({
-  imports: [DatePipe, PostImageGallery, MenuModule, TimeAgoPipe, RouterLink],
+  imports: [DatePipe, PostImageGallery, MenuModule, TimeAgoPipe, RouterLink, TruncatePipe],
   selector: 'app-post-card',
   styleUrl: './post-card.scss',
   templateUrl: './post-card.html',

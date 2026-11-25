@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -13,6 +12,8 @@ import { CommentService, PostComment } from '@app/services';
 import { AuthService } from '@app/services/auth/auth.service';
 import { TimeAgoPipe } from '@app/pipes';
 import { Pagination } from '@app/dto/responses/paginated.response';
+import { ProfileCard } from '../feed/profile-card/profile-card';
+import { RecentPostsCard } from '@app/components';
 
 const MAX_COMMENT_LENGTH = 500;
 const COMMENTS_PAGE_SIZE = 5;
@@ -25,8 +26,9 @@ const COMMENTS_PAGE_SIZE = 5;
     ToastModule,
     ReactiveFormsModule,
     RouterLink,
-    DatePipe,
     TimeAgoPipe,
+    ProfileCard,
+    RecentPostsCard,
   ],
   selector: 'app-post-detail',
   templateUrl: './post-detail.html',

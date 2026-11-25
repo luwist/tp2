@@ -53,7 +53,7 @@
   </header>
 
   <h2 class="post-card__title">{{ post().title }}</h2>
-  <p class="post-card__message">{{ post().body }}</p>
+  <p class="post-card__message">{{ post().body | truncate: 180 }}</p>
 
   <app-post-image-gallery
     [images]="post().images"

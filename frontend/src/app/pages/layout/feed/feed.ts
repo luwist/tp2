@@ -13,6 +13,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ProfileCard } from './profile-card/profile-card';
 import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
 import { InfiniteScroll } from '@app/directives';
+import { RecentPostsCard } from '@app/components';
 
 @Component({
   imports: [
@@ -26,6 +27,7 @@ import { InfiniteScroll } from '@app/directives';
     ProfileCard,
     SelectButtonModule,
     InfiniteScroll,
+    RecentPostsCard,
   ],
   selector: 'app-feed',
   styleUrl: './feed.scss',

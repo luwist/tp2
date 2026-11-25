@@ -1,13 +1,18 @@
 <p-confirmdialog />
 <p-toast position="top-center" />
 
-<section class="post-detail">
-  <nav class="post-detail__nav">
-    <a class="post-detail__back" routerLink="/">
-      <span class="post-detail__back-icon" aria-hidden="true">←</span>
-      <span>Volver a publicaciones</span>
-    </a>
-  </nav>
+<section class="post-detail-page">
+  <aside class="post-detail-page__side post-detail-page__side--left">
+    <app-profile-card />
+  </aside>
+
+  <div class="post-detail">
+    <nav class="post-detail__nav">
+      <a class="post-detail__back" routerLink="/">
+        <span class="post-detail__back-icon" aria-hidden="true">←</span>
+        <span>Volver a publicaciones</span>
+      </a>
+    </nav>
 
   @if (isLoading()) {
     <app-post-card-skeleton />
@@ -160,4 +165,9 @@
       }
     </section>
   }
+  </div>
+
+  <aside class="post-detail-page__side post-detail-page__side--right">
+    <app-recent-posts-card [username]="post()?.author?.username ?? null" />
+  </aside>
 </section>

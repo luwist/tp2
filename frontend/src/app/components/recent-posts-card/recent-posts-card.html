@@ -1,0 +1,31 @@
+<aside class="recent-card">
+  <header class="recent-card__header">
+    <h2 class="recent-card__title">Publicaciones recientes</h2>
+    <span class="recent-card__badge">{{ visiblePosts.length }}</span>
+  </header>
+
+  @if (isLoading()) {
+    <div class="recent-card__loading">Cargando...</div>
+  } @else if (visiblePosts.length === 0) {
+    <p class="recent-card__empty">Todavía no hay publicaciones recientes.</p>
+  } @else {
+    <ul class="recent-card__list">
+      @for (post of visiblePosts; track post._id ?? post.id) {
+        <li class="recent-card__item">
+          <a
+            class="recent-card__link"
+            [routerLink]="['/posts', post._id ?? post.id]"
+            (click)="$event.stopPropagation()"
+          >
+            <span class="recent-card__item-title">{{ post.title }}</span>
+            <span class="recent-card__item-meta">
+              &#64;{{ post.author?.username }}
+              <span aria-hidden="true">·</span>
+              <time [attr.datetime]="post.createdAt">{{ post.createdAt | timeAgo }}</time>
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</aside>

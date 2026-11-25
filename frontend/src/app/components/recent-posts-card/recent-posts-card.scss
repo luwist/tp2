@@ -1,0 +1,90 @@
+$surface-card: #fffdf7;
+$ink-primary: #17171f;
+$accent-yellow: #fde68a;
+$border-stroke: 2px solid $ink-primary;
+$radius-card: 24px;
+
+.recent-card {
+  background-color: $surface-card;
+  border: $border-stroke;
+  border-radius: $radius-card;
+  padding: 24px 20px;
+  box-sizing: border-box;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    margin: 0;
+    color: $ink-primary;
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    padding: 0.125rem 0.5rem;
+    background-color: $accent-yellow;
+    border: $border-stroke;
+    border-radius: 9999px;
+    color: $ink-primary;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__link {
+    display: block;
+    padding: 0.75rem;
+    border: 1.5px solid $ink-primary;
+    border-radius: 0.875rem;
+    background-color: #ffffff;
+    color: $ink-primary;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+      background-color: $accent-yellow;
+      transform: translateY(-1px);
+    }
+  }
+
+  &__item-title {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  &__item-meta {
+    display: block;
+    margin-top: 0.25rem;
+    color: #4a4860;
+    font-size: 0.75rem;
+  }
+
+  &__empty,
+  &__loading {
+    margin: 0;
+    color: #4a4860;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+}

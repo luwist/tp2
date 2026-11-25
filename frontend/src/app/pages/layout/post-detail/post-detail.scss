@@ -8,12 +8,43 @@ $border-stroke: 1.5px solid $ink-primary;
 $radius-card: 1rem;
 $radius-pill: 9999px;
 
+.post-detail-page {
+  width: 1280px;
+  max-width: 100%;
+  padding: 24px 0;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr) 320px;
+  align-items: start;
+  gap: 32px;
+
+  &__side {
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+  }
+
+  @media (max-width: 1100px) {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+
+    &__side--left {
+      display: none;
+    }
+  }
+
+  @media (max-width: 800px) {
+    grid-template-columns: minmax(0, 1fr);
+
+    &__side--right {
+      display: none;
+    }
+  }
+}
+
 .post-detail {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  max-width: 42rem;
-  margin: 0 auto;
+  min-width: 0;
   padding-bottom: 3rem;
 
   &__nav {
